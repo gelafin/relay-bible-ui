@@ -1,0 +1,23 @@
+{
+  "files": {
+    "app.js": "/relay-bible/static/js/app.d113e725.chunk.js",
+    "app.js.map": "/relay-bible/static/js/app.d113e725.chunk.js.map",
+    "runtime~app.js": "/relay-bible/static/js/runtime~app.c3de62c3.js",
+    "runtime~app.js.map": "/relay-bible/static/js/runtime~app.c3de62c3.js.map",
+    "static/js/2.f07fa6f6.chunk.js": "/relay-bible/static/js/2.f07fa6f6.chunk.js",
+    "static/js/2.f07fa6f6.chunk.js.map": "/relay-bible/static/js/2.f07fa6f6.chunk.js.map",
+    "fonts/MaterialCommunityIcons.ttf": "/relay-bible/./fonts/MaterialCommunityIcons.ttf",
+    "favicon-16.png": "/relay-bible/favicon-16.png",
+    "favicon-32.png": "/relay-bible/favicon-32.png",
+    "favicon.ico": "/relay-bible/favicon.ico",
+    "index.html": "/relay-bible/index.html",
+    "manifest.json": "/relay-bible/manifest.json",
+    "serve.json": "/relay-bible/serve.json",
+    "static/js/2.f07fa6f6.chunk.js.LICENSE.txt": "/relay-bible/static/js/2.f07fa6f6.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime~app.c3de62c3.js",
+    "static/js/2.f07fa6f6.chunk.js",
+    "static/js/app.d113e725.chunk.js"
+  ]
+}
