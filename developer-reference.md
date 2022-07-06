@@ -20,3 +20,4 @@ Deploy manually to GitHub Pages.
 
 # History
 * Followed this [Expo guide](https://docs.expo.dev/get-started/create-a-new-app/)
+* Configured linter with .eslintrc.js. To run the linter, ctrl+shift+p > "ESLint: Fix all auto-fixable problems"
