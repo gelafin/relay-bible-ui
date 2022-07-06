@@ -2,6 +2,7 @@ import { React } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Button } from 'react-native-paper';
 import ProfilePage from './components/pages/ProfilePage';
+import MainNav from './components/common/MainNav';
 
 export default function App() {
   return (
@@ -12,6 +13,7 @@ export default function App() {
       </Button>
 
       <ProfilePage yourNumbers={[1, 2, 3]}></ProfilePage>
+      <MainNav></MainNav>
     </View>
   );
 }
