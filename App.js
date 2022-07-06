@@ -1,6 +1,7 @@
 import { React } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Button } from 'react-native-paper';
+import ProfilePage from './components/pages/ProfilePage';
 
 export default function App() {
   return (
@@ -9,6 +10,8 @@ export default function App() {
       <Button icon="camera" mode="contained" onPress={() => console.log('Pressed')}
       >Press me
       </Button>
+
+      <ProfilePage yourNumbers={[1, 2, 3]}></ProfilePage>
     </View>
   );
 }
