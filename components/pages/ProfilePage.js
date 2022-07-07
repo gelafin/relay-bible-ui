@@ -1,17 +1,32 @@
 import { React } from 'react';
-import { Text } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
-const ProfilePage = ({ yourNumbers }) => {
+import PageHeader from '../common/PageHeader.js';
+
+const ProfilePage = () => {
   return (
-    <div>
-      <Text>hi</Text>
-      {
-        yourNumbers.map(currentNumber => (
-          <Text key={currentNumber}>{currentNumber}</Text>
-        ))
-      }
-    </div>
+    <View>
+      <PageHeader headingText="Profile"></PageHeader>
+      <main>
+        <View style={[styles.container, styles.pageBody]}>
+          <Text>hi, Mr. Cheese Man, sir! Nice profile you have here on this here Profiiiiiile Paaaage</Text>
+        </View>
+      </main>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  pageBody: {
+    width: '50%',
+    backgroundColor: 'pink'
+  }
+});
 
 export default ProfilePage;

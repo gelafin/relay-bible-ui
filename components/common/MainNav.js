@@ -1,10 +1,26 @@
-import { React } from 'react';
-import { Text } from 'react-native';
+import React from 'react';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const MainNav = () => (
-  <div>
-    <Text>Main Nav Menu Icons</Text>
-  </div>
-);
+// pages
+import ProfilePage from '../pages/ProfilePage';
 
-export default MainNav;
+const Tab = createMaterialBottomTabNavigator();
+
+function MyTabs() {
+  return (
+    <Tab.Navigator initialRouteName="Profile" barStyle={{ backgroundColor: 'tomato' }} style={{width: '100vw'}}>
+      <Tab.Screen name="Profile"
+        component={ProfilePage}
+        options={{
+          tabBarLabel: 'Profile',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="account" color={color} size={26} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
+  );
+}
+
+export default MyTabs;
