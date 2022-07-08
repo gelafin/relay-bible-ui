@@ -18,6 +18,17 @@ Deploy manually to GitHub Pages.
 3. Push changes to feature branch
 4. Merge feature branch into main - picked up by GH Action and deployed to Prod
 
+# Component Sources
+Look for components from these sources, in order, before making a new one.
+If a source doesn't provide a good enough component, try the next one.
+1. [Paper](https://callstack.github.io/react-native-paper/index.html)
+2. [Expo's React Native](https://docs.expo.dev/versions/v45.0.0/react-native/activityindicator/)
+3. Make a new one
+
+## The Chosen
+* Forms: [react-hook-form with react-native inputs](https://react-hook-form.com/get-started/#reactnative)
+* Navigation: [@react-navigation/material-bottom-tabs](https://callstack.github.io/react-native-paper/bottom-navigation.html)
+
 # History
 * Followed this [Expo guide](https://docs.expo.dev/get-started/create-a-new-app/)
 * Configured linter with .eslintrc.js. To run the linter, ctrl+shift+p > "ESLint: Fix all auto-fixable problems"

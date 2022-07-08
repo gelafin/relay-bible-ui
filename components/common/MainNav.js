@@ -7,9 +7,13 @@ import ProfilePage from '../pages/ProfilePage';
 
 const Tab = createMaterialBottomTabNavigator();
 
-function MyTabs() {
+const MainNav = () => {
   return (
-    <Tab.Navigator initialRouteName="Profile" barStyle={{ backgroundColor: 'tomato' }} style={{width: '100vw'}}>
+    <Tab.Navigator
+      initialRouteName="Profile"
+      barStyle={{ backgroundColor: '#eee' }}
+      style={{marginLeft: '20px'}}
+    >
       <Tab.Screen name="Profile"
         component={ProfilePage}
         options={{
@@ -23,4 +27,4 @@ function MyTabs() {
   );
 }
 
-export default MyTabs;
+export default MainNav;

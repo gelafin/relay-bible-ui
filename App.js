@@ -1,6 +1,5 @@
 import { React } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Button } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 
 // custom components
@@ -10,11 +9,10 @@ export default function App() {
   return (
     <NavigationContainer>
       <View style={styles.container}>
-        <Text>Top of the screen</Text>
-        <Button icon="camera" mode="contained" onPress={() => console.log('Pressed')}
-        >Press me
-        </Button>
-
+        {/* TODO: make this the AppBar? */}
+        <View style={styles.offWhite}>
+          <Text>Top of the screen</Text>
+        </View>
         <MainNav></MainNav>
       </View>
     </NavigationContainer>
@@ -24,8 +22,11 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  },
+  plainBackground: {
+    backgroundColor: '#fff'
+  },
+  offWhite: {
+    backgroundColor: '#eee'
   }
 });
