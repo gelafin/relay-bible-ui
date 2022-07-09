@@ -1,5 +1,9 @@
+/*
+ * passing prop to prop https://stackoverflow.com/a/48919391/14257952
+ */
+
 import { React, useState, useEffect } from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { IconButton } from 'react-native-paper';
 
 // custom
@@ -9,7 +13,7 @@ import { FormLabel } from './FormLabel';
  * A labeled text input and a context-sensitive button that submits
  * the input value when the user decides to do so and the value has changed
  */
-function SingletonInputForm({label, onSubmit, initialValue}) {
+function SingletonInputForm({label, onSubmit, initialValue, inputComponent}) {
   // button variant switches between edit, save, and undo
   const [buttonVariant, setButtonVariant] = useState('edit');
   const [buttonOptions, setButtonOptions] = useState({});
@@ -56,12 +60,16 @@ function SingletonInputForm({label, onSubmit, initialValue}) {
     // TODO: show toast "snack bar"
   }
 
+  // rename component prop
+  const InputComponent = inputComponent;
+
   return (
     <View>
       <FormLabel label={label}></FormLabel>
       <View style={styles.container}>
-        <TextInput onChangeText={handleChange} value={currentValue} style={styles.input}></TextInput>
-
+        <View style={styles.input}>
+          <InputComponent handleChange={handleChange} currentValue={currentValue}></InputComponent>
+        </View>
         <IconButton
           icon={buttonOptions.icon}
           mode="text"

@@ -4,6 +4,8 @@ import { StyleSheet, View } from 'react-native';
 // custom components
 import { PageHeader } from '../common/PageHeader.js';
 import { SingletonInputForm } from '../common/SingletonInputForm.js';
+import { SingletonInputFormText } from '../common/SingletonInputFormText.js';
+import { SingletonInputFormSelect } from '../common/SingletonInputFormSelect.js';
 import { FormSection } from '../common/FormSection.js';
 
 const ProfilePage = () => {
@@ -31,19 +33,22 @@ const ProfilePage = () => {
             label="Username"
             onSubmit={handleUsernameSubmit}
             initialValue="Cheeseyman"
+            inputComponent={SingletonInputFormText}
           ></SingletonInputForm>
 
           <FormSection label="Personas">
             <SingletonInputForm
               label="Gospel Doctrine"
               onSubmit={handleGospelPersonaSubmit}
-              initialValue=""
+              initialValue="Grace"
+              inputComponent={SingletonInputFormSelect}
             ></SingletonInputForm>
 
             <SingletonInputForm
               label="Affiliation"
               onSubmit={handleAffiliationSubmit}
-              initialValue=""
+              initialValue="LDS"
+              inputComponent={SingletonInputFormSelect}
             ></SingletonInputForm>
           </FormSection>
         </View>
