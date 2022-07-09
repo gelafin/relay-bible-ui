@@ -1,6 +1,8 @@
 import React from "react";
 import { Picker } from '@react-native-picker/picker';
 
+import { inputStyle } from "../../assets/stylesheets/inputs";
+
 /**
  * 
  * @param {function} handleChange callback given the new item value on change.
@@ -20,6 +22,7 @@ const SingletonInputFormSelect = ({handleChange, currentValue, otherProps}) => {
         handleChange(itemValue);
       }}
       selectedValue={currentValue}
+      style={inputStyle.default}
     >
       {options.map(option => (
         <Picker.Item label={option.label} value={option.value} key={option.value} />
