@@ -1,12 +1,15 @@
 import { React, useState, useEffect } from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { StyleSheet, TextInput, View } from 'react-native';
 import { IconButton } from 'react-native-paper';
+
+// custom
+import { FormLabel } from './FormLabel';
 
 /**
  * A labeled text input and a context-sensitive button that submits
  * the input value when the user decides to do so and the value has changed
  */
-export default function SingletonInputForm({label, onSubmit, initialValue}) {
+function SingletonInputForm({label, onSubmit, initialValue}) {
   // button variant switches between edit, save, and undo
   const [buttonVariant, setButtonVariant] = useState('edit');
   const [buttonOptions, setButtonOptions] = useState({});
@@ -55,14 +58,17 @@ export default function SingletonInputForm({label, onSubmit, initialValue}) {
 
   return (
     <View>
-      <Text><b>{label}</b></Text>
-      <TextInput onChangeText={handleChange} value={currentValue}></TextInput>
-      <IconButton
-        icon={buttonOptions.icon}
-        mode="text"
-        onPress={handleSavePress}
-        style={styles.iconButton}
-      ></IconButton>
+      <FormLabel label={label}></FormLabel>
+      <View style={styles.container}>
+        <TextInput onChangeText={handleChange} value={currentValue} style={styles.input}></TextInput>
+
+        <IconButton
+          icon={buttonOptions.icon}
+          mode="text"
+          onPress={handleSavePress}
+          style={styles.iconButton}
+        ></IconButton>
+      </View>
     </View>
   );
 }
@@ -70,8 +76,12 @@ export default function SingletonInputForm({label, onSubmit, initialValue}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexFlow: 'row wrap',
+    justifyContent: 'flex-start',
+  },
+  input: {
+    backgroundColor: '#eee'
   }
 });
+
+export { SingletonInputForm };

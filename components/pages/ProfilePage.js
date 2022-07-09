@@ -2,24 +2,51 @@ import { React } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 // custom components
-import PageHeader from '../common/PageHeader.js';
-import SingletonInputForm from '../common/SingletonInputForm.js';
+import { PageHeader } from '../common/PageHeader.js';
+import { SingletonInputForm } from '../common/SingletonInputForm.js';
+import { FormSection } from '../common/FormSection.js';
 
 const ProfilePage = () => {
-  // TODO: this could maybe be handled by the SingletonInputForm with an endpoint prop
+  // TODO: these submit handlers could maybe be handled by the SingletonInputForm with an endpoint prop
   const handleUsernameSubmit = (newUserName) => {
     console.log('Profile page submitting new username:', newUserName);
+  };
+
+  const handleGospelPersonaSubmit = (newPersona) => {
+    console.log('Profile page submitting new gospel persona:', newPersona);
+  };
+
+  const handleAffiliationSubmit = (newAffiliation) => {
+    console.log('Profile page submitting new affiliation:', newAffiliation);
   };
 
   return (
     <View style={styles.page}>
       <PageHeader headingText="Profile"></PageHeader>
       <main>
-        <SingletonInputForm
-          label="Username"
-          onSubmit={handleUsernameSubmit}
-          initialValue="Cheeseyman"
-        ></SingletonInputForm>
+        {/* TODO: I don't want to repeat this style wrapper on every page,
+        but bottomNav + theme is being erroneous */}
+        <View style={styles.marginLeft}>
+          <SingletonInputForm
+            label="Username"
+            onSubmit={handleUsernameSubmit}
+            initialValue="Cheeseyman"
+          ></SingletonInputForm>
+
+          <FormSection label="Personas">
+            <SingletonInputForm
+              label="Gospel Doctrine"
+              onSubmit={handleGospelPersonaSubmit}
+              initialValue=""
+            ></SingletonInputForm>
+
+            <SingletonInputForm
+              label="Affiliation"
+              onSubmit={handleAffiliationSubmit}
+              initialValue=""
+            ></SingletonInputForm>
+          </FormSection>
+        </View>
       </main>
     </View>
   );
@@ -28,8 +55,12 @@ const ProfilePage = () => {
 const styles = StyleSheet.create({
   page: {
     flex: 1,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    // marginLeft: '20px' // you thought this would work, didn't you?
+  },
+  marginLeft: {
+    marginLeft: '20px'
   }
 });
 
-export default ProfilePage;
+export { ProfilePage };
