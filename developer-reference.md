@@ -28,6 +28,7 @@ If a source doesn't provide a good enough component, try the next one.
 ## The Chosen
 * Forms: [react-hook-form with react-native inputs](https://react-hook-form.com/get-started/#reactnative)
 * Navigation: [@react-navigation/material-bottom-tabs](https://callstack.github.io/react-native-paper/bottom-navigation.html)
+* input: custom (components with "SingletonInputForm" in the name)
 
 # History
 * Followed this [Expo guide](https://docs.expo.dev/get-started/create-a-new-app/)

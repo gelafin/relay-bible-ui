@@ -68,14 +68,12 @@ function SingletonInputForm({label, onSubmit, initialValue, inputComponent, inpu
   return (
     <View>
       <FormLabel label={label}></FormLabel>
-      <View style={styles.container}>
-        <View style={styles.input}>
-          <InputComponent
-            handleChange={handleChange}
-            currentValue={currentValue}
-            otherProps={inputComponentProps}
-          ></InputComponent>
-        </View>
+      <View style={[styles.container, styles.verticalCenter]}>
+        <InputComponent
+          handleChange={handleChange}
+          currentValue={currentValue}
+          otherProps={inputComponentProps}
+        ></InputComponent>
         <IconButton
           icon={buttonOptions.icon}
           mode="text"
@@ -93,8 +91,12 @@ const styles = StyleSheet.create({
     flexFlow: 'row wrap',
     justifyContent: 'flex-start',
   },
-  input: {
-    backgroundColor: '#eee'
+  verticalCenter: {
+    alignItems: 'center'
+  },
+  iconButton: {
+    height: 'fit-content',
+    width: 'fit-content'
   }
 });
 
