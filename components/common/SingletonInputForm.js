@@ -12,8 +12,10 @@ import { FormLabel } from './FormLabel';
 /**
  * A labeled text input and a context-sensitive button that submits
  * the input value when the user decides to do so and the value has changed
+ * @param inputComponentProps array of any props to pass to child, e.g., 
+ * the options array required for SingletonInputFormSelect
  */
-function SingletonInputForm({label, onSubmit, initialValue, inputComponent}) {
+function SingletonInputForm({label, onSubmit, initialValue, inputComponent, inputComponentProps}) {
   // button variant switches between edit, save, and undo
   const [buttonVariant, setButtonVariant] = useState('edit');
   const [buttonOptions, setButtonOptions] = useState({});
@@ -68,7 +70,11 @@ function SingletonInputForm({label, onSubmit, initialValue, inputComponent}) {
       <FormLabel label={label}></FormLabel>
       <View style={styles.container}>
         <View style={styles.input}>
-          <InputComponent handleChange={handleChange} currentValue={currentValue}></InputComponent>
+          <InputComponent
+            handleChange={handleChange}
+            currentValue={currentValue}
+            otherProps={inputComponentProps}
+          ></InputComponent>
         </View>
         <IconButton
           icon={buttonOptions.icon}

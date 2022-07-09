@@ -42,6 +42,10 @@ const ProfilePage = () => {
               onSubmit={handleGospelPersonaSubmit}
               initialValue="Grace"
               inputComponent={SingletonInputFormSelect}
+              inputComponentProps={[[
+                {label: 'option1', value: 'value1'},
+                {label: 'option2', value: 'value2'}
+              ]]}
             ></SingletonInputForm>
 
             <SingletonInputForm
@@ -49,6 +53,10 @@ const ProfilePage = () => {
               onSubmit={handleAffiliationSubmit}
               initialValue="LDS"
               inputComponent={SingletonInputFormSelect}
+              inputComponentProps={[[
+                {label: 'optionA', value: 'valueA'},
+                {label: 'optionB', value: 'valueB'}
+              ]]}
             ></SingletonInputForm>
           </FormSection>
         </View>
