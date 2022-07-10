@@ -40,7 +40,7 @@ const ProfilePage = () => {
             <SingletonInputForm
               label="Gospel Doctrine"
               onSubmit={handleGospelPersonaSubmit}
-              initialValue="Grace"
+              initialValue=""
               inputComponent={SingletonInputFormSelect}
               inputComponentProps={[[
                 {label: 'option1', value: 'value1'},
@@ -51,7 +51,7 @@ const ProfilePage = () => {
             <SingletonInputForm
               label="Affiliation"
               onSubmit={handleAffiliationSubmit}
-              initialValue="LDS"
+              initialValue="valueB"
               inputComponent={SingletonInputFormSelect}
               inputComponentProps={[[
                 {label: 'optionA', value: 'valueA'},

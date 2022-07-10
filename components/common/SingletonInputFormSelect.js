@@ -8,13 +8,17 @@ import { inputStyle } from "../../assets/stylesheets/inputs";
  * @param {function} handleChange callback given the new item value on change.
  * Must set currentValue to update this component's input value
  * @param {string} currentValue value of this input, tracked in parent state
- * @param {array} options objects with "label" and "value" used as options
+ * @param {array} otherProps array containing these props specific to the select component:
+ * Array of objects with "label" and "value" properties, used as options
  * @returns 
  */
 const SingletonInputFormSelect = ({handleChange, currentValue, otherProps}) => {
   // unpack options
-  const [options] = otherProps;
-  console.log(options);
+  let [options] = otherProps;
+
+  // add placeholder option for when currentValue is not among the options
+  const EMPTY_VALUE = '';
+  options = [...options, {label: '',  value: EMPTY_VALUE}];
 
   return (
     <Picker
