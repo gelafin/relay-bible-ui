@@ -16,10 +16,6 @@ const SingletonInputFormSelect = ({handleChange, currentValue, otherProps}) => {
   // unpack options
   let [options] = otherProps;
 
-  // add placeholder option for when currentValue is not among the options
-  const EMPTY_VALUE = '';
-  options = [...options, {label: '',  value: EMPTY_VALUE}];
-
   return (
     <Picker
       onValueChange={(itemValue) => {

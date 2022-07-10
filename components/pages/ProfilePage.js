@@ -40,22 +40,26 @@ const ProfilePage = () => {
             <SingletonInputForm
               label="Gospel Doctrine"
               onSubmit={handleGospelPersonaSubmit}
-              initialValue=""
+              initialValue="undecided"
               inputComponent={SingletonInputFormSelect}
               inputComponentProps={[[
-                {label: 'option1', value: 'value1'},
-                {label: 'option2', value: 'value2'}
+                {label: 'Undecided', value: 'undecided'},
+                {label: 'Grace', value: 'grace'},
+                {label: 'Grace Plus Response', value: 'gracePlusResponse'},
+                {label: 'Not Listed', value: 'notListed'}
               ]]}
             ></SingletonInputForm>
 
             <SingletonInputForm
               label="Affiliation"
               onSubmit={handleAffiliationSubmit}
-              initialValue="valueB"
+              initialValue="mormon"
               inputComponent={SingletonInputFormSelect}
               inputComponentProps={[[
-                {label: 'optionA', value: 'valueA'},
-                {label: 'optionB', value: 'valueB'}
+                {label: 'Undecided', value: 'undecided'},
+                {label: 'Church of Jesus Christ (Mormon)', value: 'mormon'},
+                {label: 'Protestant', value: 'protestant'},
+                {label: 'Not Listed', value: 'notListed'}
               ]]}
             ></SingletonInputForm>
           </FormSection>
