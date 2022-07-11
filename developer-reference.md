@@ -29,6 +29,11 @@ If a source doesn't provide a good enough component, try the next one.
 * Forms: [react-hook-form with react-native inputs](https://react-hook-form.com/get-started/#reactnative)
 * Navigation: [@react-navigation/material-bottom-tabs](https://callstack.github.io/react-native-paper/bottom-navigation.html)
 * input: custom (components with "SingletonInputForm" in the name)
+* button/icon button: react-paper
+* View: react-native
+* theme: custom
+  * reusable styling is in assets/stylesheets
+  * if style calls for multiple components to be used in a specific way, use a wrapper component (e.g., components/pages/PageStyler)
 
 # History
 * Followed this [Expo guide](https://docs.expo.dev/get-started/create-a-new-app/)
