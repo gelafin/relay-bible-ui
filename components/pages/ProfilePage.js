@@ -70,13 +70,15 @@ const ProfilePage = () => {
         </FormSection>
         <DeleteButton onPress={()=>{setShouldShowDialog(true)}}>Delete Profile</DeleteButton>
       </PageStyler>
-      <ConfirmDialog
-        title="Delete Profile?"
-        description={DELETE_PROFILE_DIALOG_DESCRIPTION}
-        shouldShowDialog={shouldShowDialog}
-        setShouldShowDialog={setShouldShowDialog}
-        onConfirm={deleteProfile}
-      ></ConfirmDialog>
+      {shouldShowDialog &&
+        <ConfirmDialog
+          title="Delete Profile?"
+          description={DELETE_PROFILE_DIALOG_DESCRIPTION}
+          shouldShowDialog={shouldShowDialog}
+          setShouldShowDialog={setShouldShowDialog}
+          onConfirm={deleteProfile}
+        ></ConfirmDialog>
+      }
     </>
   );
 }
