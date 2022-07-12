@@ -9,6 +9,7 @@ import { FormSection } from '../common/FormSection.js';
 import { PageStyler } from './PageStyler.js';
 import { DeleteButton } from '../buttons/DeleteButton.js';
 import { ConfirmDialog } from '../common/ConfirmDialog.js';
+import { ContextHeader } from '../common/ContextHeader.js';
 
 const DELETE_PROFILE_DIALOG_DESCRIPTION = 'Your public notes will remain. There\'s nothing you can do about this. Mwahaha <3';
 
@@ -34,6 +35,7 @@ const ProfilePage = () => {
 
   return (
     <>
+      <ContextHeader headingText="Top o' the page to you, laddies"></ContextHeader>
       <PageHeader headingText="Profile"></PageHeader>
       <PageStyler>
         <SingletonInputForm

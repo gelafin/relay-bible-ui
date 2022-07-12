@@ -1,9 +1,5 @@
 import { StyleSheet } from 'react-native';
-
-const colors = {
-  'WHITE': '#FFF',
-  'DARK_GRAY': '#707070'
-}
+import { colors } from './themeConstants/themeColors';
 
 const layoutStyles = StyleSheet.create({
   page: {
@@ -14,8 +10,20 @@ const layoutStyles = StyleSheet.create({
     marginLeft: '20px'
   },
   appBar: {
+    backgroundColor: colors.LIGHT_GRAY
+  },
+  appBarBold: {
     backgroundColor: colors.DARK_GRAY
+  },
+  appBarSmall: {
+    height: 'fit-content',
+    paddingTop: '10px',
+    paddingBottom: '10px',
+  },
+  appBarSmallText: {
+    fontSize: '1rem'
   }
+  
 });
 
 export { layoutStyles };

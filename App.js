@@ -25,10 +25,6 @@ export default function App() {
     // <PaperThemeProvider theme={theme}>
     <NavigationContainer>
       <View style={styles.container}>
-        {/* TODO: make this the AppBar? */}
-        <View style={styles.offWhite}>
-          <Text>Top of the screen</Text>
-        </View>
         <MainNav></MainNav>
       </View>
     </NavigationContainer>
@@ -39,10 +35,4 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  plainBackground: {
-    backgroundColor: '#fff'
-  },
-  offWhite: {
-    backgroundColor: '#eee'
-  }
 });

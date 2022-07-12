@@ -5,11 +5,11 @@ import { Appbar } from 'react-native-paper';
 import { layoutStyles } from '../../assets/stylesheets/layouts';
 
 const PageHeader = ({headingText}) => {
-  // TODO: import goBack
+  // TODO: import goBack here if not in ContextHeader
   const goBack = () => console.log('back button pressed');
 
   return (
-    <Appbar.Header style={layoutStyles.appBar}>
+    <Appbar.Header style={layoutStyles.appBarBold}>
       <Appbar.BackAction onPress={goBack} />
       <Appbar.Content title={headingText} />
     </Appbar.Header>
