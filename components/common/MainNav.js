@@ -4,18 +4,20 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 // custom
 import { ProfilePage } from '../pages/ProfilePage';
+import { ReadingPage } from '../pages/ReadingPage';
 
 const Tab = createMaterialBottomTabNavigator();
 
 const screens = [
-  {name: 'Profile', component: ProfilePage, tabBarLabel: 'Profile', icon: 'account'}
+  {name: 'Profile', component: ProfilePage, tabBarLabel: 'Profile', icon: 'account'},
+  {name: 'Reading', component: ReadingPage, tabBarLabel: 'Bible', icon: 'book'}
 ];
 
 const MainNav = () => {
   return (
     <Tab.Navigator
       initialRouteName="Profile"
-      barStyle={{ backgroundColor: '#eee' }}
+      barStyle={{ backgroundColor: '#eee' }} // TODO: import appbar style
     >
       {screens.map(screen => (
         <Tab.Screen

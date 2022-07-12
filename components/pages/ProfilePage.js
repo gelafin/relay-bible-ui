@@ -35,7 +35,7 @@ const ProfilePage = () => {
 
   return (
     <>
-      <ContextHeader headingText="Top o' the page to you, laddies"></ContextHeader>
+      <ContextHeader headingText="Top o' the profile page to you, laddies"></ContextHeader>
       <PageHeader headingText="Profile"></PageHeader>
       <PageStyler>
         <SingletonInputForm
