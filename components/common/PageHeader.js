@@ -1,16 +1,19 @@
 import { React } from 'react';
-import { Text, StyleSheet } from 'react-native';
+import { Appbar } from 'react-native-paper';
+
+// custom
+import { layoutStyles } from '../../assets/stylesheets/layouts';
 
 const PageHeader = ({headingText}) => {
+  // TODO: import goBack
+  const goBack = () => console.log('back button pressed');
+
   return (
-    <Text style={styles.headingText}>{headingText}</Text>
+    <Appbar.Header style={layoutStyles.appBar}>
+      <Appbar.BackAction onPress={goBack} />
+      <Appbar.Content title={headingText} />
+    </Appbar.Header>
   );
 }
-
-const styles = StyleSheet.create({
-  headingText: {
-    fontSize: '2rem'
-  },
-});
   
 export { PageHeader };
