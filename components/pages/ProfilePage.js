@@ -1,5 +1,4 @@
 import { React } from 'react';
-import { StyleSheet, View } from 'react-native';
 
 // custom components
 import { PageHeader } from '../common/PageHeader.js';
@@ -8,6 +7,7 @@ import { SingletonInputFormText } from '../common/SingletonInputFormText.js';
 import { SingletonInputFormSelect } from '../common/SingletonInputFormSelect.js';
 import { FormSection } from '../common/FormSection.js';
 import { PageStyler } from './PageStyler.js';
+import { DeleteButton } from '../buttons/DeleteButton.js';
 
 const ProfilePage = () => {
   // TODO: these submit handlers could maybe be handled by the SingletonInputForm with an endpoint prop
@@ -58,6 +58,7 @@ const ProfilePage = () => {
           ]]}
         ></SingletonInputForm>
       </FormSection>
+      <DeleteButton onPress={() => {console.log('pressed the scary red button');}}>Delete Profile</DeleteButton>
     </PageStyler>
   );
 }

@@ -34,6 +34,8 @@ If a source doesn't provide a good enough component, try the next one.
 * theme: custom
   * reusable styling is in assets/stylesheets
   * if style calls for multiple components to be used in a specific way, use a wrapper component (e.g., components/pages/PageStyler)
+* buttons: custom buttons in components/buttons (new custom buttons use react-native-paper)
+  * style prop doesn't support sugar styles like "border". Instead, set each style individually, as in this [example to set button border color](https://github.com/callstack/react-native-paper/issues/2875)
 
 # History
 * Followed this [Expo guide](https://docs.expo.dev/get-started/create-a-new-app/)
