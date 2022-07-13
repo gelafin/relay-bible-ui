@@ -1,11 +1,11 @@
 {
   "files": {
-    "app.js": "/relay-bible-ui/static/js/app.b55f221a.chunk.js",
-    "app.js.map": "/relay-bible-ui/static/js/app.b55f221a.chunk.js.map",
+    "app.js": "/relay-bible-ui/static/js/app.5d1636b0.chunk.js",
+    "app.js.map": "/relay-bible-ui/static/js/app.5d1636b0.chunk.js.map",
     "runtime~app.js": "/relay-bible-ui/static/js/runtime~app.f3c0199f.js",
     "runtime~app.js.map": "/relay-bible-ui/static/js/runtime~app.f3c0199f.js.map",
-    "static/js/2.b67ec66f.chunk.js": "/relay-bible-ui/static/js/2.b67ec66f.chunk.js",
-    "static/js/2.b67ec66f.chunk.js.map": "/relay-bible-ui/static/js/2.b67ec66f.chunk.js.map",
+    "static/js/2.318bafae.chunk.js": "/relay-bible-ui/static/js/2.318bafae.chunk.js",
+    "static/js/2.318bafae.chunk.js.map": "/relay-bible-ui/static/js/2.318bafae.chunk.js.map",
     "fonts/MaterialCommunityIcons.ttf": "/relay-bible-ui/./fonts/MaterialCommunityIcons.ttf",
     "favicon-16.png": "/relay-bible-ui/favicon-16.png",
     "favicon-32.png": "/relay-bible-ui/favicon-32.png",
@@ -13,11 +13,11 @@
     "index.html": "/relay-bible-ui/index.html",
     "manifest.json": "/relay-bible-ui/manifest.json",
     "serve.json": "/relay-bible-ui/serve.json",
-    "static/js/2.b67ec66f.chunk.js.LICENSE.txt": "/relay-bible-ui/static/js/2.b67ec66f.chunk.js.LICENSE.txt"
+    "static/js/2.318bafae.chunk.js.LICENSE.txt": "/relay-bible-ui/static/js/2.318bafae.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime~app.f3c0199f.js",
-    "static/js/2.b67ec66f.chunk.js",
-    "static/js/app.b55f221a.chunk.js"
+    "static/js/2.318bafae.chunk.js",
+    "static/js/app.5d1636b0.chunk.js"
   ]
 }
