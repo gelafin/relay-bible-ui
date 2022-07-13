@@ -7,7 +7,8 @@ const layoutStyles = StyleSheet.create({
     backgroundColor: colors.WHITE,
   },
   pageMargins: {
-    marginLeft: '20px'
+    marginLeft: '20px',
+    flex: 1
   },
   appBar: {
     backgroundColor: colors.LIGHT_GRAY
@@ -22,6 +23,9 @@ const layoutStyles = StyleSheet.create({
   },
   appBarSmallText: {
     fontSize: '1rem'
+  },
+  readingPage: {
+    backgroundColor: colors.KHAKI
   }
   
 });

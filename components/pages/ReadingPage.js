@@ -4,6 +4,7 @@ import { Text } from 'react-native';
 // custom
 import { PageStyler } from './PageStyler.js';
 import { ContextHeader } from '../common/ContextHeader.js';
+import { layoutStyles } from '../../assets/stylesheets/layouts.js';
 
 const sampleText = `
     The Creation of the World
@@ -19,7 +20,7 @@ const ReadingPage = () => {
   return (
     <>
       <ContextHeader headingText="Top o' the reading page to you, laddies"></ContextHeader>
-      <PageStyler>
+      <PageStyler customPageStyle={layoutStyles.readingPage}>
         <Text>{sampleText}</Text>
       </PageStyler>
     </>

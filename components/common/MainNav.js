@@ -17,7 +17,7 @@ const MainNav = () => {
   return (
     <Tab.Navigator
       initialRouteName="Profile"
-      barStyle={{ backgroundColor: '#eee' }} // TODO: import appbar style
+      barStyle={{ backgroundColor: '#eee' }}  // importing the color string from layouts.js is weird?
     >
       {screens.map(screen => (
         <Tab.Screen

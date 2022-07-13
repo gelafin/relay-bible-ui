@@ -3,8 +3,8 @@ import { View } from 'react-native';
 
 import { layoutStyles } from '../../assets/stylesheets/layouts';
 
-const PageStyler = ({children}) => (
-  <View style={layoutStyles.page}>
+const PageStyler = ({children, customPageStyle}) => (
+  <View style={[layoutStyles.page, customPageStyle]}>
     <View style={layoutStyles.pageMargins}>{children}</View>
   </View>
 );
