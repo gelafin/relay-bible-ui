@@ -4,7 +4,7 @@
 
 import { React, useEffect, useState } from 'react';
 import { Modal, Portal } from 'react-native-paper';
-import { FlatList, Text, View } from 'react-native';
+import { FlatList, View } from 'react-native';
 
 // custom
 import { CHAPTER_COUNTS } from '../../constants/chapterCounts';
