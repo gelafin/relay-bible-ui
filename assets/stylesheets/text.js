@@ -6,6 +6,9 @@ const textStyles = StyleSheet.create({
   },
   plain: {
     color: 'black'
+  },
+  listSelectOption: {
+    fontSize: 32
   }
 });
 

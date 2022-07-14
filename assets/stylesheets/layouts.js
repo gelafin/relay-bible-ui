@@ -30,8 +30,19 @@ const layoutStyles = StyleSheet.create({
   },
   readingPage: {
     backgroundColor: colors.KHAKI
-  }
-  
+  },
+  listSelectOption: {
+    padding: 20,
+    cursor: 'pointer'
+  },
+  modalContainerStyle: {
+    backgroundColor: 'white',
+    padding: 20,
+    width: '80vw',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    height: '100%'
+  }  
 });
 
 export { layoutStyles };

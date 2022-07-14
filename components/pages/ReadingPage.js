@@ -11,7 +11,6 @@ import { layoutStyles } from '../../assets/stylesheets/layouts.js';
 import { textStyles } from '../../assets/stylesheets/text.js';
 import { ChapterSelectButton } from '../buttons/ChapterSelectButton.js';
 import { ChapterSelectModal } from '../common/ChapterSelectModal.js';
-import { ChapterSelectModal_manually } from '../common/ChapterSelectModal_manually';
 
 // example for API route GET /verses/:bookName/:chapterNumber
 // regular 0-indexed array of one string per verse (no spaces is slightly preferred, but whatever is easier with sample data)

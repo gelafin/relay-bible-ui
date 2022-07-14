@@ -4,13 +4,12 @@
 
 import { React, useEffect, useState } from 'react';
 import { Modal, Portal } from 'react-native-paper';
-import { FlatList, Text, View, TouchableOpacity } from 'react-native';
+import { FlatList, Text, View } from 'react-native';
 
 // custom
 import { CHAPTER_COUNTS } from '../../constants/chapterCounts';
 import { layoutStyles } from '../../assets/stylesheets/layouts';
-
-const containerStyle = {backgroundColor: 'white', padding: 20, width: '80vw', marginLeft: 'auto', marginRight: 'auto', height: '100%'};
+import { ListOption } from '../buttons/ListOption';
 
 const ChapterSelectModal = ({visible, setVisible, onChapterSelect}) => {
   const [selectedBook, setSelectedBook] = useState();
@@ -60,31 +59,25 @@ const ChapterSelectModal = ({visible, setVisible, onChapterSelect}) => {
     selectedBook && selectedChapter && submit();
   }, [selectedBook, selectedChapter]);
 
-  // each item rendered by the books FlatList
   const renderBookNameItem = ({item}) => (
-    <TouchableOpacity
-      style={{padding: 20, cursor: 'pointer'}}
+    <ListOption
+      label={item.bookName}
       onPress={() => setSelectedBook(item.bookName)}
-    >
-      <Text style={{fontSize: 32}}>{item.bookName}</Text>
-    </TouchableOpacity>
+    ></ListOption>
   );
 
   // each item rendered by the chapters FlatList
   const renderChapterNumberItem = ({item}) => (
-    <TouchableOpacity
-      style={{padding: 20, cursor: 'pointer'}}
+    <ListOption
+      label={item.chapterNumber}
       onPress={() => setSelectedChapter(item.chapterNumber)}
-    >
-      <Text style={{fontSize: 32}}>{item.chapterNumber}</Text>
-    </TouchableOpacity>
+    ></ListOption>
   );
 
   return (
     <>
       <Portal>
-        <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle}>
-          <Text>Wat u want, Genesis 1 or Genesis 1? Or we can do Geonosis pew pew</Text>
+        <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={layoutStyles.modalContainerStyle}>
           <View style={[layoutStyles.page, layoutStyles.horizontalContainer]}>
             {/* list of books */}
             <FlatList data={booksData} renderItem={renderBookNameItem} keyExtractor={item => item.bookName} />
