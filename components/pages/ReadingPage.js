@@ -32,8 +32,8 @@ const ReadingPage = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const openModal = () => setModalIsOpen(true);
-  const handleChapterSelect = () => {
-    console.log('chapter selected! Excellent choice');
+  const handleChapterSelect = ({book, chapter}) => {
+    console.log(`chapter selected! Excellent choice. Navigating to ${book} ${chapter}`);
   };
 
   return (

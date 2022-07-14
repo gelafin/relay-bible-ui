@@ -11,6 +11,9 @@ const layoutStyles = StyleSheet.create({
     marginRight: '20px',
     flex: 1
   },
+  horizontalContainer: {
+    flexDirection: 'row'
+  },
   appBar: {
     backgroundColor: colors.LIGHT_GRAY
   },
