@@ -25,10 +25,7 @@ const ChapterSelectModal = ({visible, setVisible, onChapterSelect}) => {
 
   console.log(booksData);
 
-  const renderBookNameItem = ({item}) => {
-    console.log(item.bookName);
-    return (<View><Text>{item.bookName}</Text></View>);
-  };
+  const renderBookNameItem = ({item}) => (<View><Text>{item.bookName}</Text></View>);
 
   return (
     <>
@@ -37,8 +34,11 @@ const ChapterSelectModal = ({visible, setVisible, onChapterSelect}) => {
           <Text onPress={handleSelection}>Click this to test. The below do not work yet</Text>
           <Text>Wat u want, Genesis 1 or Genesis 1? Or we can do Geonosis pew pew</Text>
           {/* list of books */}
-          <SafeAreaView style={{flex: 1, width: '100%'}}>
-            <FlatList style={{flex: 1, width: '100%'}} data={booksData} renderItem={renderBookNameItem} keyExtractor={item => item.bookName} />
+          <SafeAreaView>
+            {/* TODO: https://stackoverflow.com/questions/48674848/flatlist-not-scrolling
+                or just use <View><Text> and style manually
+            */}
+            <FlatList data={booksData} renderItem={renderBookNameItem} keyExtractor={item => item.bookName} />
           </SafeAreaView>
         </Modal>
       </Portal>
