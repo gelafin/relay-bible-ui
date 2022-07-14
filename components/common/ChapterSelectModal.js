@@ -23,7 +23,12 @@ const ChapterSelectModal = ({visible, setVisible, onChapterSelect}) => {
     {bookName: key, chapterCount: CHAPTER_COUNTS[key], }
   ));
 
-  const bookNameComponent = ({bookName}) => (<View><Text>{bookName}</Text></View>);
+  console.log(booksData);
+
+  const renderBookNameItem = ({item}) => {
+    console.log(item.bookName);
+    return (<View><Text>{item.bookName}</Text></View>);
+  };
 
   return (
     <>
@@ -32,7 +37,9 @@ const ChapterSelectModal = ({visible, setVisible, onChapterSelect}) => {
           <Text onPress={handleSelection}>Click this to test. The below do not work yet</Text>
           <Text>Wat u want, Genesis 1 or Genesis 1? Or we can do Geonosis pew pew</Text>
           {/* list of books */}
-          <FlatList style={{flex: 1}} data={booksData} renderItem={bookNameComponent} keyExtractor={item => item.bookName} />
+          <SafeAreaView style={{flex: 1, width: '100%'}}>
+            <FlatList style={{flex: 1, width: '100%'}} data={booksData} renderItem={renderBookNameItem} keyExtractor={item => item.bookName} />
+          </SafeAreaView>
         </Modal>
       </Portal>
     </>
