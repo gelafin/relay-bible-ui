@@ -1,17 +1,25 @@
 import { StyleSheet } from 'react-native';
+import { colors } from './themeConstants/themeColors';
 
 const buttonStyle = StyleSheet.create({
   default: {
     padding: '5px',
-    backgroundColor: '#fff',
+    backgroundColor: colors.WHITE,
     borderRadius: '5px',
     width: 'fit-content'
   },
   warningLabel: {
-    color: 'red',
+    color: colors.RED,
   },
   warningBorder: {
-    borderColor: 'red'
+    borderColor: colors.RED
+  },
+  chip: {
+    padding: 0,
+    borderRadius: '20px',
+  },
+  transparent: {
+    backgroundColor: ''
   }
 });
 

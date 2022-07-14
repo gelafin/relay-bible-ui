@@ -2,16 +2,19 @@
 
 import { React, useState } from 'react';
 import { Text } from 'react-native';
+import { Provider } from 'react-native-paper';
 
 // custom
 import { PageStyler } from './PageStyler.js';
 import { ContextHeader } from '../common/ContextHeader.js';
 import { layoutStyles } from '../../assets/stylesheets/layouts.js';
 import { textStyles } from '../../assets/stylesheets/text.js';
+import { ChapterSelectButton } from '../buttons/ChapterSelectButton.js';
+import { ChapterSelectModal } from '../common/ChapterSelectModal.js';
 
 // example for API route GET /verses/:bookName/:chapterNumber
 // regular 0-indexed array of one string per verse (no spaces is slightly preferred, but whatever is easier with sample data)
-const sampleVerses = [
+const sampleChapter = [
   'In the beginning, God created the heavens and the earth.',
   'The earth was without form and void, and darkness was over the face of the deep. And the Spirit of God was hovering over the face of the waters.',
   'And God said, “Let there be light,” and there was light.',
@@ -25,21 +28,35 @@ const sampleVerses = [
 const ReadingPage = () => {
   const [currentBook, setCurrentBook] = useState('Genesis');
   const [currentChapter, setCurrentChapter] = useState(1);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const openModal = () => setModalIsOpen(true);
+  const handleChapterSelect = () => {
+    console.log('chapter selected! Excellent choice');
+  };
 
   return (
     <>
-      <ContextHeader headingText={`${currentBook} ${currentChapter}`}></ContextHeader>
-      <PageStyler customPageStyle={layoutStyles.readingPage}>
-        <Text>
-          {sampleVerses.map((verseText, index) =>
-            <Text key={'v' + index}>
-              {/* verse number */}
-              <Text style={textStyles.superscript}>{index + 1}</Text>
-              <Text>{' ' + verseText + ' '}</Text>
-            </Text>
-          )}
-        </Text>
-      </PageStyler>
+      <Provider>
+        <ContextHeader
+          customHeadingComponent={
+            <ChapterSelectButton label={`${currentBook} ${currentChapter}`} onPress={openModal}></ChapterSelectButton>
+          }
+        >
+        </ContextHeader>
+        <ChapterSelectModal visible={modalIsOpen} setVisible={setModalIsOpen} onChapterSelect={handleChapterSelect}></ChapterSelectModal>
+        <PageStyler customPageStyle={layoutStyles.readingPage}>
+          <Text>
+            {sampleChapter.map((verseText, index) =>
+              <Text key={'v' + index}>
+                {/* verse number */}
+                <Text style={textStyles.superscript}>{index + 1}</Text>
+                <Text>{' ' + verseText + ' '}</Text>
+              </Text>
+            )}
+          </Text>
+        </PageStyler>
+      </Provider>
     </>
   );
 };

@@ -8,6 +8,7 @@ const layoutStyles = StyleSheet.create({
   },
   pageMargins: {
     marginLeft: '20px',
+    marginRight: '20px',
     flex: 1
   },
   appBar: {
