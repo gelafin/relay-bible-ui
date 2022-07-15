@@ -12,29 +12,22 @@ import { layoutStyles } from '../../assets/stylesheets/layouts';
 import { ListOption } from '../buttons/ListOption';
 
 const ChapterSelectModal = ({visible, setVisible, onChapterSelect, initialBookName, initialChapterNumber}) => {
-  const [selectedBook, setSelectedBook] = useState(null);
-  const [selectedChapter, setSelectedChapter] = useState(null);
+  const [selectedBook, setSelectedBook] = useState(initialBookName);
+  const [selectedChapter, setSelectedChapter] = useState(initialChapterNumber);
   const [chapterCount, setChapterCount] = useState(0);
+  const [chapterSelectionDisplay, setChapterSelectionDisplay] = useState();
 
   const resetSelection = () => {
-    console.log('resetting modal selection');
-    setSelectedBook(null);
-    setSelectedChapter(null);
+    setSelectedBook(initialBookName);
+    setSelectedChapter(initialChapterNumber);
   };
 
   const hideModal = () => {
-    resetSelection();
+    // if user did not select a chapter and wants to close modal, reset
+    selectedChapter || resetSelection();
 
     setVisible(false)
   };
-
-  // update chapter options based on selected book
-  useEffect(() => {
-    setChapterCount(BOOK_METADATA[selectedBook]?.chapterCount);
-
-    // deselect chapter when book changes (TODO: and book is not initial selection)
-    setSelectedChapter(null);
-  }, [selectedBook]);
 
   // process data into array of objects, expected by FlatList
   const booksData = Object.keys(BOOK_METADATA).map((key) => (
@@ -56,10 +49,26 @@ const ChapterSelectModal = ({visible, setVisible, onChapterSelect, initialBookNa
     onChapterSelect({book: selectedBook, chapter: selectedChapter});
   };
 
-  // submit if both book and chapter are selected by user
   useEffect(() => {
-    selectedBook && selectedChapter && submit();
-  }, [selectedBook, selectedChapter]);
+    // update chapter options based on selected book
+    setChapterCount(BOOK_METADATA[selectedBook]?.chapterCount);
+  
+    // Deselect chapter when book is not initial selection.
+    // When it is the initial book, show the initial chapter
+    // but don't actually select it, because the modal would submit
+    if (selectedBook === initialBookName) {
+      setChapterSelectionDisplay(initialChapterNumber);
+    } else {
+      setSelectedChapter(null);
+      setChapterSelectionDisplay(null);
+    }
+  }, [selectedBook]);
+
+  // submit if chapter is selected by user
+  useEffect(() => {
+    selectedChapter !== initialChapterNumber && setChapterSelectionDisplay(selectedChapter);
+    selectedChapter && submit();
+  }, [selectedChapter]);
 
   const renderBookNameItem = ({item}) => (
     <ListOption
@@ -74,7 +83,7 @@ const ChapterSelectModal = ({visible, setVisible, onChapterSelect, initialBookNa
     <ListOption
       label={item.chapterNumber}
       onPress={() => setSelectedChapter(item.chapterNumber)}
-      isSelected={item.chapterNumber === selectedChapter}
+      isSelected={item.chapterNumber === chapterSelectionDisplay}
     ></ListOption>
   );
 

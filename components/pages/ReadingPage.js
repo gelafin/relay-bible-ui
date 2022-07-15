@@ -64,6 +64,8 @@ const ReadingPage = () => {
 
   // set current verse list based on current book & chapter selection
   useEffect(() => {
+    console.log(`Reading page state: ${currentBookName} ${currentChapterNumber}`);
+
     try {
       const verseList = currentBookName && currentChapterNumber ?
         mockChapterText[currentBookName][currentChapterNumber - 1]
