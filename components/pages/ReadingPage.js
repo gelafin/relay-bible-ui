@@ -115,16 +115,25 @@ const ReadingPage = () => {
   );
 };
 
-const Verse = ({verseText, verseNumber, onPress}) => (
-  <Pressable
-    style={layoutStyles.inline}
-    onPress={() => {onPress({text: verseText, number: verseNumber})}}
-  >
-    <Text style={textStyles}>
-      <Text style={textStyles.superscript}>{verseNumber}</Text>
-      <Text>{' ' + verseText + ' '}</Text>
-    </Text>
-  </Pressable>
-);
+const Verse = ({verseText, verseNumber, onPress}) => {
+  const [isSelected, setIsSelected] = useState();
+
+  const handleSelect = () => {
+    setIsSelected(!isSelected);
+    onPress({text: verseText, number: verseNumber});
+  };
+
+  return (
+    <Pressable
+      style={layoutStyles.inline}
+      onPress={handleSelect}
+    >
+      <Text style={[textStyles, isSelected && textStyles.selectedVerse]}>
+        <Text style={textStyles.superscript}>{verseNumber}</Text>
+        <Text>{' ' + verseText + ' '}</Text>
+      </Text>
+    </Pressable>
+  );
+};
 
 export { ReadingPage };
