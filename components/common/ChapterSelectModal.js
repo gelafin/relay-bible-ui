@@ -12,8 +12,8 @@ import { layoutStyles } from '../../assets/stylesheets/layouts';
 import { ListOption } from '../buttons/ListOption';
 
 const ChapterSelectModal = ({visible, setVisible, onChapterSelect, initialBookName, initialChapterNumber}) => {
-  const [selectedBook, setSelectedBook] = useState(null);
-  const [selectedChapter, setSelectedChapter] = useState(null);
+  const [selectedBook, setSelectedBook] = useState(initialBookName);
+  const [selectedChapter, setSelectedChapter] = useState(initialChapterNumber);
   const [chapterCount, setChapterCount] = useState(0);
 
   const resetSelection = () => {
@@ -23,7 +23,8 @@ const ChapterSelectModal = ({visible, setVisible, onChapterSelect, initialBookNa
   };
 
   const hideModal = () => {
-    resetSelection();
+    // resetSelection();
+    setSelectedChapter(null);
 
     setVisible(false)
   };
