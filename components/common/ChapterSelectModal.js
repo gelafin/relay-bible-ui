@@ -15,9 +15,9 @@ const ChapterSelectModal = ({visible, setVisible, onChapterSelect, initialBookNa
   const [selectedBook, setSelectedBook] = useState(initialBookName);
   const [selectedChapter, setSelectedChapter] = useState(initialChapterNumber);
   const [chapterCount, setChapterCount] = useState(0);
+  const [chapterSelectionDisplay, setChapterSelectionDisplay] = useState();
 
   const resetSelection = () => {
-    console.log('resetting modal selection');
     setSelectedBook(initialBookName);
     setSelectedChapter(initialChapterNumber);
   };
@@ -50,17 +50,23 @@ const ChapterSelectModal = ({visible, setVisible, onChapterSelect, initialBookNa
   };
 
   useEffect(() => {
-    console.log(`Modal state: ${selectedBook} ${selectedChapter}`);
     // update chapter options based on selected book
     setChapterCount(BOOK_METADATA[selectedBook]?.chapterCount);
   
-    // deselect chapter when book is not initial selection
-    selectedBook !== initialBookName && setSelectedChapter(null);
+    // Deselect chapter when book is not initial selection.
+    // When it is the initial book, show the initial chapter
+    // but don't actually select it, because the modal would submit
+    if (selectedBook === initialBookName) {
+      setChapterSelectionDisplay(initialChapterNumber);
+    } else {
+      setSelectedChapter(null);
+      setChapterSelectionDisplay(null);
+    }
   }, [selectedBook]);
 
   // submit if chapter is selected by user
   useEffect(() => {
-    console.log(`Modal state: ${selectedBook} ${selectedChapter}`);
+    selectedChapter !== initialChapterNumber && setChapterSelectionDisplay(selectedChapter);
     selectedChapter && submit();
   }, [selectedChapter]);
 
@@ -77,7 +83,7 @@ const ChapterSelectModal = ({visible, setVisible, onChapterSelect, initialBookNa
     <ListOption
       label={item.chapterNumber}
       onPress={() => setSelectedChapter(item.chapterNumber)}
-      isSelected={item.chapterNumber === selectedChapter}
+      isSelected={item.chapterNumber === chapterSelectionDisplay}
     ></ListOption>
   );
 
