@@ -5,9 +5,9 @@ import { Text, TouchableOpacity } from "react-native";
 import { layoutStyles } from "../../assets/stylesheets/layouts";
 import { textStyles } from "../../assets/stylesheets/text";
 
-const ListOption = ({label, onPress}) => (
+const ListOption = ({label, onPress, isSelected}) => (
   <TouchableOpacity
-    style={layoutStyles.listSelectOption}
+    style={[layoutStyles.listSelectOption, isSelected && layoutStyles.listSelectOptionSelected]}
     onPress={onPress}
   >
     <Text style={textStyles.listSelectOption}>{label}</Text>

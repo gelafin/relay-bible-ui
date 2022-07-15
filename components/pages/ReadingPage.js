@@ -65,10 +65,15 @@ const ReadingPage = () => {
   // set current verse list based on current book & chapter selection
   useEffect(() => {
     try {
-      currentBookName && currentChapterNumber &&
-      setCurrentVerseList(mockChapterText[currentBookName][currentChapterNumber - 1]);
-
-      setCurrentBookAndChapterString(`${currentBookName} ${currentChapterNumber}`);
+      const verseList = currentBookName && currentChapterNumber ?
+        mockChapterText[currentBookName][currentChapterNumber - 1]
+        : null;
+        
+      if (verseList) {
+        setCurrentVerseList(verseList);
+    
+        setCurrentBookAndChapterString(`${currentBookName} ${currentChapterNumber}`);
+      }
     } catch (error) {
       console.error(`Selection ${currentBookName} ${currentChapterNumber} is not part of the current data set`);
     }
@@ -83,10 +88,16 @@ const ReadingPage = () => {
           }
         >
         </ContextHeader>
-        <ChapterSelectModal visible={modalIsOpen} setVisible={setModalIsOpen} onChapterSelect={handleChapterSelect}></ChapterSelectModal>
+        <ChapterSelectModal
+          visible={modalIsOpen}
+          setVisible={setModalIsOpen}
+          onChapterSelect={handleChapterSelect}
+          initialBookName={currentBookName}
+          initialChapterNumber={currentChapterNumber}
+        ></ChapterSelectModal>
         <PageStyler customPageStyle={layoutStyles.readingPage}>
           <Text>
-            {currentVerseList.map((verseText, index) =>
+            {currentVerseList?.map((verseText, index) =>
               <Text key={'v' + index}>
                 {/* verse number */}
                 <Text style={textStyles.superscript}>{index + 1}</Text>

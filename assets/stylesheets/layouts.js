@@ -35,6 +35,9 @@ const layoutStyles = StyleSheet.create({
     padding: 20,
     cursor: 'pointer'
   },
+  listSelectOptionSelected: {
+    backgroundColor: 'pink'
+  },
   modalContainerStyle: {
     backgroundColor: 'white',
     padding: 20,

@@ -7,16 +7,17 @@ import { Modal, Portal } from 'react-native-paper';
 import { FlatList, View } from 'react-native';
 
 // custom
-import { BOOK_METADATA } from '../../constants/chapterCounts';
+import { BOOK_METADATA } from '../../constants/bookMetadata';
 import { layoutStyles } from '../../assets/stylesheets/layouts';
 import { ListOption } from '../buttons/ListOption';
 
-const ChapterSelectModal = ({visible, setVisible, onChapterSelect}) => {
-  const [selectedBook, setSelectedBook] = useState();
-  const [selectedChapter, setSelectedChapter] = useState();
+const ChapterSelectModal = ({visible, setVisible, onChapterSelect, initialBookName, initialChapterNumber}) => {
+  const [selectedBook, setSelectedBook] = useState(null);
+  const [selectedChapter, setSelectedChapter] = useState(null);
   const [chapterCount, setChapterCount] = useState(0);
 
   const resetSelection = () => {
+    console.log('resetting modal selection');
     setSelectedBook(null);
     setSelectedChapter(null);
   };
@@ -31,6 +32,7 @@ const ChapterSelectModal = ({visible, setVisible, onChapterSelect}) => {
   useEffect(() => {
     setChapterCount(BOOK_METADATA[selectedBook]?.chapterCount);
 
+    // deselect chapter when book changes (TODO: and book is not initial selection)
     setSelectedChapter(null);
   }, [selectedBook]);
 
@@ -54,7 +56,7 @@ const ChapterSelectModal = ({visible, setVisible, onChapterSelect}) => {
     onChapterSelect({book: selectedBook, chapter: selectedChapter});
   };
 
-  // submit if both book and chapter are selected
+  // submit if both book and chapter are selected by user
   useEffect(() => {
     selectedBook && selectedChapter && submit();
   }, [selectedBook, selectedChapter]);
@@ -63,6 +65,7 @@ const ChapterSelectModal = ({visible, setVisible, onChapterSelect}) => {
     <ListOption
       label={item.bookName}
       onPress={() => setSelectedBook(item.bookName)}
+      isSelected={item.bookName === selectedBook}
     ></ListOption>
   );
 
@@ -71,6 +74,7 @@ const ChapterSelectModal = ({visible, setVisible, onChapterSelect}) => {
     <ListOption
       label={item.chapterNumber}
       onPress={() => setSelectedChapter(item.chapterNumber)}
+      isSelected={item.chapterNumber === selectedChapter}
     ></ListOption>
   );
 
