@@ -18,24 +18,16 @@ const ChapterSelectModal = ({visible, setVisible, onChapterSelect, initialBookNa
 
   const resetSelection = () => {
     console.log('resetting modal selection');
-    setSelectedBook(null);
-    setSelectedChapter(null);
+    setSelectedBook(initialBookName);
+    setSelectedChapter(initialChapterNumber);
   };
 
   const hideModal = () => {
-    // resetSelection();
-    setSelectedChapter(null);
+    // if user did not select a chapter and wants to close modal, reset
+    selectedChapter || resetSelection();
 
     setVisible(false)
   };
-
-  // update chapter options based on selected book
-  useEffect(() => {
-    setChapterCount(BOOK_METADATA[selectedBook]?.chapterCount);
-
-    // deselect chapter when book changes (TODO: and book is not initial selection)
-    setSelectedChapter(null);
-  }, [selectedBook]);
 
   // process data into array of objects, expected by FlatList
   const booksData = Object.keys(BOOK_METADATA).map((key) => (
@@ -57,10 +49,20 @@ const ChapterSelectModal = ({visible, setVisible, onChapterSelect, initialBookNa
     onChapterSelect({book: selectedBook, chapter: selectedChapter});
   };
 
-  // submit if both book and chapter are selected by user
   useEffect(() => {
-    selectedBook && selectedChapter && submit();
-  }, [selectedBook, selectedChapter]);
+    console.log(`Modal state: ${selectedBook} ${selectedChapter}`);
+    // update chapter options based on selected book
+    setChapterCount(BOOK_METADATA[selectedBook]?.chapterCount);
+  
+    // deselect chapter when book is not initial selection
+    selectedBook !== initialBookName && setSelectedChapter(null);
+  }, [selectedBook]);
+
+  // submit if chapter is selected by user
+  useEffect(() => {
+    console.log(`Modal state: ${selectedBook} ${selectedChapter}`);
+    selectedChapter && submit();
+  }, [selectedChapter]);
 
   const renderBookNameItem = ({item}) => (
     <ListOption
