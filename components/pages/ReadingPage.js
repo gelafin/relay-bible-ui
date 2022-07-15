@@ -1,7 +1,7 @@
 // remove Text newline (referenced Jul 2022): https://stackoverflow.com/a/70289492/14257952
 
 import { React, useEffect, useState } from 'react';
-import { Text } from 'react-native';
+import { Pressable, Text } from 'react-native';
 import { Provider } from 'react-native-paper';
 
 // custom
@@ -57,15 +57,12 @@ const ReadingPage = () => {
 
   const openModal = () => setModalIsOpen(true);
   const handleChapterSelect = ({book, chapter}) => {
-    console.log(`chapter selected! Excellent choice. Navigating to ${book} ${chapter}`);
     setCurrentBookName(book);
     setCurrentChapterNumber(chapter);
   };
 
   // set current verse list based on current book & chapter selection
   useEffect(() => {
-    console.log(`Reading page state: ${currentBookName} ${currentChapterNumber}`);
-
     try {
       const verseList = currentBookName && currentChapterNumber ?
         mockChapterText[currentBookName][currentChapterNumber - 1]
@@ -80,6 +77,10 @@ const ReadingPage = () => {
       console.error(`Selection ${currentBookName} ${currentChapterNumber} is not part of the current data set`);
     }
   }, [currentBookName, currentChapterNumber]);
+
+  const handleVerseSelection = (verse) => {
+    console.log(`${verse.number} ${verse.text}`);
+  };
 
   return (
     <>
@@ -100,11 +101,12 @@ const ReadingPage = () => {
         <PageStyler customPageStyle={layoutStyles.readingPage}>
           <Text>
             {currentVerseList?.map((verseText, index) =>
-              <Text key={'v' + index}>
-                {/* verse number */}
-                <Text style={textStyles.superscript}>{index + 1}</Text>
-                <Text>{' ' + verseText + ' '}</Text>
-              </Text>
+              <Verse
+                key={'v' + index}
+                verseNumber={index + 1}
+                verseText={verseText}
+                onPress={handleVerseSelection}
+              ></Verse>
             )}
           </Text>
         </PageStyler>
@@ -112,5 +114,17 @@ const ReadingPage = () => {
     </>
   );
 };
+
+const Verse = ({verseText, verseNumber, onPress}) => (
+  <Pressable
+    style={layoutStyles.inline}
+    onPress={() => {onPress({text: verseText, number: verseNumber})}}
+  >
+    <Text style={textStyles}>
+      <Text style={textStyles.superscript}>{verseNumber}</Text>
+      <Text>{' ' + verseText + ' '}</Text>
+    </Text>
+  </Pressable>
+);
 
 export { ReadingPage };

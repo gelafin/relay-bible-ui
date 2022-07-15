@@ -45,7 +45,10 @@ const layoutStyles = StyleSheet.create({
     marginLeft: 'auto',
     marginRight: 'auto',
     height: '100%'
-  }  
+  },
+  inline: {
+    display: 'inline'
+  }
 });
 
 export { layoutStyles };

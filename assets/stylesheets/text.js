@@ -9,6 +9,10 @@ const textStyles = StyleSheet.create({
   },
   listSelectOption: {
     fontSize: 32
+  },
+  selectedVerse: {
+    textDecorationLine: 'underline',
+    textDecorationColor: 'blue'
   }
 });
 
