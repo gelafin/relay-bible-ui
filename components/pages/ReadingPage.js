@@ -53,6 +53,7 @@ const ReadingPage = () => {
   const [currentChapterNumber, setCurrentChapterNumber] = useState(1);
   const [currentVerseList, setCurrentVerseList] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [currentBookAndChapterString, setCurrentBookAndChapterString] = useState('');
 
   const openModal = () => setModalIsOpen(true);
   const handleChapterSelect = ({book, chapter}) => {
@@ -63,8 +64,14 @@ const ReadingPage = () => {
 
   // set current verse list based on current book & chapter selection
   useEffect(() => {
-    currentBookName && currentChapterNumber &&
-    setCurrentVerseList(mockChapterText[currentBookName][currentChapterNumber - 1]);
+    try {
+      currentBookName && currentChapterNumber &&
+      setCurrentVerseList(mockChapterText[currentBookName][currentChapterNumber - 1]);
+
+      setCurrentBookAndChapterString(`${currentBookName} ${currentChapterNumber}`);
+    } catch (error) {
+      console.error(`Selection ${currentBookName} ${currentChapterNumber} is not part of the current data set`);
+    }
   }, [currentBookName, currentChapterNumber]);
 
   return (
@@ -72,7 +79,7 @@ const ReadingPage = () => {
       <Provider>
         <ContextHeader
           customHeadingComponent={
-            <ChapterSelectButton label={`${currentBookName} ${currentChapterNumber}`} onPress={openModal}></ChapterSelectButton>
+            <ChapterSelectButton label={currentBookAndChapterString} onPress={openModal}></ChapterSelectButton>
           }
         >
         </ContextHeader>

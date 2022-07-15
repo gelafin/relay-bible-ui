@@ -7,7 +7,7 @@ import { Modal, Portal } from 'react-native-paper';
 import { FlatList, View } from 'react-native';
 
 // custom
-import { CHAPTER_COUNTS } from '../../constants/chapterCounts';
+import { BOOK_METADATA } from '../../constants/chapterCounts';
 import { layoutStyles } from '../../assets/stylesheets/layouts';
 import { ListOption } from '../buttons/ListOption';
 
@@ -29,13 +29,13 @@ const ChapterSelectModal = ({visible, setVisible, onChapterSelect}) => {
 
   // update chapter options based on selected book
   useEffect(() => {
-    setChapterCount(CHAPTER_COUNTS[selectedBook]);
+    setChapterCount(BOOK_METADATA[selectedBook]?.chapterCount);
 
     setSelectedChapter(null);
   }, [selectedBook]);
 
   // process data into array of objects, expected by FlatList
-  const booksData = Object.keys(CHAPTER_COUNTS).map((key) => (
+  const booksData = Object.keys(BOOK_METADATA).map((key) => (
     {bookName: key}
   ));
 
