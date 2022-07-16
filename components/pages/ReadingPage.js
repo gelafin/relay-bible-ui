@@ -53,7 +53,7 @@ const ReadingPage = () => {
   const [currentBookName, setCurrentBookName] = useState('Genesis');
   const [currentChapterNumber, setCurrentChapterNumber] = useState(1);
   const [currentVerseList, setCurrentVerseList] = useState([]);
-  const [selectedVerses, setSelectedVerses] = useState([]);
+  const [selectedVerses, setSelectedVerses] = useState(new Set());  // constant-time checks for Verse.isSelected
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [currentBookAndChapterString, setCurrentBookAndChapterString] = useState('');
 
@@ -81,17 +81,29 @@ const ReadingPage = () => {
     }
   }, [currentBookName, currentChapterNumber]);
 
-  const handleVerseSelect = (verse) => {
-    setSelectedVerses([...selectedVerses, verse.number]);
+  const verseIsSelected = (verseNumber) => selectedVerses.has(verseNumber);
+
+  const handleVersePress = (verse) => {
+    verseIsSelected(verse.number) ? handleVerseDeselect(verse.number)
+      : handleVerseSelect(verse.number);
   };
 
-  // TODO: optimize by storing selected verse numbers in a tree
-  const handleVerseDeselect = (verse) => {
-    setSelectedVerses(selectedVerses.filter((selectedVerseNumber) => selectedVerseNumber !== verse.number));
+  const handleVerseSelect = (verseNumber) => {
+    // add to set of selected verse numbers
+    const tempCopy = new Set(selectedVerses);
+    tempCopy.add(verseNumber);
+    setSelectedVerses(tempCopy);
+  };
+
+  const handleVerseDeselect = (verseNumber) => {
+    // remove from set of selected verse numbers
+    const tempCopy = new Set(selectedVerses);
+    tempCopy.delete(verseNumber);
+    setSelectedVerses(tempCopy);
   };
 
   const clearSelectedVerses = () => {
-    setSelectedVerses([]);
+    setSelectedVerses(new Set());
   };
 
   return (
@@ -117,14 +129,14 @@ const ReadingPage = () => {
                 key={'v' + index}
                 verseNumber={index + 1}
                 verseText={verseText}
-                onSelect={handleVerseSelect}
-                onDeselect={handleVerseDeselect}
+                isSelected={verseIsSelected(index + 1)}
+                onVersePress={handleVersePress}
               ></Verse>
             )}
           </Text>
         </PageStyler>
         <Drawer
-          isOpen={selectedVerses.length > 0}
+          isOpen={selectedVerses.size > 0}
           text="yes hi, you selected a verse?"
         ></Drawer>
       </Provider>
