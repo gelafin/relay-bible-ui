@@ -61,6 +61,7 @@ const ReadingPage = () => {
   const handleChapterSelect = ({book, chapter}) => {
     setCurrentBookName(book);
     setCurrentChapterNumber(chapter);
+    clearSelectedVerses();
   };
 
   // set current verse list based on current book & chapter selection
@@ -87,6 +88,10 @@ const ReadingPage = () => {
   // TODO: optimize by storing selected verse numbers in a tree
   const handleVerseDeselect = (verse) => {
     setSelectedVerses(selectedVerses.filter((selectedVerseNumber) => selectedVerseNumber !== verse.number));
+  };
+
+  const clearSelectedVerses = () => {
+    setSelectedVerses([]);
   };
 
   return (
