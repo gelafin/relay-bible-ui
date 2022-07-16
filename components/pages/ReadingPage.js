@@ -1,16 +1,17 @@
 // remove Text newline (referenced Jul 2022): https://stackoverflow.com/a/70289492/14257952
 
 import { React, useEffect, useState } from 'react';
-import { Pressable, Text } from 'react-native';
+import { Text } from 'react-native';
 import { Provider } from 'react-native-paper';
 
 // custom
 import { PageStyler } from './PageStyler.js';
 import { ContextHeader } from '../common/ContextHeader.js';
 import { layoutStyles } from '../../assets/stylesheets/layouts.js';
-import { textStyles } from '../../assets/stylesheets/text.js';
 import { ChapterSelectButton } from '../buttons/ChapterSelectButton.js';
 import { ChapterSelectModal } from '../common/ChapterSelectModal.js';
+import { Verse } from '../unique/Verse.js';
+import { Drawer } from '../common/Drawer.js';
 
 // example for API route GET /verses/:bookName/:chapterNumber
 // regular 0-indexed array of one string per verse (no spaces is slightly preferred, but whatever is easier with sample data)
@@ -52,6 +53,7 @@ const ReadingPage = () => {
   const [currentBookName, setCurrentBookName] = useState('Genesis');
   const [currentChapterNumber, setCurrentChapterNumber] = useState(1);
   const [currentVerseList, setCurrentVerseList] = useState([]);
+  const [selectedVerses, setSelectedVerses] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [currentBookAndChapterString, setCurrentBookAndChapterString] = useState('');
 
@@ -78,8 +80,13 @@ const ReadingPage = () => {
     }
   }, [currentBookName, currentChapterNumber]);
 
-  const handleVerseSelection = (verse) => {
-    console.log(`${verse.number} ${verse.text}`);
+  const handleVerseSelect = (verse) => {
+    setSelectedVerses([...selectedVerses, verse.number]);
+  };
+
+  // TODO: optimize by storing selected verse numbers in a tree
+  const handleVerseDeselect = (verse) => {
+    setSelectedVerses(selectedVerses.filter((selectedVerseNumber) => selectedVerseNumber !== verse.number));
   };
 
   return (
@@ -105,34 +112,18 @@ const ReadingPage = () => {
                 key={'v' + index}
                 verseNumber={index + 1}
                 verseText={verseText}
-                onPress={handleVerseSelection}
+                onSelect={handleVerseSelect}
+                onDeselect={handleVerseDeselect}
               ></Verse>
             )}
           </Text>
         </PageStyler>
+        <Drawer
+          isOpen={selectedVerses.length > 0}
+          text="yes hi, you selected a verse?"
+        ></Drawer>
       </Provider>
     </>
-  );
-};
-
-const Verse = ({verseText, verseNumber, onPress}) => {
-  const [isSelected, setIsSelected] = useState();
-
-  const handleSelect = () => {
-    setIsSelected(!isSelected);
-    onPress({text: verseText, number: verseNumber});
-  };
-
-  return (
-    <Pressable
-      style={layoutStyles.inline}
-      onPress={handleSelect}
-    >
-      <Text style={[textStyles, isSelected && textStyles.selectedVerse]}>
-        <Text style={textStyles.superscript}>{verseNumber}</Text>
-        <Text>{' ' + verseText + ' '}</Text>
-      </Text>
-    </Pressable>
   );
 };
 

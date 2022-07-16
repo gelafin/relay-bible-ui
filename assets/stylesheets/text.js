@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { colors } from './themeConstants/themeColors';
 
 const textStyles = StyleSheet.create({
   superscript: {
@@ -11,8 +12,8 @@ const textStyles = StyleSheet.create({
     fontSize: 32
   },
   selectedVerse: {
-    textDecorationLine: 'underline',
-    textDecorationColor: 'blue'
+    borderBottomColor: colors.BLUE,
+    borderBottomWidth: '2px'
   }
 });
 

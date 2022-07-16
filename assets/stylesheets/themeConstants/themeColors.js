@@ -3,7 +3,8 @@ const colors = {
   'DARK_GRAY': '#DADADA',
   'LIGHT_GRAY': '#EEE',
   'KHAKI': '#FCF2D8',
-  'RED': 'red'
+  'RED': 'red',
+  'BLUE': 'blue'
 }
 
 export { colors };
