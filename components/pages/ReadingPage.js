@@ -65,6 +65,10 @@ const ReadingPage = () => {
     clearSelectedVerses();
   };
 
+  const closeDrawer = () => {
+    clearSelectedVerses();
+  };
+
   // set current verse list based on current book & chapter selection
   useEffect(() => {
     try {
@@ -144,6 +148,7 @@ const ReadingPage = () => {
             currentBook={currentBookName}
             currentChapter={currentChapterNumber}
             selectedVerses={Array.from(selectedVerses).sort()}
+            onClosePress={closeDrawer}
           ></DrawerOptionsFragment>
         </Drawer>
       </Provider>

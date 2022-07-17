@@ -6,10 +6,10 @@ import { CloseButton } from "../buttons/CloseButton";
 /*
  * selectedVerses: ordered array of verse numbers
  */
-const DrawerOptionsFragment = ({currentBook, currentChapter, selectedVerses}) => {
+const DrawerOptionsFragment = ({currentBook, currentChapter, selectedVerses, onClosePress}) => {
   const [contextHeaderText, setContextHeaderText] = useState();
 
-  const topButton = <CloseButton></CloseButton>
+  const topButton = <CloseButton onPress={onClosePress}></CloseButton>
 
   // update context header text each render
   useEffect(() => {
