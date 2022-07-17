@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 
 // custom components
-import { MainNav } from './components/common/MainNav';
+import { MainNav } from './components/unique/MainNav';
 
 export default function App() {
   return (

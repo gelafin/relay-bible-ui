@@ -1,4 +1,4 @@
-import { React, useEffect, useState} from "react";
+import { React } from "react";
 import { Pressable, Text } from "react-native";
 
 // custom

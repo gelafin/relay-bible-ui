@@ -12,6 +12,7 @@ import { ChapterSelectButton } from '../buttons/ChapterSelectButton.js';
 import { ChapterSelectModal } from '../common/ChapterSelectModal.js';
 import { Verse } from '../unique/Verse.js';
 import { Drawer } from '../common/Drawer.js';
+import { DrawerOptionsFragment } from '../unique/DrawerOptionsFragment.js';
 
 // example for API route GET /verses/:bookName/:chapterNumber
 // regular 0-indexed array of one string per verse (no spaces is slightly preferred, but whatever is easier with sample data)
@@ -39,7 +40,7 @@ const mockChapterText = {
     [
       'Scary scary scary.',
       'Big scary apocalypse.',
-      'Then happy forever after!'    
+      'Then happy forever after!'
     ],
     [
       'Abueno adios, Master.',
@@ -137,8 +138,14 @@ const ReadingPage = () => {
         </PageStyler>
         <Drawer
           isOpen={selectedVerses.size > 0}
-          text="yes hi, you selected a verse?"
-        ></Drawer>
+          minimize={true}  // TODO: remove this and set height based on child height?
+        >
+          <DrawerOptionsFragment
+            currentBook={currentBookName}
+            currentChapter={currentChapterNumber}
+            selectedVerses={Array.from(selectedVerses).sort()}
+          ></DrawerOptionsFragment>
+        </Drawer>
       </Provider>
     </>
   );

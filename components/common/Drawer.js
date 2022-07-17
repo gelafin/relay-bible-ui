@@ -3,15 +3,15 @@
  */
 
 import React from "react";
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import { layoutStyles } from "../../assets/stylesheets/layouts";
 
-const Drawer = ({isOpen, text}) => {
+const Drawer = ({isOpen, children, minimize}) => {
   return (
     <>
       {isOpen &&
-        <View style={layoutStyles.drawer}>
-          <Text>{text}</Text>
+        <View style={[layoutStyles.drawer, !minimize && layoutStyles.fullHeight]}>
+          {children}
         </View>
       }
     </>
