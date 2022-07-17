@@ -14,6 +14,15 @@ const layoutStyles = StyleSheet.create({
   horizontalContainer: {
     flexDirection: 'row'
   },
+  centerAlign: {
+    alignItems: 'center'
+  },
+  centerJustify: {
+    justifyContent: 'center'
+  },
+  absolute: {
+    position: 'absolute'
+  },
   appBar: {
     backgroundColor: colors.LIGHT_GRAY
   },
@@ -61,7 +70,14 @@ const layoutStyles = StyleSheet.create({
   },
   fullHeight: {
     height: '100vh'
-  }
+  },
 });
 
-export { layoutStyles };
+const absoluteCenterContainer = [
+  layoutStyles.horizontalContainer,
+  layoutStyles.centerJustify,
+  layoutStyles.absolute,
+  {width: '100%'}
+];
+
+export { layoutStyles, absoluteCenterContainer };
