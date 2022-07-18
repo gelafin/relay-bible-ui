@@ -1,6 +1,11 @@
 import { StyleSheet } from 'react-native';
 import { colors } from './themeConstants/themeColors';
 
+const zIndexBreakpoints = {
+  'LEVEL_1': 1,
+  'LEVEL_2': 100
+};
+
 const layoutStyles = StyleSheet.create({
   page: {
     flex: 1,
@@ -65,7 +70,7 @@ const layoutStyles = StyleSheet.create({
     height: '250px',
     backgroundColor: colors.WHITE,
     padding: '10px 30px',
-    zIndex: 100,
+    zIndex: zIndexBreakpoints.LEVEL_2,
     boxShadow: 'rgb(0 0 0 / 60%) 0px -4px 4px 2px'  
   },
   fullHeight: {
@@ -80,4 +85,4 @@ const absoluteCenterContainer = [
   {width: '100%'}
 ];
 
-export { layoutStyles, absoluteCenterContainer };
+export { layoutStyles, absoluteCenterContainer, zIndexBreakpoints };

@@ -4,7 +4,8 @@ const colors = {
   'LIGHT_GRAY': '#EEE',
   'KHAKI': '#FCF2D8',
   'RED': 'red',
-  'BLUE': 'blue'
+  'BLUE': 'blue',
+  'BLACK': 'black'
 }
 
 export { colors };

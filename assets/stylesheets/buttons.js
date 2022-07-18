@@ -4,9 +4,12 @@ import { colors } from './themeConstants/themeColors';
 const buttonStyle = StyleSheet.create({
   default: {
     padding: '5px',
-    backgroundColor: colors.WHITE,
+    backgroundColor: colors.BLUE,
     borderRadius: '5px',
     width: 'fit-content'
+  },
+  defaultLabel: {
+    color: colors.WHITE
   },
   warningLabel: {
     color: colors.RED,
