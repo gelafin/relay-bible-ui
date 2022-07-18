@@ -173,9 +173,7 @@ const ReadingPage = () => {
           initialChapterNumber={currentChapterNumber}
         ></ChapterSelectModal>
         <PageStyler customPageStyle={layoutStyles.readingPage}>
-          <ScrollView
-            scrollEnabled='true'
-          >
+          <ScrollView scrollEnabled='true'>
             <Text>
               {currentVerseList?.map((verseText, index) =>
                 <Verse

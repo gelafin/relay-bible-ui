@@ -6,7 +6,8 @@ const buttonStyle = StyleSheet.create({
     padding: '5px',
     backgroundColor: colors.BLUE,
     borderRadius: '5px',
-    width: 'fit-content'
+    width: 'fit-content',
+    cursor: 'pointer'
   },
   defaultLabel: {
     color: colors.WHITE
@@ -14,7 +15,8 @@ const buttonStyle = StyleSheet.create({
   warningLabel: {
     color: colors.RED,
   },
-  warningBorder: {
+  warning: {
+    backgroundColor: colors.WHITE,
     borderColor: colors.RED
   },
   chip: {

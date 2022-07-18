@@ -6,7 +6,7 @@ const DeleteButton = ({onPress, children}) => (
   <Button
     icon="delete"
     mode="outlined"
-    style={[buttonStyle.default, buttonStyle.warningBorder]}
+    style={[buttonStyle.default, buttonStyle.warning]}
     labelStyle={buttonStyle.warningLabel}
     onPress={onPress}
   >{children}</Button>

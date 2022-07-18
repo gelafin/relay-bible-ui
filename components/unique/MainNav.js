@@ -5,12 +5,16 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 // custom
 import { ProfilePage } from '../pages/ProfilePage';
 import { ReadingPage } from '../pages/ReadingPage';
+import { NotesPage } from '../pages/NotesPage';
+import { CommentaryPage } from '../pages/CommentaryPage';
 
 const Tab = createMaterialBottomTabNavigator();
 
 const screens = [
   {name: 'Profile', component: ProfilePage, tabBarLabel: 'Profile', icon: 'account'},
-  {name: 'Reading', component: ReadingPage, tabBarLabel: 'Bible', icon: 'book'}
+  {name: 'Reading', component: ReadingPage, tabBarLabel: 'Bible', icon: 'book'},
+  {name: 'Notes', component: NotesPage, tabBarLabel: 'Notes', icon: 'pencil'},
+  {name: 'Commentary', component: CommentaryPage, tabBarLabel: 'Commentary', icon: 'comment'}
 ];
 
 const MainNav = () => {
