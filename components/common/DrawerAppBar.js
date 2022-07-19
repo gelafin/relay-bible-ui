@@ -6,6 +6,13 @@ import { layoutStyles } from "../../assets/stylesheets/layouts";
 import { DrawerExpandButton } from "../buttons/DrawerExpandButton";
 import { CloseButton } from "../buttons/CloseButton";
 
+// TODO: tried this; didn't set transform at all, even though online examples match this exactly.
+// Also tried iconColor. Set in component profiler but had no effect at all.
+// Also tried disabled={true}, which had no effect at all
+// Clicking it disabled both buttons due to a silent error...
+// React Native does not support visibility: 'hidden' as of Jul 2022
+const HIDE_HACK = {transform: [{translateY: 100}]};
+
 const DrawerAppBar = ({contextHeaderText, onClosePress, onExpandPress}) => {
   const closeButton = (
     <CloseButton
@@ -14,20 +21,16 @@ const DrawerAppBar = ({contextHeaderText, onClosePress, onExpandPress}) => {
       style={!onClosePress && {visibility: 'hidden'}}>
     </CloseButton>
   );
-  const expandButtonStyle = !onExpandPress && {visibility: 'hidden'};
+
   const expandButton = (
     <DrawerExpandButton
       onPress={onExpandPress}
       // hide if no callback was passed
-      style={expandButtonStyle}>
+      iconColor='transparent'
+      disabled={true}
+    >
     </DrawerExpandButton>
   );
-
-  useEffect(()=> {
-    console.log('onExpandPress (should be falsy): ', onExpandPress);
-    console.log('negating it should be true > ', !onExpandPress);
-    console.log('expecting visibility object to give to style prop: ', !onExpandPress && {visibility: 'hidden'});
-  }, [onExpandPress]);
 
   return (
     <View
