@@ -1,18 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { View, Text } from "react-native";
-import { layoutStyles, absoluteCenterContainer, zIndexBreakpoints } from "../../assets/stylesheets/layouts";
-import { CloseButton } from "../buttons/CloseButton";
+import { View } from "react-native";
+import { layoutStyles } from "../../assets/stylesheets/layouts";
 import { RelatedButton } from "../buttons/RelatedButton";
-
-const MAX_TOP_BUTTON_HEIGHT = 41;
+import { DrawerAppBar } from "../common/DrawerAppBar";
 
 /*
  * selectedVerses: ordered array of verse numbers
  */
 const DrawerOptionsFragment = ({currentBook, currentChapter, selectedVerses, onClosePress, onRelatedNotesPress, onRelatedCommentaryPress}) => {
   const [contextHeaderText, setContextHeaderText] = useState();
-
-  const topButton = <CloseButton onPress={onClosePress}></CloseButton>
 
   // update context header text each render
   useEffect(() => {
@@ -24,22 +20,10 @@ const DrawerOptionsFragment = ({currentBook, currentChapter, selectedVerses, onC
 
   return (
     <View>
-      <View
-        style={[
-          absoluteCenterContainer,
-          {zIndex: zIndexBreakpoints.LEVEL_2 + 1, maxHeight: MAX_TOP_BUTTON_HEIGHT}
-        ]}
-      >{topButton}</View>
-      {/* This context header View's height controls where the Related buttons are.
-      Its height must be greater than the topButton View, or the topButton View will be covered */}
-      <View
-        style={[
-          layoutStyles.horizontalContainer,
-          {minHeight: MAX_TOP_BUTTON_HEIGHT + 1, justifyContent: 'space-between', marginLeft: '10px'}
-        ]}
-      >
-        <Text>{contextHeaderText}</Text>
-      </View>
+      <DrawerAppBar
+        contextHeaderText={contextHeaderText}
+        onClosePress={onClosePress}
+      ></DrawerAppBar>
       {/* TODO: instead of alignSelf, put invisible spacers on the left,
       same width as the left two MainNav buttons. Then rename buttons to just "related" */}
       <View style={[layoutStyles.horizontalContainer, {alignSelf: 'flex-end'}]}>
