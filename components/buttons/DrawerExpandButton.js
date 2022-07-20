@@ -6,7 +6,7 @@ import { buttonStyle } from '../../assets/stylesheets/buttons';
 
 const icons = {
   'UP': 'chevron-up',
-  'DOWN': 'chevron-up'
+  'DOWN': 'chevron-down'
 };
 
 const colors = {

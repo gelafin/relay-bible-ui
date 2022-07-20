@@ -5,6 +5,7 @@ import { RelatedButton } from "../buttons/RelatedButton";
 import { DrawerAppBar } from "../common/DrawerAppBar";
 
 /*
+ * small area with option buttons you can put in a drawer; counterpart to full-page DrawerPage
  * selectedVerses: ordered array of verse numbers
  */
 const DrawerOptionsFragment = ({currentBook, currentChapter, selectedVerses, onClosePress, onExpandPress, onRelatedNotesPress, onRelatedCommentaryPress}) => {

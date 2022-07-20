@@ -12,8 +12,7 @@ import { ChapterSelectButton } from '../buttons/ChapterSelectButton.js';
 import { ChapterSelectModal } from '../common/ChapterSelectModal.js';
 import { Verse } from '../unique/Verse.js';
 import { Drawer } from '../common/Drawer.js';
-// import { DrawerOptionsFragment } from '../unique/DrawerOptionsFragment.js';
-import { DrawerOptionsFragment } from '../unique/DrawerOptionsFragmentProposed.js';
+import { DrawerOptionsFragment } from '../unique/DrawerOptionsFragment.js';
 
 // example for API route GET /verses/:bookName/:chapterNumber
 // regular 0-indexed array of one string per verse (no spaces is slightly preferred, but whatever is easier with sample data)
@@ -103,22 +102,18 @@ const ReadingPage = () => {
   const [selectedVerses, setSelectedVerses] = useState(new Set());  // constant-time checks for Verse.isSelected
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [currentBookAndChapterString, setCurrentBookAndChapterString] = useState('');
-
-  const openModal = () => setModalIsOpen(true);
+  const [drawerIsMinimized, setDrawerIsMinimized] = useState(true);
+  
   const handleChapterSelect = ({book, chapter}) => {
     setCurrentBookName(book);
     setCurrentChapterNumber(chapter);
     clearSelectedVerses();
   };
-
-  const closeDrawer = () => {
-    clearSelectedVerses();
-  };
-
-  const expandDrawer = () => {
-    console.log('expand drawer');
-  };
-
+  
+  const openModal = () => setModalIsOpen(true);
+  const closeDrawer = () => clearSelectedVerses();
+  const toggleExpandMinimizeDrawer = () => setDrawerIsMinimized(!drawerIsMinimized);
+  
   // set current verse list based on current book & chapter selection
   useEffect(() => {
     try {
@@ -202,22 +197,14 @@ const ReadingPage = () => {
         </PageStyler>
         <Drawer
           isOpen={selectedVerses.size > 0}
-          minimize={true}  // TODO: remove this and set height based on child height?
+          minimize={drawerIsMinimized}  // TODO: remove this and set height based on child height?
         >
-          {/* <DrawerOptionsFragment
-            currentBook={currentBookName}
-            currentChapter={currentChapterNumber}
-            selectedVerses={Array.from(selectedVerses).sort()}
-            onClosePress={closeDrawer}
-            onRelatedCommentaryPress={handleRelatedCommentaryPress}
-            onRelatedNotesPress={handleRelatedNotesPress}
-          ></DrawerOptionsFragment> */}
           <DrawerOptionsFragment
             currentBook={currentBookName}
             currentChapter={currentChapterNumber}
             selectedVerses={Array.from(selectedVerses).sort()}
             onClosePress={closeDrawer}
-            onExpandPress={expandDrawer}
+            onExpandPress={toggleExpandMinimizeDrawer}
             onRelatedCommentaryPress={handleRelatedCommentaryPress}
             onRelatedNotesPress={handleRelatedNotesPress}
           ></DrawerOptionsFragment>
