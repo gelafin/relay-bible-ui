@@ -111,7 +111,7 @@ const ReadingPage = () => {
   };
   
   const openModal = () => setModalIsOpen(true);
-  const closeDrawer = () => clearSelectedVerses();
+  const closeDrawer = () => {clearSelectedVerses(); setDrawerIsMinimized(true)};
   const toggleExpandMinimizeDrawer = () => setDrawerIsMinimized(!drawerIsMinimized);
   
   // set current verse list based on current book & chapter selection

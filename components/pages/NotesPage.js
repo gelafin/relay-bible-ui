@@ -6,9 +6,12 @@ import { PageStyler } from './PageStyler.js';
 import { PageHeader } from '../common/PageHeader.js';
 import { ContextHeader } from '../common/ContextHeader.js';
 
-// if selectedVerses are provided, set filter and don't render contextHeader (Drawer does).
-// Filter controls context heading
-const NotesPage = ({selectedVerses}) => {
+// If selectedVerses are provided, this is in a drawer.
+// When in a drawer, set filter and don't render contextHeader (Drawer does).
+// Filter settings are independent of context header when set
+const NotesPage = ({initialSelectedVerses}) => {
+  const [selectedVerses, setSelectedVerses] = useState(initialSelectedVerses);
+
   return (
     <>
       <ContextHeader>{selectedVerses}</ContextHeader>

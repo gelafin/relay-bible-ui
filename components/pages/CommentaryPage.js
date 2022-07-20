@@ -8,7 +8,9 @@ import { ContextHeader } from '../common/ContextHeader.js';
 
 // if selectedVerses are provided, set filter and don't render contextHeader (Drawer does).
 // Filter controls context heading
-const CommentaryPage = ({selectedVerses}) => {
+const CommentaryPage = ({initialSelectedVerses}) => {
+  const [selectedVerses, setSelectedVerses] = useState(initialSelectedVerses);
+
   return (
     <>
       <ContextHeader>{selectedVerses}</ContextHeader>
