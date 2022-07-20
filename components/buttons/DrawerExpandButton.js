@@ -39,6 +39,7 @@ const DrawerExpandButton = ({onPress, isInitiallyUp, hide}) => {
       color={iconColor}
       iconColor={iconColor}  // ver 5.x rename of color prop
       disabled={disabled}
+      style={hide && {pointerEvents: 'none'}}
     ></IconButton>
   );
 };

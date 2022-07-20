@@ -8,7 +8,7 @@ import { DrawerAppBar } from "../common/DrawerAppBar";
  * small area with option buttons you can put in a drawer; counterpart to full-page DrawerPage
  * selectedVerses: ordered array of verse numbers
  */
-const DrawerOptionsFragment = ({currentBook, currentChapter, selectedVerses, onClosePress, onExpandPress, onRelatedNotesPress, onRelatedCommentaryPress}) => {
+const DrawerOptionsFragment = ({currentBook, currentChapter, selectedVerses, onClosePress, onRelatedNotesPress, onRelatedCommentaryPress}) => {
   const [contextHeaderText, setContextHeaderText] = useState();
 
   // update context header text each render
@@ -24,7 +24,6 @@ const DrawerOptionsFragment = ({currentBook, currentChapter, selectedVerses, onC
       <DrawerAppBar
         contextHeaderText={contextHeaderText}
         onClosePress={onClosePress}
-        onExpandPress={onExpandPress}
       ></DrawerAppBar>
       {/* TODO: instead of alignSelf, put invisible spacers on the left,
       same width as the left two MainNav buttons. Then rename buttons to just "related" */}

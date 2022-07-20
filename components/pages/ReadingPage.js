@@ -13,6 +13,8 @@ import { ChapterSelectModal } from '../common/ChapterSelectModal.js';
 import { Verse } from '../unique/Verse.js';
 import { Drawer } from '../common/Drawer.js';
 import { DrawerOptionsFragment } from '../unique/DrawerOptionsFragment.js';
+import { DrawerPage } from '../common/DrawerPage.js';
+import { NotesPage } from './NotesPage.js';
 
 // example for API route GET /verses/:bookName/:chapterNumber
 // regular 0-indexed array of one string per verse (no spaces is slightly preferred, but whatever is easier with sample data)
@@ -103,6 +105,7 @@ const ReadingPage = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [currentBookAndChapterString, setCurrentBookAndChapterString] = useState('');
   const [drawerIsMinimized, setDrawerIsMinimized] = useState(true);
+  const [drawerContents, setDrawerContents] = useState(VerseSelectedContextDrawer);
   
   const handleChapterSelect = ({book, chapter}) => {
     setCurrentBookName(book);
@@ -111,7 +114,12 @@ const ReadingPage = () => {
   };
   
   const openModal = () => setModalIsOpen(true);
-  const closeDrawer = () => {clearSelectedVerses(); setDrawerIsMinimized(true)};
+  const closeDrawer = () => {
+    setDrawerIsMinimized(true);
+
+    // hide verse context drawer
+    clearSelectedVerses();
+  };
   const toggleExpandMinimizeDrawer = () => setDrawerIsMinimized(!drawerIsMinimized);
   
   // set current verse list based on current book & chapter selection
@@ -157,12 +165,48 @@ const ReadingPage = () => {
   };
 
   const handleRelatedNotesPress = () => {
-    console.log('opening Related Notes drawer');
+    console.log('opening Related Notes drawer and closing other drawers');
+    // TODO: set drawercontents
   };
 
   const handleRelatedCommentaryPress = () => {
     console.log('opening Related Commentary drawer');
+    // TODO: set drawercontents
   };
+
+  const VerseSelectedContextDrawer = (
+    <DrawerOptionsFragment
+      currentBook={currentBookName}
+      currentChapter={currentChapterNumber}
+      selectedVerses={Array.from(selectedVerses).sort()}
+      onClosePress={closeDrawer}
+      onRelatedCommentaryPress={handleRelatedCommentaryPress}
+      onRelatedNotesPress={handleRelatedNotesPress}
+    ></DrawerOptionsFragment>
+  );
+
+  const NotesPage = (
+    <DrawerPage
+      onExpandPress={toggleExpandMinimizeDrawer}
+      onClosePress={closeDrawer}
+    >
+      <NotesPage initialSelectedVerses={selectedVerses}></NotesPage>
+    </DrawerPage>
+  );
+
+  const CommentaryPage = (
+    <DrawerPage
+      onExpandPress={toggleExpandMinimizeDrawer}
+      onClosePress={closeDrawer}
+    >
+      <CommentaryPage initialSelectedVerses={selectedVerses}></CommentaryPage>
+    </DrawerPage>
+  );
+
+  // initialize drawer contents
+  useEffect(() => {
+    setDrawerContents(VerseSelectedContextDrawer);
+  }, []);
 
   return (
     <>
@@ -195,20 +239,15 @@ const ReadingPage = () => {
             </Text>
           </ScrollView>
         </PageStyler>
+
+        {/* Verse selected context drawer with "Related" buttons */}
         <Drawer
           isOpen={selectedVerses.size > 0}
-          minimize={drawerIsMinimized}  // TODO: remove this and set height based on child height?
+          minimize={drawerIsMinimized}
         >
-          <DrawerOptionsFragment
-            currentBook={currentBookName}
-            currentChapter={currentChapterNumber}
-            selectedVerses={Array.from(selectedVerses).sort()}
-            onClosePress={closeDrawer}
-            onExpandPress={toggleExpandMinimizeDrawer}
-            onRelatedCommentaryPress={handleRelatedCommentaryPress}
-            onRelatedNotesPress={handleRelatedNotesPress}
-          ></DrawerOptionsFragment>
+          {drawerContents}
         </Drawer>
+
       </Provider>
     </>
   );

@@ -1,12 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { DrawerAppBar } from "./DrawerAppBar";
 
 // page you can put in a drawer; full-page counterpart to DrawerOptionsFragment
-const DrawerPage = ({}) => {
+const DrawerPage = ({contextHeaderText, onClosePress, onExpandPress, children}) => {
 
   return (
     <>
-      <DrawerAppBar></DrawerAppBar>
+      <DrawerAppBar
+        contextHeaderText={contextHeaderText}
+        onClosePress={onClosePress}
+        onExpandPress={onExpandPress}
+      ></DrawerAppBar>
+      {children}
     </>
   );
 };
