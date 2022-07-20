@@ -115,6 +115,10 @@ const ReadingPage = () => {
     clearSelectedVerses();
   };
 
+  const expandDrawer = () => {
+    console.log('expand drawer');
+  };
+
   // set current verse list based on current book & chapter selection
   useEffect(() => {
     try {
@@ -213,6 +217,7 @@ const ReadingPage = () => {
             currentChapter={currentChapterNumber}
             selectedVerses={Array.from(selectedVerses).sort()}
             onClosePress={closeDrawer}
+            onExpandPress={expandDrawer}
             onRelatedCommentaryPress={handleRelatedCommentaryPress}
             onRelatedNotesPress={handleRelatedNotesPress}
           ></DrawerOptionsFragment>
