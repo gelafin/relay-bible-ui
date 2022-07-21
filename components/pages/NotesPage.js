@@ -1,5 +1,5 @@
 import { React, useState } from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, Text } from 'react-native';
 
 // custom components
 import { PageStyler } from './PageStyler.js';
@@ -18,7 +18,7 @@ const NotesPage = ({initialSelectedVerses}) => {
       <PageHeader headingText="My Notes"></PageHeader>
       <PageStyler>
         <ScrollView scrollEnabled='true'>
-          
+          <Text>Test</Text>
         </ScrollView>
       </PageStyler>
     </>

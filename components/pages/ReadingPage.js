@@ -15,6 +15,7 @@ import { Drawer } from '../common/Drawer.js';
 import { DrawerOptionsFragment } from '../unique/DrawerOptionsFragment.js';
 import { DrawerPage } from '../common/DrawerPage.js';
 import { NotesPage } from './NotesPage.js';
+import { CommentaryPage } from './CommentaryPage.js';
 
 // example for API route GET /verses/:bookName/:chapterNumber
 // regular 0-indexed array of one string per verse (no spaces is slightly preferred, but whatever is easier with sample data)
@@ -105,7 +106,7 @@ const ReadingPage = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [currentBookAndChapterString, setCurrentBookAndChapterString] = useState('');
   const [drawerIsMinimized, setDrawerIsMinimized] = useState(true);
-  const [drawerContents, setDrawerContents] = useState(VerseSelectedContextDrawer);
+  const [drawerContents, setDrawerContents] = useState();
   
   const handleChapterSelect = ({book, chapter}) => {
     setCurrentBookName(book);
@@ -167,6 +168,7 @@ const ReadingPage = () => {
   const handleRelatedNotesPress = () => {
     console.log('opening Related Notes drawer and closing other drawers');
     // TODO: set drawercontents
+
   };
 
   const handleRelatedCommentaryPress = () => {
@@ -174,38 +176,38 @@ const ReadingPage = () => {
     // TODO: set drawercontents
   };
 
-  const VerseSelectedContextDrawer = (
-    <DrawerOptionsFragment
-      currentBook={currentBookName}
-      currentChapter={currentChapterNumber}
-      selectedVerses={Array.from(selectedVerses).sort()}
-      onClosePress={closeDrawer}
-      onRelatedCommentaryPress={handleRelatedCommentaryPress}
-      onRelatedNotesPress={handleRelatedNotesPress}
-    ></DrawerOptionsFragment>
-  );
-
-  const NotesPage = (
-    <DrawerPage
-      onExpandPress={toggleExpandMinimizeDrawer}
-      onClosePress={closeDrawer}
-    >
-      <NotesPage initialSelectedVerses={selectedVerses}></NotesPage>
-    </DrawerPage>
-  );
-
-  const CommentaryPage = (
-    <DrawerPage
-      onExpandPress={toggleExpandMinimizeDrawer}
-      onClosePress={closeDrawer}
-    >
-      <CommentaryPage initialSelectedVerses={selectedVerses}></CommentaryPage>
-    </DrawerPage>
-  );
+  const drawerContentsOptions = {
+    'NOTES_PAGE': (
+      <DrawerPage
+        onExpandPress={toggleExpandMinimizeDrawer}
+        onClosePress={closeDrawer}
+      >
+        <NotesPage initialSelectedVerses={selectedVerses}></NotesPage>
+      </DrawerPage>
+    ),
+    'VERSE_SELECTED_OPTIONS': (
+      <DrawerOptionsFragment
+        currentBook={currentBookName}
+        currentChapter={currentChapterNumber}
+        selectedVerses={Array.from(selectedVerses).sort()}
+        onClosePress={closeDrawer}
+        onRelatedCommentaryPress={handleRelatedCommentaryPress}
+        onRelatedNotesPress={handleRelatedNotesPress}
+      ></DrawerOptionsFragment>
+    ),
+    'COMMENTARY_PAGE': (
+      <DrawerPage
+        onExpandPress={toggleExpandMinimizeDrawer}
+        onClosePress={closeDrawer}
+      >
+        <CommentaryPage initialSelectedVerses={selectedVerses}></CommentaryPage>
+      </DrawerPage>
+    )
+  };
 
   // initialize drawer contents
   useEffect(() => {
-    setDrawerContents(VerseSelectedContextDrawer);
+    setDrawerContents(drawerContentsOptions.VERSE_SELECTED_OPTIONS);
   }, []);
 
   return (
