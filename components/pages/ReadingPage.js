@@ -120,9 +120,12 @@ const ReadingPage = () => {
 
     // hide verse context drawer
     clearSelectedVerses();
+
+    // reset drawer contents to default
+    setDrawerContents(drawerContentsOptions.VERSE_SELECTED_OPTIONS);
   };
-  const toggleExpandMinimizeDrawer = () => setDrawerIsMinimized(!drawerIsMinimized);
-  
+  const toggleExpandMinimizeDrawer = () => setDrawerIsMinimized(drawerIsMinimized => !drawerIsMinimized);
+
   // set current verse list based on current book & chapter selection
   useEffect(() => {
     try {
@@ -166,14 +169,11 @@ const ReadingPage = () => {
   };
 
   const handleRelatedNotesPress = () => {
-    console.log('opening Related Notes drawer and closing other drawers');
-    // TODO: set drawercontents
-
+    setDrawerContents(drawerContentsOptions.NOTES_PAGE);
   };
 
   const handleRelatedCommentaryPress = () => {
-    console.log('opening Related Commentary drawer');
-    // TODO: set drawercontents
+    setDrawerContents(drawerContentsOptions.COMMENTARY_PAGE);
   };
 
   const drawerContentsOptions = {
