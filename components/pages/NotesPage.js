@@ -5,6 +5,8 @@ import { ScrollView, Text } from 'react-native';
 import { PageStyler } from './PageStyler.js';
 import { PageHeader } from '../common/PageHeader.js';
 import { ContextHeader } from '../common/ContextHeader.js';
+
+// custom utils
 import { versesToString } from '../../util/VerseReferenceFormatter.js';
 
 // If selectedVerses are provided, this is in a drawer.
@@ -28,7 +30,8 @@ const NotesPage = ({initialSelectedVerses}) => {
   // set context header text based on selected verses
   useEffect(() => {
     const {selectedVerses, bookName, chapterNumber} = filterSettings;
-    const newHeaderText = versesToString(bookName, chapterNumber, selectedVerses);
+    const newHeaderText = versesToString(bookName, chapterNumber, selectedVerses)
+      || 'All';
 
     setContextHeaderText(newHeaderText);
   }, [filterSettings?.selectedVerses]);
@@ -37,7 +40,7 @@ const NotesPage = ({initialSelectedVerses}) => {
     <>
       {/* If initialSelectedVerses are provided, this component is in a drawer,
           so don't show header */}
-      {!initialSelectedVerses && <ContextHeader>{contextHeaderText}</ContextHeader>}
+      {!initialSelectedVerses && <ContextHeader headingText={contextHeaderText}></ContextHeader>}
       <PageHeader headingText="My Notes"></PageHeader>
       <PageStyler>
         <ScrollView scrollEnabled="true">
