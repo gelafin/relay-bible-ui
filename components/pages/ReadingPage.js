@@ -16,6 +16,7 @@ import { DrawerOptionsFragment } from '../unique/DrawerOptionsFragment.js';
 import { DrawerPage } from '../common/DrawerPage.js';
 import { NotesPage } from './NotesPage.js';
 import { CommentaryPage } from './CommentaryPage.js';
+import { Enum } from '../../util/Enum.js';
 
 // example for API route GET /verses/:bookName/:chapterNumber
 // regular 0-indexed array of one string per verse (no spaces is slightly preferred, but whatever is easier with sample data)
@@ -98,6 +99,8 @@ const mockChapterText = {
   ]
 };
 
+const drawerContentsOptions = new Enum('NOTES_PAGE', 'COMMENTARY_PAGE', 'VERSE_SELECTED_OPTIONS');
+
 const ReadingPage = () => {
   const [currentBookName, setCurrentBookName] = useState('Genesis');
   const [currentChapterNumber, setCurrentChapterNumber] = useState(1);
@@ -176,35 +179,6 @@ const ReadingPage = () => {
     setDrawerContents(drawerContentsOptions.COMMENTARY_PAGE);
   };
 
-  const drawerContentsOptions = {
-    'NOTES_PAGE': (
-      <DrawerPage
-        onExpandPress={toggleExpandMinimizeDrawer}
-        onClosePress={closeDrawer}
-      >
-        <NotesPage initialSelectedVerses={selectedVerses}></NotesPage>
-      </DrawerPage>
-    ),
-    'VERSE_SELECTED_OPTIONS': (
-      <DrawerOptionsFragment
-        currentBook={currentBookName}
-        currentChapter={currentChapterNumber}
-        selectedVerses={Array.from(selectedVerses).sort()}
-        onClosePress={closeDrawer}
-        onRelatedCommentaryPress={handleRelatedCommentaryPress}
-        onRelatedNotesPress={handleRelatedNotesPress}
-      ></DrawerOptionsFragment>
-    ),
-    'COMMENTARY_PAGE': (
-      <DrawerPage
-        onExpandPress={toggleExpandMinimizeDrawer}
-        onClosePress={closeDrawer}
-      >
-        <CommentaryPage initialSelectedVerses={selectedVerses}></CommentaryPage>
-      </DrawerPage>
-    )
-  };
-
   // initialize drawer contents
   useEffect(() => {
     setDrawerContents(drawerContentsOptions.VERSE_SELECTED_OPTIONS);
@@ -247,7 +221,36 @@ const ReadingPage = () => {
           isOpen={selectedVerses.size > 0}
           minimize={drawerIsMinimized}
         >
-          {drawerContents}
+          {/* JSX-style switch for drawerContents */}
+          {
+            drawerContents === drawerContentsOptions.VERSE_SELECTED_OPTIONS &&
+            <DrawerOptionsFragment
+              currentBook={currentBookName}
+              currentChapter={currentChapterNumber}
+              selectedVerses={Array.from(selectedVerses).sort()}
+              onClosePress={closeDrawer}
+              onRelatedCommentaryPress={handleRelatedCommentaryPress}
+              onRelatedNotesPress={handleRelatedNotesPress}
+            ></DrawerOptionsFragment>
+          }
+          {
+            drawerContents === drawerContentsOptions.NOTES_PAGE &&
+            <DrawerPage
+              onExpandPress={toggleExpandMinimizeDrawer}
+              onClosePress={closeDrawer}
+            >
+              <NotesPage initialSelectedVerses={selectedVerses}></NotesPage>
+            </DrawerPage>
+          }
+          {
+            drawerContents === drawerContentsOptions.COMMENTARY_PAGE &&
+            <DrawerPage
+              onExpandPress={toggleExpandMinimizeDrawer}
+              onClosePress={closeDrawer}
+            >
+              <CommentaryPage initialSelectedVerses={selectedVerses}></CommentaryPage>
+            </DrawerPage>
+          }
         </Drawer>
 
       </Provider>
