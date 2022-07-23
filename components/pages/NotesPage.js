@@ -36,12 +36,24 @@ const NotesPage = ({initialSelectedVerses}) => {
     setContextHeaderText(newHeaderText);
   }, [filterSettings?.selectedVerses]);
 
+  const handleFilterPress = () => {
+    console.log('filtering...');
+  };
+
+  const handleNewPress = () => {
+    console.log('creating new...');
+  };
+
   return (
     <>
       {/* If initialSelectedVerses are provided, this component is in a drawer,
           so don't show header */}
       {!initialSelectedVerses && <ContextHeader headingText={contextHeaderText}></ContextHeader>}
-      <PageHeader headingText="My Notes"></PageHeader>
+      <PageHeader
+        headingText="My Notes"
+        onFilterPress={!initialSelectedVerses && handleFilterPress}
+        onNewPress={!initialSelectedVerses && handleNewPress}
+      ></PageHeader>
       <PageStyler>
         <ScrollView scrollEnabled="true">
           <Text>Test</Text>
