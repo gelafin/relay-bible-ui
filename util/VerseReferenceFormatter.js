@@ -4,7 +4,11 @@
  * where the verse number shown is always the first element of verseNumbers.
  */
 export const versesToString = (book, chapter, verseNumbers) => {
-  let contextHeaderText = `${book} ${chapter}:${verseNumbers.slice(0, 1)}`;
+  // initialize default return value
+  let contextHeaderText = '';
+
+  contextHeaderText = book && chapter && verseNumbers?.length > 0 &&
+    `${book} ${chapter}:${verseNumbers.slice(0, 1)}`;
 
   // append 'etc' for ranges
   contextHeaderText += verseNumbers?.length > 1 ? ' etc'
