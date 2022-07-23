@@ -14,7 +14,7 @@ const NotesPage = ({initialSelectedVerses}) => {
 
   return (
     <>
-      <ContextHeader>{selectedVerses}</ContextHeader>
+      {/* <ContextHeader>{selectedVerses}</ContextHeader> */}
       <PageHeader headingText="My Notes"></PageHeader>
       <PageStyler>
         <ScrollView scrollEnabled='true'>

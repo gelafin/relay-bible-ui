@@ -4,10 +4,12 @@ import { React, useEffect, useState } from 'react';
 import { Text, ScrollView } from 'react-native';
 import { Provider } from 'react-native-paper';
 
-// custom
+// custom styles
+import { layoutStyles } from '../../assets/stylesheets/layouts.js';
+
+// custom components
 import { PageStyler } from './PageStyler.js';
 import { ContextHeader } from '../common/ContextHeader.js';
-import { layoutStyles } from '../../assets/stylesheets/layouts.js';
 import { ChapterSelectButton } from '../buttons/ChapterSelectButton.js';
 import { ChapterSelectModal } from '../common/ChapterSelectModal.js';
 import { Verse } from '../unique/Verse.js';
@@ -17,6 +19,9 @@ import { DrawerPage } from '../common/DrawerPage.js';
 import { NotesPage } from './NotesPage.js';
 import { CommentaryPage } from './CommentaryPage.js';
 import { Enum } from '../../util/Enum.js';
+
+// custom util
+import { versesToString } from "../../util/VerseReferenceFormatter";
 
 // example for API route GET /verses/:bookName/:chapterNumber
 // regular 0-indexed array of one string per verse (no spaces is slightly preferred, but whatever is easier with sample data)
@@ -110,7 +115,14 @@ const ReadingPage = () => {
   const [currentBookAndChapterString, setCurrentBookAndChapterString] = useState('');
   const [drawerIsMinimized, setDrawerIsMinimized] = useState(true);
   const [drawerContents, setDrawerContents] = useState();
-  
+  const [contextHeaderText, setContextHeaderText] = useState();
+  const [selectedVersesOrdered, setSelectedVersesOrdered] = useState([]);
+
+  // TODO: use min heap for selected verses to maintain order and contains() speed
+  useEffect(() => {
+    setSelectedVersesOrdered(Array.from(selectedVerses).sort());
+  }, [selectedVerses]);
+
   const handleChapterSelect = ({book, chapter}) => {
     setCurrentBookName(book);
     setCurrentChapterNumber(chapter);
@@ -184,6 +196,12 @@ const ReadingPage = () => {
     setDrawerContents(drawerContentsOptions.VERSE_SELECTED_OPTIONS);
   }, []);
 
+  // update context header text
+  useEffect(() => {
+    let contextHeaderText = versesToString(currentBookName, currentChapterNumber, selectedVersesOrdered);
+    setContextHeaderText(contextHeaderText);
+  }, [currentBookName, currentChapterNumber, selectedVersesOrdered]);
+
   return (
     <>
       <Provider>
@@ -224,20 +242,22 @@ const ReadingPage = () => {
           {/* JSX-style switch for drawerContents */}
           {
             drawerContents === drawerContentsOptions.VERSE_SELECTED_OPTIONS &&
-            <DrawerOptionsFragment
-              currentBook={currentBookName}
-              currentChapter={currentChapterNumber}
-              selectedVerses={Array.from(selectedVerses).sort()}
+            <DrawerPage
+              headerText={contextHeaderText}
               onClosePress={closeDrawer}
-              onRelatedCommentaryPress={handleRelatedCommentaryPress}
-              onRelatedNotesPress={handleRelatedNotesPress}
-            ></DrawerOptionsFragment>
+            >
+              <DrawerOptionsFragment
+                onRelatedCommentaryPress={handleRelatedCommentaryPress}
+                onRelatedNotesPress={handleRelatedNotesPress}
+              ></DrawerOptionsFragment>
+            </DrawerPage>
           }
           {
             drawerContents === drawerContentsOptions.NOTES_PAGE &&
             <DrawerPage
-              onExpandPress={toggleExpandMinimizeDrawer}
+              headerText={contextHeaderText}
               onClosePress={closeDrawer}
+              onExpandPress={toggleExpandMinimizeDrawer}
             >
               <NotesPage initialSelectedVerses={selectedVerses}></NotesPage>
             </DrawerPage>
@@ -245,8 +265,9 @@ const ReadingPage = () => {
           {
             drawerContents === drawerContentsOptions.COMMENTARY_PAGE &&
             <DrawerPage
-              onExpandPress={toggleExpandMinimizeDrawer}
+              headerText={contextHeaderText}
               onClosePress={closeDrawer}
+              onExpandPress={toggleExpandMinimizeDrawer}
             >
               <CommentaryPage initialSelectedVerses={selectedVerses}></CommentaryPage>
             </DrawerPage>
