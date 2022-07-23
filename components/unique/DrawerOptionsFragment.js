@@ -3,6 +3,7 @@ import { View } from "react-native";
 import { layoutStyles } from "../../assets/stylesheets/layouts";
 import { RelatedButton } from "../buttons/RelatedButton";
 import { DrawerAppBar } from "../common/DrawerAppBar";
+import { versesToString } from "../../util/VerseReferenceFormatter";
 
 /*
  * small area with option buttons you can put in a drawer; counterpart to full-page DrawerPage
@@ -13,9 +14,8 @@ const DrawerOptionsFragment = ({currentBook, currentChapter, selectedVerses, onC
 
   // update context header text each render
   useEffect(() => {
-    let contextHeaderText = `${currentBook} ${currentChapter}:${selectedVerses.slice(0, 1)}`;
-    contextHeaderText += selectedVerses?.length > 1 ? ' etc'
-      : '';
+    let contextHeaderText = versesToString(currentBook, currentChapter, selectedVerses);
+
     setContextHeaderText(contextHeaderText);
   }, [currentBook, currentChapter, selectedVerses]);
 
