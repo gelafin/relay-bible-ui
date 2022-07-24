@@ -28,4 +28,11 @@ const buttonStyle = StyleSheet.create({
   }
 });
 
-export { buttonStyle };
+const iconButtonStyle = StyleSheet.create({
+  iconButton: {
+    height: 'fit-content',
+    width: 'fit-content'
+  }
+});
+
+export { buttonStyle, iconButtonStyle };

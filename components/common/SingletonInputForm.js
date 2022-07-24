@@ -17,6 +17,7 @@ import { FormLabel } from './FormLabel';
  */
 function SingletonInputForm({label, onSubmit, initialValue, inputComponent, inputComponentProps}) {
   // button variant switches between edit, save, and undo
+  // TODO: these have been abstracted. Use EditButton and SaveButton
   const [buttonVariant, setButtonVariant] = useState('edit');
   const [buttonOptions, setButtonOptions] = useState({});
   const [currentValue, setCurrentValue] = useState(initialValue);

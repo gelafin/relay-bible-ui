@@ -10,7 +10,7 @@ const Drawer = ({isOpen, children, minimize}) => {
   return (
     <>
       {isOpen &&
-        <View style={[layoutStyles.drawer, !minimize && layoutStyles.fullHeight]}>
+        <View style={[layoutStyles.drawer, !minimize && layoutStyles.fullScreenHeight]}>
           {children}
         </View>
       }

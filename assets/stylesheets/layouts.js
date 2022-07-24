@@ -1,9 +1,11 @@
 import { StyleSheet } from 'react-native';
 import { colors } from './themeConstants/themeColors';
 
+// z-indices between these breakpoints can be used,
+// but these breakpoints form layer groups
 const zIndexBreakpoints = {
   'LEVEL_1': 1,
-  'LEVEL_2': 100
+  'LEVEL_2': 100  // bottom of a drawer, for example
 };
 
 const layoutStyles = StyleSheet.create({
@@ -16,7 +18,11 @@ const layoutStyles = StyleSheet.create({
     marginRight: '20px',
     flex: 1
   },
+  container: {
+    flex: 1
+  },
   horizontalContainer: {
+    justifyContent: 'flex-start',
     flexDirection: 'row'
   },
   centerAlign: {
@@ -24,6 +30,9 @@ const layoutStyles = StyleSheet.create({
   },
   centerJustify: {
     justifyContent: 'center'
+  },
+  verticalCenter: {
+    alignItems: 'center'
   },
   absolute: {
     position: 'absolute'
@@ -73,9 +82,12 @@ const layoutStyles = StyleSheet.create({
     zIndex: zIndexBreakpoints.LEVEL_2,
     boxShadow: 'rgb(0 0 0 / 60%) 0px -4px 4px 2px'  
   },
-  fullHeight: {
+  fullScreenHeight: {
     height: '100vh'
   },
+  fullWidth: {
+    width: '100%'
+  }
 });
 
 const absoluteCenterContainer = [
