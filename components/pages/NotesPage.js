@@ -13,19 +13,27 @@ import { versesToString } from '../../util/VerseReferenceFormatter.js';
 const sampleNotes = [
   {
     'title': 'Note Title Abc',
-    'body': 'I think this verse is cool because a comparison can be made between the symbolism of the metaphors of both passages insofar that one applies best practices of exegesis and hermeneutics.'
+    'body': 'I think this verse is cool because a comparison can be made between the symbolism of the metaphors of both passages insofar that one applies best practices of exegesis and hermeneutics.',
+    'linkedVerses': ['Revelation 2:5'],
+    'isPublic': true
   },
   {
     'title': 'Note Title 2',
-    'body': 'Glory be'
+    'body': 'Glory be',
+    'linkedVerses': ['Genesis 1:10'],
+    'isPublic': false
   },
   {
     'title': 'My Note Title',
-    'body': 'I think this passage is pretty nice.'
+    'body': 'I think this passage is pretty nice.',
+    'linkedVerses': ['Genesis 14:2', 'Psalms 145:100', 'Zechariah 1:3', 'Matthew 5:5'],
+    'isPublic': true
   },
   {
     'title': 'Grocery list',
-    'body': `Captain Crunch Berries\nCaptain Crunch Chocolate\nCaptain Crunch Peanut Butter`
+    'body': `Captain Crunch Berries\nCaptain Crunch Chocolate\nCaptain Crunch Peanut Butter`,
+    'linkedVerses': [],
+    'isPublic': true
   },
 ];
 
@@ -83,6 +91,8 @@ const NotesPage = ({initialSelectedVerses}) => {
               key={'note' + index}
               title={note.title}
               body={note.body}
+              linkedVerseReferences={note.linkedVerses}
+              isPublic={note.isPublic}
             ></Note>
           ))}
         </ScrollView>

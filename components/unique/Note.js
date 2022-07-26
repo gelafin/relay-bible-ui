@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 
 // custom styles
 import { layoutStyles } from "../../assets/stylesheets/layouts";
@@ -9,7 +9,7 @@ import { SingletonInputFormText } from "../common/SingletonInputFormText";
 import { FormLabel } from "../common/FormLabel";
 import { SaveButton } from "../buttons/SaveButton";
 
-const Note = ({title, body}) => {
+const Note = ({title, body, linkedVerseReferences, isPublic}) => {
   const [currentBody, setCurrentBody] = useState(body);
   const [actionButtons, setActionButtons] = useState();
 
@@ -30,9 +30,13 @@ const Note = ({title, body}) => {
           handleChange={handleBodyChange}
           currentValue={body}
           fullScreen
+          multiline
+          numberOfLines={2}
         ></SingletonInputFormText>
         <SaveButton onPress={saveNote}></SaveButton>
       </View>
+      <Text>{linkedVerseReferences.join(' ')}</Text>
+      {isPublic && <Text>public</Text>}
     </View>
   );
 };
