@@ -14,10 +14,11 @@ import { UndoButton } from "../buttons/UndoButton";
 
 const Note = ({title, body, linkedVerseReferences, isPublic}) => {
   const [currentBody, setCurrentBody] = useState(body);
-  const [actionButtons, setActionButtons] = useState();
+  const [hasChanges, setHasChanges] = useState(false);
 
   const handleBodyChange = (newText) => {
     setCurrentBody(newText);
+    setHasChanges(true);
   };
 
   const focusEdit = () => {
@@ -30,29 +31,38 @@ const Note = ({title, body, linkedVerseReferences, isPublic}) => {
 
   const saveNote = () => {
     console.log('saving note with body ', currentBody);
+    setHasChanges(false);
   };
 
   const discardChanges = () => {
     console.log('resetting note body to prop/db version');
+    setCurrentBody(body);
+    setHasChanges(false);
   };
 
   return (
     <View>
       <FormLabel label={title}></FormLabel>
       {/* TODO: verticalCenter is good for 1-line Notes but not large Notes */}
-      <View style={[layoutStyles.container, layoutStyles.horizontalContainer, layoutStyles.verticalCenter]}>
+      <View style={[layoutStyles.container, layoutStyles.horizontalContainer]}>
         <SingletonInputFormText
           handleChange={handleBodyChange}
-          currentValue={body}
-          fullScreen
+          currentValue={currentBody}
+          flexValue={1}
           multiline
           numberOfLines={2}
         ></SingletonInputFormText>
-        <View>
-          <EditButton onPress={focusEdit}></EditButton>
-          <UndoButton onPress={discardChanges}></UndoButton>
-          <SaveButton onPress={saveNote}></SaveButton>
-          <DeleteButton onPress={deleteNote}></DeleteButton>
+        <View style={[layoutStyles.horizontalContainer, {flex: 0.1, flexWrap: 'wrap'}]}>
+          {!hasChanges && 
+            <EditButton onPress={focusEdit}></EditButton>
+          }
+          {hasChanges &&
+            <>
+              <UndoButton onPress={discardChanges}></UndoButton>
+              <SaveButton onPress={saveNote}></SaveButton>
+              <DeleteButton onPress={deleteNote}></DeleteButton>          
+            </>
+          }
         </View>
       </View>
       <Text>{linkedVerseReferences.join(' ')}</Text>
