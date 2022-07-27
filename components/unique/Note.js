@@ -8,6 +8,9 @@ import { layoutStyles } from "../../assets/stylesheets/layouts";
 import { SingletonInputFormText } from "../common/SingletonInputFormText";
 import { FormLabel } from "../common/FormLabel";
 import { SaveButton } from "../buttons/SaveButton";
+import { EditButton } from "../buttons/EditButton";
+import { DeleteButton } from "../buttons/DeleteButton";
+import { UndoButton } from "../buttons/UndoButton";
 
 const Note = ({title, body, linkedVerseReferences, isPublic}) => {
   const [currentBody, setCurrentBody] = useState(body);
@@ -17,8 +20,20 @@ const Note = ({title, body, linkedVerseReferences, isPublic}) => {
     setCurrentBody(newText);
   };
 
+  const focusEdit = () => {
+    console.log('focus input component');
+  };
+
+  const deleteNote = () => {
+    console.log('deleting note with body ', currentBody);
+  };
+
   const saveNote = () => {
     console.log('saving note with body ', currentBody);
+  };
+
+  const discardChanges = () => {
+    console.log('resetting note body to prop/db version');
   };
 
   return (
@@ -33,7 +48,12 @@ const Note = ({title, body, linkedVerseReferences, isPublic}) => {
           multiline
           numberOfLines={2}
         ></SingletonInputFormText>
-        <SaveButton onPress={saveNote}></SaveButton>
+        <View>
+          <EditButton onPress={focusEdit}></EditButton>
+          <UndoButton onPress={discardChanges}></UndoButton>
+          <SaveButton onPress={saveNote}></SaveButton>
+          <DeleteButton onPress={deleteNote}></DeleteButton>
+        </View>
       </View>
       <Text>{linkedVerseReferences.join(' ')}</Text>
       {isPublic && <Text>public</Text>}
