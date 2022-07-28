@@ -25,8 +25,9 @@ const Note = ({title, body, linkedVerseReferences, isPublic}) => {
   const focusEdit = () => {
     console.log('focus input component');
     setIsFocused(true);
-    // setIsFocused(false);
   };
+
+  const restoreFocusPower = () => (setIsFocused(false));
 
   const deleteNote = () => {
     console.log('deleting note with body ', currentBody);
@@ -55,6 +56,7 @@ const Note = ({title, body, linkedVerseReferences, isPublic}) => {
           multiline
           numberOfLines={2}
           isFocused={isFocused}
+          restoreFocusPower={restoreFocusPower}
         ></SingletonInputFormText>
         <View style={[layoutStyles.horizontalContainer, {flex: 0.1, flexWrap: 'wrap'}]}>
           {!hasChanges && 

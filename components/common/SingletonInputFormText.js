@@ -5,7 +5,7 @@ import { TextInput } from "react-native";
 
 import { inputStyle } from "../../assets/stylesheets/inputs";
 
-const SingletonInputFormText = ({handleChange, currentValue, flexValue, multiline, numberOfLines, isFocused}) => {
+const SingletonInputFormText = ({handleChange, currentValue, flexValue, multiline, numberOfLines, isFocused, restoreFocusPower}) => {
   const inputRef = useRef(null);
 
   const focusInput = () => {
@@ -14,6 +14,8 @@ const SingletonInputFormText = ({handleChange, currentValue, flexValue, multilin
     if (inputRef?.current && isFocused) {
       inputRef.current.focus();
       inputRef.current.setSelectionRange(inputLength, inputLength);
+
+      restoreFocusPower();
     }
   };
 
