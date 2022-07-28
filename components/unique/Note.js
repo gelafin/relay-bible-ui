@@ -16,17 +16,66 @@ const Note = ({noteId, title, body, linkedVerseReferences, isPublic, deleteMe}) 
   const [currentBody, setCurrentBody] = useState(body);
   const [hasChanges, setHasChanges] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
+  const [showDeleteButton, setShowDeleteButton] = useState(false);
+  const [showEditButton, setShowEditButton] = useState(true);
 
+  /**
+   * display management
+   */
+  const toggleBlurFocusButtons = (showBlurButtons) => {
+    console.log(showBlurButtons && 'DEBUG: showing edit button');
+    console.log(!showBlurButtons && 'DEBUG: showing delete button');
+
+    setShowEditButton(showBlurButtons);
+    setShowDeleteButton(!showBlurButtons);
+  };
+
+  /**
+   * button press handlers
+   */
+  const handleEditPress = () => {
+    focusEdit();
+    
+    // DON'T toggle edit/delete button display; focus listener already does
+  };
+
+  const handleSavePress = () => {
+    saveNote();
+    toggleBlurFocusButtons(true);
+  };
+
+  const handleUndoPress = () => {
+    discardChanges();
+    toggleBlurFocusButtons(true);
+  };
+
+  /**
+   * listener handlers
+   */
   const handleBodyChange = (newText) => {
     setCurrentBody(newText);
     setHasChanges(true);
   };
 
+  const handleFocus = () => {
+    toggleBlurFocusButtons(false);
+  };
+
+  const handleBlur = () => {
+    // TODO: this is a race condition that should be turned into useEffect somehow
+    setTimeout(() => (toggleBlurFocusButtons(true)), 200);
+  };
+
+  /*
+   * helpers
+   */
   const focusEdit = () => {
     console.log('focus input component');
     setIsFocused(true);
   };
 
+  // Enable setting isFocused to true... by setting it to false!
+  // Intended for use by children when they blur
   const restoreFocusPower = () => (setIsFocused(false));
 
   const deleteNote = () => {
@@ -57,18 +106,22 @@ const Note = ({noteId, title, body, linkedVerseReferences, isPublic, deleteMe}) 
           multiline
           numberOfLines={2}
           isFocused={isFocused}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           restoreFocusPower={restoreFocusPower}
         ></SingletonInputFormText>
 
         <View style={[layoutStyles.horizontalContainer, {flex: 0.1, flexWrap: 'wrap'}]}>
-          {!hasChanges && 
-            <EditButton onPress={focusEdit}></EditButton>
+          {showEditButton && 
+            <EditButton onPress={handleEditPress}></EditButton>
+          }
+          {showDeleteButton &&
+            <DeleteButton onPress={deleteNote}></DeleteButton>
           }
           {hasChanges &&
             <>
-              <UndoButton onPress={discardChanges}></UndoButton>
-              <SaveButton onPress={saveNote}></SaveButton>
-              <DeleteButton onPress={deleteNote}></DeleteButton>          
+              <UndoButton onPress={handleUndoPress}></UndoButton>
+              <SaveButton onPress={handleSavePress}></SaveButton>
             </>
           }
         </View>

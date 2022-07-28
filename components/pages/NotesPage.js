@@ -90,7 +90,7 @@ const NotesPage = ({initialSelectedVerses}) => {
   const deleteNote = (noteId) => {
     // TODO: call api
 
-    setNotes(sampleNotes.filter(note => note.id !== noteId));
+    setNotes(notes.filter(note => note.id !== noteId));
 
     // TODO: after api call, update displayed notes
     // fetchNoteData();

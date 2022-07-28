@@ -5,7 +5,12 @@ import { TextInput } from "react-native";
 
 import { inputStyle } from "../../assets/stylesheets/inputs";
 
-const SingletonInputFormText = ({handleChange, currentValue, flexValue, multiline, numberOfLines, isFocused, restoreFocusPower}) => {
+/**
+ * @param isFocused programmatically sets focus
+ * @param onFocus is called when user sets focus
+ * @returns 
+ */
+const SingletonInputFormText = ({handleChange, currentValue, flexValue, multiline, numberOfLines, isFocused, restoreFocusPower, onFocus, onBlur}) => {
   const inputRef = useRef(null);
 
   const focusInput = () => {
@@ -29,6 +34,8 @@ const SingletonInputFormText = ({handleChange, currentValue, flexValue, multilin
       style={[inputStyle.default, flexValue && {flex: flexValue}]}
       multiline={multiline}
       numberOfLines={numberOfLines}  // Docs say this is an Android only option
+      onFocus={onFocus}
+      onBlur={onBlur}
     ></TextInput>
   );
 };
