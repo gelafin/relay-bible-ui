@@ -12,7 +12,7 @@ import { EditButton } from "../buttons/EditButton";
 import { DeleteButton } from "../buttons/DeleteButton";
 import { UndoButton } from "../buttons/UndoButton";
 
-const Note = ({title, body, linkedVerseReferences, isPublic}) => {
+const Note = ({noteId, title, body, linkedVerseReferences, isPublic, deleteMe}) => {
   const [currentBody, setCurrentBody] = useState(body);
   const [hasChanges, setHasChanges] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
@@ -31,6 +31,7 @@ const Note = ({title, body, linkedVerseReferences, isPublic}) => {
 
   const deleteNote = () => {
     console.log('deleting note with body ', currentBody);
+    deleteMe(noteId);
   };
 
   const saveNote = () => {
@@ -58,6 +59,7 @@ const Note = ({title, body, linkedVerseReferences, isPublic}) => {
           isFocused={isFocused}
           restoreFocusPower={restoreFocusPower}
         ></SingletonInputFormText>
+
         <View style={[layoutStyles.horizontalContainer, {flex: 0.1, flexWrap: 'wrap'}]}>
           {!hasChanges && 
             <EditButton onPress={focusEdit}></EditButton>

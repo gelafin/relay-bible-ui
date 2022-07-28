@@ -12,24 +12,29 @@ import { versesToString } from '../../util/VerseReferenceFormatter.js';
 
 const sampleNotes = [
   {
+    // ID can be a combo of title and linked verses, and uniqueness can be enforced
+    'id': '1',
     'title': 'Note Title Abc',
     'body': 'I think this verse is cool because a comparison can be made between the symbolism of the metaphors of both passages insofar that one applies best practices of exegesis and hermeneutics.',
     'linkedVerses': ['Revelation 2:5'],
     'isPublic': true
   },
   {
+    'id': '2',
     'title': 'Note Title 2',
     'body': 'Glory be',
     'linkedVerses': ['Genesis 1:10'],
     'isPublic': false
   },
   {
+    'id': '3',
     'title': 'My Note Title',
     'body': 'I think this passage is pretty nice.',
     'linkedVerses': ['Genesis 14:2', 'Psalms 145:100', 'Zechariah 1:3', 'Matthew 5:5'],
     'isPublic': true
   },
   {
+    'id': '4',
     'title': 'Grocery list',
     'body': `Captain Crunch Berries\nCaptain Crunch Chocolate\nCaptain Crunch Peanut Butter`,
     'linkedVerses': [],
@@ -43,6 +48,14 @@ const sampleNotes = [
 const NotesPage = ({initialSelectedVerses}) => {
   const [filterSettings, setFilterSettings] = useState({});
   const [contextHeaderText, setContextHeaderText] = useState('');
+  const [notes, setNotes] = useState([]);
+
+  const fetchNoteData = () => {
+    // TODO: hit the api
+    setNotes(sampleNotes);
+  };
+
+  useEffect(fetchNoteData, []);
 
   const initializeFilterSettings = () => (
     setFilterSettings({
@@ -74,6 +87,15 @@ const NotesPage = ({initialSelectedVerses}) => {
     console.log('creating new...');
   };
 
+  const deleteNote = (noteId) => {
+    // TODO: call api
+
+    setNotes(sampleNotes.filter(note => note.id !== noteId));
+
+    // TODO: after api call, update displayed notes
+    // fetchNoteData();
+  };
+
   return (
     <>
       {/* If initialSelectedVerses are provided, this component is in a drawer,
@@ -86,13 +108,15 @@ const NotesPage = ({initialSelectedVerses}) => {
       ></PageHeader>
       <PageStyler>
         <ScrollView scrollEnabled="true">
-          {sampleNotes.map((note, index) => (
+          {notes.map((note) => (
             <Note
-              key={'note' + index}
+              key={note.id}
+              noteId={note.id}
               title={note.title}
               body={note.body}
               linkedVerseReferences={note.linkedVerses}
               isPublic={note.isPublic}
+              deleteMe={deleteNote}
             ></Note>
           ))}
         </ScrollView>
