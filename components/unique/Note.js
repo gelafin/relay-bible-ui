@@ -15,6 +15,7 @@ import { UndoButton } from "../buttons/UndoButton";
 const Note = ({title, body, linkedVerseReferences, isPublic}) => {
   const [currentBody, setCurrentBody] = useState(body);
   const [hasChanges, setHasChanges] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
 
   const handleBodyChange = (newText) => {
     setCurrentBody(newText);
@@ -23,6 +24,8 @@ const Note = ({title, body, linkedVerseReferences, isPublic}) => {
 
   const focusEdit = () => {
     console.log('focus input component');
+    setIsFocused(true);
+    // setIsFocused(false);
   };
 
   const deleteNote = () => {
@@ -51,6 +54,7 @@ const Note = ({title, body, linkedVerseReferences, isPublic}) => {
           flexValue={1}
           multiline
           numberOfLines={2}
+          isFocused={isFocused}
         ></SingletonInputFormText>
         <View style={[layoutStyles.horizontalContainer, {flex: 0.1, flexWrap: 'wrap'}]}>
           {!hasChanges && 
