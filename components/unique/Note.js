@@ -101,18 +101,22 @@ const Note = ({noteId, title, body, linkedVerseReferences, isPublic, deleteMe}) 
       <FormLabel label={title}></FormLabel>
       {/* TODO: verticalCenter is good for 1-line Notes but not large Notes */}
       <View style={[layoutStyles.container, layoutStyles.horizontalContainer]}>
-        <SingletonInputFormText
-          style={{minWidth: '50%'}}
-          handleChange={handleBodyChange}
-          currentValue={currentBody}
-          flexValue={1}
-          multiline
-          autoHeight  // TODO: setting this (and multiline) based on isFocused doesn't work, because autoHeight depends on onContentSizeChange event, which does not fire on focus
-          isFocused={isFocused}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          restoreFocusPower={restoreFocusPower}
-        ></SingletonInputFormText>
+        <View style={[layoutStyles.container, layoutStyles.verticalContainer]}>
+          <SingletonInputFormText
+            style={{minWidth: '50%'}}
+            handleChange={handleBodyChange}
+            currentValue={currentBody}
+            flexValue={1}
+            multiline
+            autoHeight  // TODO: setting this (and multiline) based on isFocused doesn't work, because autoHeight depends on onContentSizeChange event, which does not fire on focus
+            isFocused={isFocused}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            restoreFocusPower={restoreFocusPower}
+          ></SingletonInputFormText>
+          <Text>{linkedVerseReferences.join(' ')}</Text>
+          {isPublic && <Text>public</Text>}
+        </View>
 
         {/* TODO: maxWidth: min-content lets buttons wrap, but it causes a vertical default, which is not wanted.
         This should be changed to a media query where the default button View is row wrap atop the note text input,
@@ -132,8 +136,6 @@ const Note = ({noteId, title, body, linkedVerseReferences, isPublic, deleteMe}) 
           }
         </View>
       </View>
-      <Text>{linkedVerseReferences.join(' ')}</Text>
-      {isPublic && <Text>public</Text>}
     </View>
   );
 };

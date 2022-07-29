@@ -25,6 +25,9 @@ const layoutStyles = StyleSheet.create({
     justifyContent: 'flex-start',
     flexDirection: 'row'
   },
+  verticalContainer: {
+    flexDirection: 'column'
+  },
   centerAlign: {
     alignItems: 'center'
   },
