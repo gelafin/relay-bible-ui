@@ -9,7 +9,7 @@ import { SingletonInputFormText } from "../common/SingletonInputFormText";
 import { FormLabel } from "../common/FormLabel";
 import { SaveButton } from "../buttons/SaveButton";
 import { EditButton } from "../buttons/EditButton";
-import { DeleteButton } from "../buttons/DeleteButton";
+import { DeleteIconButton } from "../buttons/DeleteIconButton";
 import { UndoButton } from "../buttons/UndoButton";
 
 const Note = ({noteId, title, body, linkedVerseReferences, isPublic, deleteMe}) => {
@@ -100,29 +100,31 @@ const Note = ({noteId, title, body, linkedVerseReferences, isPublic, deleteMe}) 
       {/* TODO: verticalCenter is good for 1-line Notes but not large Notes */}
       <View style={[layoutStyles.container, layoutStyles.horizontalContainer]}>
         <SingletonInputFormText
+          style={{minWidth: '50%'}}
           handleChange={handleBodyChange}
           currentValue={currentBody}
           flexValue={1}
           multiline
-          numberOfLines={2}
+          numberOfLines={2}  // TODO: expand in focus handler, reset in blur handler
           isFocused={isFocused}
           onFocus={handleFocus}
           onBlur={handleBlur}
           restoreFocusPower={restoreFocusPower}
         ></SingletonInputFormText>
 
-        <View style={[layoutStyles.horizontalContainer, {flexWrap: 'wrap'}]}>
+        {/* maxWidth: min-content lets buttons wrap, but it causes a vertical default, which is not wanted */}
+        <View style={[layoutStyles.horizontalContainer, {flexWrap: 'wrap', maxWidth: 'min-content'}]}>
           {showEditButton && 
             <EditButton onPress={handleEditPress}></EditButton>
-          }
-          {showDeleteButton &&
-            <DeleteButton onPress={deleteNote}>delete</DeleteButton>
           }
           {hasChanges &&
             <>
               <UndoButton onPress={handleUndoPress}></UndoButton>
               <SaveButton onPress={handleSavePress}></SaveButton>
             </>
+          }
+          {showDeleteButton &&
+            <DeleteIconButton onPress={deleteNote}></DeleteIconButton>
           }
         </View>
       </View>
