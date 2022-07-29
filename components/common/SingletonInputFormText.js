@@ -1,6 +1,6 @@
 // useRef code adapted from https://stackoverflow.com/a/62250053/14257952 and React Native docs Jul 2022
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { TextInput } from "react-native";
 
 import { inputStyle } from "../../assets/stylesheets/inputs";
@@ -10,8 +10,14 @@ import { inputStyle } from "../../assets/stylesheets/inputs";
  * @param onFocus is called when user sets focus
  * @returns 
  */
-const SingletonInputFormText = ({handleChange, currentValue, flexValue, multiline, numberOfLines, isFocused, restoreFocusPower, onFocus, onBlur}) => {
+const SingletonInputFormText = ({
+  handleChange, currentValue, flexValue, multiline, autoHeight, numberOfLines, isFocused, restoreFocusPower, onFocus, onBlur
+}) => {
   const inputRef = useRef(null);
+  const [boxHeight, setBoxHeight] = useState(0);
+  const [shouldUseAutoHeight, setShouldUseAutoHeight] = useState(false);
+
+  useEffect(() => setShouldUseAutoHeight(!numberOfLines && autoHeight), [numberOfLines, autoHeight]);
 
   const focusInput = () => {
     const inputLength = currentValue?.length || 0;
@@ -24,6 +30,10 @@ const SingletonInputFormText = ({handleChange, currentValue, flexValue, multilin
     }
   };
 
+  const updateHeight = ({nativeEvent}) => {
+    setBoxHeight(nativeEvent.contentSize.height);
+  };
+
   useEffect(focusInput, [isFocused, inputRef]);
 
   return (
@@ -31,9 +41,15 @@ const SingletonInputFormText = ({handleChange, currentValue, flexValue, multilin
       ref={inputRef}
       onChangeText={handleChange}
       value={currentValue}
-      style={[inputStyle.default, flexValue && {flex: flexValue}]}
+      style={[
+        inputStyle.default,
+        flexValue && {flex: flexValue},
+        // overflow: hidden is needed to hide scroll bar, but height is correct
+        shouldUseAutoHeight && {height: boxHeight, overflow: 'hidden'}
+      ]}
       multiline={multiline}
-      numberOfLines={numberOfLines}  // Docs say this is an Android only option
+      numberOfLines={numberOfLines}  // affects Android only
+      onContentSizeChange={shouldUseAutoHeight && updateHeight}
       onFocus={onFocus}
       onBlur={onBlur}
     ></TextInput>

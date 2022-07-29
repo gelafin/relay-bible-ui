@@ -18,6 +18,7 @@ const Note = ({noteId, title, body, linkedVerseReferences, isPublic, deleteMe}) 
   const [isFocused, setIsFocused] = useState(false);
   const [showDeleteButton, setShowDeleteButton] = useState(false);
   const [showEditButton, setShowEditButton] = useState(true);
+  const [noteDisplayLines, setNoteDisplayLines] = useState(2);
 
   /**
    * display management
@@ -59,6 +60,7 @@ const Note = ({noteId, title, body, linkedVerseReferences, isPublic, deleteMe}) 
 
   const handleFocus = () => {
     toggleBlurFocusButtons(false);
+    setNoteDisplayLines();
   };
 
   const handleBlur = () => {
@@ -105,14 +107,16 @@ const Note = ({noteId, title, body, linkedVerseReferences, isPublic, deleteMe}) 
           currentValue={currentBody}
           flexValue={1}
           multiline
-          numberOfLines={2}  // TODO: expand in focus handler, reset in blur handler
+          autoHeight  // TODO: setting this (and multiline) based on isFocused doesn't work, because autoHeight depends on onContentSizeChange event, which does not fire on focus
           isFocused={isFocused}
           onFocus={handleFocus}
           onBlur={handleBlur}
           restoreFocusPower={restoreFocusPower}
         ></SingletonInputFormText>
 
-        {/* maxWidth: min-content lets buttons wrap, but it causes a vertical default, which is not wanted */}
+        {/* TODO: maxWidth: min-content lets buttons wrap, but it causes a vertical default, which is not wanted.
+        This should be changed to a media query where the default button View is row wrap atop the note text input,
+        and at a min-width breakpoint is changed to row wrap at the right of the text input */}
         <View style={[layoutStyles.horizontalContainer, {flexWrap: 'wrap', maxWidth: 'min-content'}]}>
           {showEditButton && 
             <EditButton onPress={handleEditPress}></EditButton>
