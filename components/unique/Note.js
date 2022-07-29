@@ -111,12 +111,12 @@ const Note = ({noteId, title, body, linkedVerseReferences, isPublic, deleteMe}) 
           restoreFocusPower={restoreFocusPower}
         ></SingletonInputFormText>
 
-        <View style={[layoutStyles.horizontalContainer, {flex: 0.1, flexWrap: 'wrap'}]}>
+        <View style={[layoutStyles.horizontalContainer, {flexWrap: 'wrap'}]}>
           {showEditButton && 
             <EditButton onPress={handleEditPress}></EditButton>
           }
           {showDeleteButton &&
-            <DeleteButton onPress={deleteNote}></DeleteButton>
+            <DeleteButton onPress={deleteNote}>delete</DeleteButton>
           }
           {hasChanges &&
             <>
