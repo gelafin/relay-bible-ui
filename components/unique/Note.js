@@ -112,8 +112,8 @@ const Note = ({noteId, title, body, linkedVerseReferences, isPublic, deleteMe}) 
             onBlur={handleBlur}
             restoreFocusPower={restoreFocusPower}
           ></SingletonInputFormText>
-          <Text>{linkedVerseReferences.join(' ')}</Text>
-          {isPublic && <Text>public</Text>}
+          <Text style={{fontStyle: 'italic'}}>{linkedVerseReferences.join(' ')}</Text>
+          {isPublic && <Text style={{fontStyle: 'italic'}}>public</Text>}
         </View>
 
         {/* TODO: maxWidth: min-content lets buttons wrap, but it causes a vertical default, which is not wanted.
