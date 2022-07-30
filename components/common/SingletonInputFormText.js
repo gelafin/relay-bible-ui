@@ -14,8 +14,8 @@ const SingletonInputFormText = ({
   handleChange, currentValue, flexValue, multiline, autoHeight, numberOfLines, isFocused, restoreFocusPower, onFocus, onBlur
 }) => {
   const inputRef = useRef(null);
-  const [boxHeight, setBoxHeight] = useState(0);
-  const [shouldUseAutoHeight, setShouldUseAutoHeight] = useState(false);
+  const [boxHeight, setBoxHeight] = useState(32);
+  const [shouldUseAutoHeight, setShouldUseAutoHeight] = useState(true);
 
   useEffect(() => setShouldUseAutoHeight(!numberOfLines && autoHeight), [numberOfLines, autoHeight]);
 
@@ -30,9 +30,10 @@ const SingletonInputFormText = ({
     }
   };
 
-  const updateHeight = ({nativeEvent}) => {
-    setBoxHeight(nativeEvent.contentSize.height);
-  };
+  // const updateHeight = ({nativeEvent}) => {
+  //   console.log('setting height based on content size to ', nativeEvent.contentSize.height);
+  //   setBoxHeight(nativeEvent.contentSize.height);
+  // };
 
   useEffect(focusInput, [isFocused, inputRef]);
 
@@ -43,13 +44,13 @@ const SingletonInputFormText = ({
       value={currentValue}
       style={[
         inputStyle.default,
-        flexValue && {flex: flexValue},
+        flexValue && {flex: flexValue, alignItems: 'stretch'},
         // overflow: hidden is needed to hide scroll bar, but height is correct
-        shouldUseAutoHeight && {height: boxHeight, overflow: 'hidden'}
+        // shouldUseAutoHeight && {height: boxHeight, overflow: 'hidden'}
       ]}
       multiline={multiline}
       numberOfLines={numberOfLines}  // affects Android only
-      onContentSizeChange={shouldUseAutoHeight && updateHeight}
+      // onContentSizeChange={shouldUseAutoHeight && updateHeight}
       onFocus={onFocus}
       onBlur={onBlur}
     ></TextInput>

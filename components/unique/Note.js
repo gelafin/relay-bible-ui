@@ -18,7 +18,6 @@ const Note = ({noteId, title, body, linkedVerseReferences, isPublic, deleteMe}) 
   const [isFocused, setIsFocused] = useState(false);
   const [showDeleteButton, setShowDeleteButton] = useState(false);
   const [showEditButton, setShowEditButton] = useState(true);
-  const [noteDisplayLines, setNoteDisplayLines] = useState(2);
 
   /**
    * display management
@@ -60,7 +59,6 @@ const Note = ({noteId, title, body, linkedVerseReferences, isPublic, deleteMe}) 
 
   const handleFocus = () => {
     toggleBlurFocusButtons(false);
-    setNoteDisplayLines();
   };
 
   const handleBlur = () => {

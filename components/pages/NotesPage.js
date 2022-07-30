@@ -6,6 +6,7 @@ import { PageStyler } from './PageStyler.js';
 import { PageHeader } from '../common/PageHeader.js';
 import { ContextHeader } from '../common/ContextHeader.js';
 import { Note } from '../unique/Note.js';
+import { NoteEditDialog } from '../unique/NoteEditDialog.js';
 
 // custom utils
 import { versesToString } from '../../util/VerseReferenceFormatter.js';
@@ -49,6 +50,7 @@ const NotesPage = ({initialSelectedVerses}) => {
   const [filterSettings, setFilterSettings] = useState({});
   const [contextHeaderText, setContextHeaderText] = useState('');
   const [notes, setNotes] = useState([]);
+  const [showNoteCreateDialog, setShowNoteCreateDialog] = useState(false);
 
   const fetchNoteData = () => {
     // TODO: hit the api
@@ -85,12 +87,26 @@ const NotesPage = ({initialSelectedVerses}) => {
 
   const handleNewPress = () => {
     console.log('creating new...');
+    setShowNoteCreateDialog(true);
   };
 
   const deleteNote = (noteId) => {
     // TODO: call api
 
     setNotes(notes.filter(note => note.id !== noteId));
+
+    // TODO: after api call, update displayed notes
+    // fetchNoteData();
+  };
+
+  /**
+   * @param {*} noteData object in the form {title: string, body: string, linkedVerses: string[], isPublic: bool}
+   */
+  const createNote = (noteData) => {
+    // TODO: call api
+    const notesCopy = [...notes];
+    notesCopy.push({...noteData, id: notes[notes.length - 1].id + 1});
+    setNotes(notesCopy);
 
     // TODO: after api call, update displayed notes
     // fetchNoteData();
@@ -121,6 +137,13 @@ const NotesPage = ({initialSelectedVerses}) => {
           ))}
         </ScrollView>
       </PageStyler>
+      {showNoteCreateDialog &&
+        <NoteEditDialog
+          setShouldShowDialog={setShowNoteCreateDialog}
+          onCancel={() => setShowNoteCreateDialog(false)}
+          onSubmit={createNote}
+        ></NoteEditDialog>
+      }
     </>
   );
 };
