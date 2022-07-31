@@ -93,14 +93,6 @@ const ReadingPage = () => {
   };
 
   // set current verse list based on current book & chapter selection
-  // useEffect(() => {
-  //   // const verseList = currentBookName && currentChapterNumber ?
-  //   //   mockChapterText[currentBookName][currentChapterNumber - 1]
-  //   //   : null;
-  //   fetchVerses();
-  // }, [currentBookName, currentChapterNumber]);
-
-  // set current verse list based on current book & chapter selection
   useEffect(() => {
     console.log(`\tbook name: ${currentBookName} chapter: ${currentChapterNumber}`);
     fetchVerses();
