@@ -3,6 +3,7 @@
 import { React, useEffect, useState } from 'react';
 import { Text, ScrollView } from 'react-native';
 import { Provider } from 'react-native-paper';
+import axios from 'axios';
 
 // custom styles
 import { layoutStyles } from '../../assets/stylesheets/layouts.js';
@@ -22,6 +23,7 @@ import { Enum } from '../../util/Enum.js';
 
 // custom util
 import { versesToString } from "../../util/VerseReferenceFormatter";
+import { BASE_URL } from '../../constants/apiData.js';
 
 // example for API route GET /verses/:bookName/:chapterNumber
 // regular 0-indexed array of one string per verse (no spaces is slightly preferred, but whatever is easier with sample data)
@@ -107,7 +109,7 @@ const mockChapterText = {
 const drawerContentsOptions = new Enum('NOTES_PAGE', 'COMMENTARY_PAGE', 'VERSE_SELECTED_OPTIONS');
 
 const ReadingPage = () => {
-  const [currentBookName, setCurrentBookName] = useState('Genesis');
+  const [currentBookName, setCurrentBookName] = useState('Matthew');
   const [currentChapterNumber, setCurrentChapterNumber] = useState(1);
   const [currentVerseList, setCurrentVerseList] = useState([]);
   const [selectedVerses, setSelectedVerses] = useState(new Set());  // constant-time checks for Verse.isSelected
@@ -141,22 +143,50 @@ const ReadingPage = () => {
   };
   const toggleExpandMinimizeDrawer = () => setDrawerIsMinimized(drawerIsMinimized => !drawerIsMinimized);
 
+  // does not validate params
+  const fetchVerses = async () => {
+    console.log(`\tbook name: ${currentBookName} chapter: ${currentChapterNumber}`);
+    try {
+      if (!currentBookName || !currentChapterNumber) {
+        return;
+        // throw new Error(`invalid book ${bookName} or chapter ${chapterNumber}`);
+      }
+
+      console.log('fetching verses with book ', currentBookName, ' and chapter ', currentChapterNumber);
+      const reqUrl = `${BASE_URL}verses/${currentBookName}/${currentChapterNumber}`;
+      console.log('req url: ', reqUrl);
+      const res = await axios.get(reqUrl);
+      const verseList = res?.data ? res.data : null;
+
+      if (verseList) {
+        console.log('success. Verses: ', JSON.stringify(verseList));
+        setCurrentVerseList(verseList);
+  
+        setCurrentBookAndChapterString(`${currentBookName} ${currentChapterNumber}`);
+      } else {
+        console.log('error. res: ', JSON.stringify(res));
+      }
+
+    } catch (error) {
+      console.log(`Selection ${currentBookName} ${currentChapterNumber} is not part of the current data set`);
+      console.log(error);
+    }
+  };
+
+  // set current verse list based on current book & chapter selection
+  // useEffect(() => {
+  //   // const verseList = currentBookName && currentChapterNumber ?
+  //   //   mockChapterText[currentBookName][currentChapterNumber - 1]
+  //   //   : null;
+  //   fetchVerses();
+  // }, [currentBookName, currentChapterNumber]);
+
   // set current verse list based on current book & chapter selection
   useEffect(() => {
-    try {
-      const verseList = currentBookName && currentChapterNumber ?
-        mockChapterText[currentBookName][currentChapterNumber - 1]
-        : null;
-        
-      if (verseList) {
-        setCurrentVerseList(verseList);
-    
-        setCurrentBookAndChapterString(`${currentBookName} ${currentChapterNumber}`);
-      }
-    } catch (error) {
-      console.error(`Selection ${currentBookName} ${currentChapterNumber} is not part of the current data set`);
-    }
-  }, [currentBookName, currentChapterNumber]);
+    console.log(`\tbook name: ${currentBookName} chapter: ${currentChapterNumber}`);
+    fetchVerses();
+  },
+  [currentBookName, currentChapterNumber]);
 
   const verseIsSelected = (verseNumber) => selectedVerses.has(verseNumber);
 
@@ -221,11 +251,11 @@ const ReadingPage = () => {
         <PageStyler customPageStyle={layoutStyles.readingPage}>
           <ScrollView scrollEnabled='true'>
             <Text>
-              {currentVerseList?.map((verseText, index) =>
+              {currentVerseList && currentVerseList.map((verseData, index) =>
                 <Verse
                   key={'v' + index}
                   verseNumber={index + 1}
-                  verseText={verseText}
+                  verseText={verseData.bible_text}
                   isSelected={verseIsSelected(index + 1)}
                   onVersePress={handleVersePress}
                 ></Verse>

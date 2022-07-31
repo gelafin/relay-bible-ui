@@ -10,6 +10,8 @@ import { NoteEditDialog } from '../unique/NoteEditDialog.js';
 
 // custom utils
 import { versesToString } from '../../util/VerseReferenceFormatter.js';
+import axios from 'axios';
+import { BASE_URL } from '../../constants/apiData.js';
 
 const sampleNotes = [
   {
