@@ -11,6 +11,9 @@ Test on localhost. Run from root of project. Have to build client first if testi
         yarn deploy
 Deploy manually to GitHub Pages.
 
+        set constants/apiData.js USE_PRODUCTION_API_URL = true
+use production API base path for requests
+
 # Flow
 1. Create feature branch from development branch
 2. Test locally
