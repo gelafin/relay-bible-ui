@@ -53,9 +53,13 @@ const NotesPage = ({initialSelectedVerses}) => {
   const [contextHeaderText, setContextHeaderText] = useState('');
   const [notes, setNotes] = useState([]);
   const [showNoteCreateDialog, setShowNoteCreateDialog] = useState(false);
+  const [userName, setUserName] = useState('CTCheeseman');  // TODO: use global state
 
-  const fetchNoteData = () => {
+  const fetchNoteData = async () => {
     // TODO: hit the api
+    // const reqUrl = `${BASE_URL}notes/${userName}`;
+    // const res = await axios.get(reqUrl);
+
     setNotes(sampleNotes);
   };
 
@@ -104,8 +108,13 @@ const NotesPage = ({initialSelectedVerses}) => {
   /**
    * @param {*} noteData object in the form {title: string, body: string, linkedVerses: string[], isPublic: bool}
    */
-  const createNote = (noteData) => {
+  const createNote = async (noteData) => {
     // TODO: call api
+    const reqUrl = `${BASE_URL}notes/${userName}`;
+    const reqBodyData = noteData;
+
+    // const res = await axios.post(reqUrl, reqBodyData);
+
     const notesCopy = [...notes];
     notesCopy.push({...noteData, id: notes[notes.length - 1].id + 1});
     setNotes(notesCopy);
