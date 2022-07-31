@@ -62,18 +62,19 @@ const ReadingPage = () => {
   };
   const toggleExpandMinimizeDrawer = () => setDrawerIsMinimized(drawerIsMinimized => !drawerIsMinimized);
 
-  // does not validate params
   const fetchVerses = async () => {
     console.log(`\tbook name: ${currentBookName} chapter: ${currentChapterNumber}`);
     try {
+      // validate (invalid values will block the next valid request)
       if (!currentBookName || !currentChapterNumber) {
         return;
-        // throw new Error(`invalid book ${bookName} or chapter ${chapterNumber}`);
       }
 
       console.log('fetching verses with book ', currentBookName, ' and chapter ', currentChapterNumber);
-      const reqUrl = `${BASE_URL}verses/${currentBookName}/${currentChapterNumber}`;
+      // replace spaces for url
+      const reqUrl = `${BASE_URL}verses/${currentBookName.replaceAll(' ', '-')}/${currentChapterNumber}`;
       console.log('req url: ', reqUrl);
+
       const res = await axios.get(reqUrl);
       const verseList = res?.data ? res.data : null;
 
