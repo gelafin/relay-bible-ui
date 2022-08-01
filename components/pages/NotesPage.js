@@ -112,6 +112,7 @@ const NotesPage = ({initialSelectedVerses}) => {
    */
   const createNote = async (noteData) => {
     // TODO: call api
+    // note from Tim 8/1/22: make sure that it has book_name, chapter_num and verse_num in the linkedVerses string with only a reference to one verse
     const reqUrl = `${BASE_URL}notes/${userName}`;
     const reqBodyData = noteData;
 
