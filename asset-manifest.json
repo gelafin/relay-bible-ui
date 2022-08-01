@@ -1,7 +1,7 @@
 {
   "files": {
-    "app.js": "/relay-bible-ui/static/js/app.f032d4da.chunk.js",
-    "app.js.map": "/relay-bible-ui/static/js/app.f032d4da.chunk.js.map",
+    "app.js": "/relay-bible-ui/static/js/app.8de701b7.chunk.js",
+    "app.js.map": "/relay-bible-ui/static/js/app.8de701b7.chunk.js.map",
     "runtime~app.js": "/relay-bible-ui/static/js/runtime~app.f3c0199f.js",
     "runtime~app.js.map": "/relay-bible-ui/static/js/runtime~app.f3c0199f.js.map",
     "static/js/2.1cb29e4d.chunk.js": "/relay-bible-ui/static/js/2.1cb29e4d.chunk.js",
@@ -18,6 +18,6 @@
   "entrypoints": [
     "static/js/runtime~app.f3c0199f.js",
     "static/js/2.1cb29e4d.chunk.js",
-    "static/js/app.f032d4da.chunk.js"
+    "static/js/app.8de701b7.chunk.js"
   ]
 }
