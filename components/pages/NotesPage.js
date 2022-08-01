@@ -46,7 +46,7 @@ const sampleNotes = [
 ];
 
 // If selectedVerses are provided, this is in a drawer.
-// selectedVerses are in the form [{book: str, chapter: int, number: int}]
+// selectedVerses are in the form [{bookName: str, chapterNumber: int, verseNumber: int}]
 // When in a drawer, set filter and don't render contextHeader (Drawer does).
 // Filter settings are independent of context header when set
 const NotesPage = ({initialSelectedVerses}) => {
@@ -77,11 +77,13 @@ const NotesPage = ({initialSelectedVerses}) => {
 
   // set context header text based on selected verses
   useEffect(() => {
+    console.log('\tdetected change in filter settings for verses. Getting new context header text');
     const {selectedVerses} = filterSettings;
 
-    // TODO: create and use temporarily a new versesToString(selectedVerses: obj[])
-    const newHeaderText = versesToString(bookName, chapterNumber, selectedVerses)
+    const newHeaderText = versesToString(selectedVerses)
       || 'All';
+
+    console.log('\tnew header text: ', newHeaderText);
 
     setContextHeaderText(newHeaderText);
   }, [filterSettings?.selectedVerses]);
@@ -90,7 +92,9 @@ const NotesPage = ({initialSelectedVerses}) => {
     console.log('filtering...');
 
     // TODO: show filter form modal, then set filter settings in handleSubmitFilterSettings
-    setFilterSettings({...filterSettings, selectedVerses: [{book: 'Matthew', chapter: 5, number: 5}]});
+    const sampleVerses = [{bookName: 'Matthew', chapterNumber: 5, verseNumber: 5}];
+
+    setFilterSettings({...filterSettings, selectedVerses: sampleVerses});
   };
 
   const handleNewPress = () => {
@@ -134,7 +138,7 @@ const NotesPage = ({initialSelectedVerses}) => {
       <PageHeader
         headingText="My Notes"
         onFilterPress={!initialSelectedVerses && handleFilterPress}
-        onNewPress={!initialSelectedVerses && handleNewPress}
+        onNewPress={handleNewPress}
       ></PageHeader>
       <PageStyler>
         <ScrollView scrollEnabled="true">
