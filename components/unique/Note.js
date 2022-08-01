@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text } from "react-native";
 
 // custom styles
@@ -18,6 +18,7 @@ const Note = ({noteId, title, body, linkedVerseReferences, isPublic, deleteMe}) 
   const [isFocused, setIsFocused] = useState(false);
   const [showDeleteButton, setShowDeleteButton] = useState(false);
   const [showEditButton, setShowEditButton] = useState(true);
+  const [numberOfLines, setNumberOfLines] = useState(2);
 
   /**
    * display management
@@ -59,24 +60,26 @@ const Note = ({noteId, title, body, linkedVerseReferences, isPublic, deleteMe}) 
 
   const handleFocus = () => {
     toggleBlurFocusButtons(false);
+
+    // sync independently tracked flag
+    setIsFocused(true);
   };
 
   const handleBlur = () => {
     // TODO: this is a race condition that should be turned into useEffect somehow
     setTimeout(() => (toggleBlurFocusButtons(true)), 200);
+
+    // sync independently tracked flag
+    setIsFocused(false);
   };
 
-  /*
+  /**
    * helpers
    */
   const focusEdit = () => {
     console.log('focus input component');
     setIsFocused(true);
   };
-
-  // Enable setting isFocused to true... by setting it to false!
-  // Intended for use by children when they blur
-  const restoreFocusPower = () => (setIsFocused(false));
 
   const deleteNote = () => {
     console.log('deleting note with body ', currentBody);
@@ -94,6 +97,18 @@ const Note = ({noteId, title, body, linkedVerseReferences, isPublic, deleteMe}) 
     setHasChanges(false);
   };
 
+  /**
+   * side effect listeners
+   */
+
+  // expand input area on focus
+  useEffect(() => {
+    console.log('(note with body ', currentBody, ') Note \n\tisFocused? ', isFocused);
+    const showLines = isFocused ? 5 : 2;
+    
+    setNumberOfLines(showLines);
+  }, [isFocused]);
+
   return (
     <View>
       <FormLabel label={title}></FormLabel>
@@ -106,11 +121,11 @@ const Note = ({noteId, title, body, linkedVerseReferences, isPublic, deleteMe}) 
             currentValue={currentBody}
             flexValue={1}
             multiline
-            autoHeight  // TODO: setting this (and multiline) based on isFocused doesn't work, because autoHeight depends on onContentSizeChange event, which does not fire on focus
+            numberOfLines={numberOfLines}
+            // autoHeight  // TODO: setting this (and multiline) based on isFocused doesn't work, because autoHeight depends on onContentSizeChange event, which does not fire on focus
             isFocused={isFocused}
             onFocus={handleFocus}
             onBlur={handleBlur}
-            restoreFocusPower={restoreFocusPower}
           ></SingletonInputFormText>
           <Text style={{fontStyle: 'italic'}}>{linkedVerseReferences.join(' ')}</Text>
           {isPublic && <Text style={{fontStyle: 'italic'}}>public</Text>}
