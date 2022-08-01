@@ -46,6 +46,7 @@ const sampleNotes = [
 ];
 
 // If selectedVerses are provided, this is in a drawer.
+// selectedVerses are in the form [{book: str, chapter: int, number: int}]
 // When in a drawer, set filter and don't render contextHeader (Drawer does).
 // Filter settings are independent of context header when set
 const NotesPage = ({initialSelectedVerses}) => {
@@ -69,8 +70,6 @@ const NotesPage = ({initialSelectedVerses}) => {
     setFilterSettings({
       ...filterSettings,
       selectedVerses: initialSelectedVerses || [],
-      bookName: '',
-      chapterNumber: 0
     })
   );
 
@@ -78,7 +77,9 @@ const NotesPage = ({initialSelectedVerses}) => {
 
   // set context header text based on selected verses
   useEffect(() => {
-    const {selectedVerses, bookName, chapterNumber} = filterSettings;
+    const {selectedVerses} = filterSettings;
+
+    // TODO: create and use temporarily a new versesToString(selectedVerses: obj[])
     const newHeaderText = versesToString(bookName, chapterNumber, selectedVerses)
       || 'All';
 
@@ -87,8 +88,9 @@ const NotesPage = ({initialSelectedVerses}) => {
 
   const handleFilterPress = () => {
     console.log('filtering...');
+
     // TODO: show filter form modal, then set filter settings in handleSubmitFilterSettings
-    setFilterSettings({...filterSettings, bookName: 'Jeremiah', chapterNumber: 5, selectedVerses: [7, 8, 9, 20]});
+    setFilterSettings({...filterSettings, selectedVerses: [{book: 'Matthew', chapter: 5, number: 5}]});
   };
 
   const handleNewPress = () => {
