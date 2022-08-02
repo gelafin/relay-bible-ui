@@ -13,28 +13,29 @@ import { versesToString } from '../../util/VerseReferenceFormatter.js';
 import axios from 'axios';
 import { BASE_URL } from '../../constants/apiData.js';
 import { NoteFilterModal } from '../common/NoteFilterModal.js';
+import { Verse } from '../../util/Verse.js';
 
-const sampleNotes = [
+export const sampleNotes = [
   {
     // ID can be a combo of title and linked verses, and uniqueness can be enforced
     'id': '1',
     'title': 'Note Title Abc',
     'body': 'I think this verse is cool because a comparison can be made between the symbolism of the metaphors of both passages insofar that one applies best practices of exegesis and hermeneutics.',
-    'linkedVerses': ['Revelation 2:5'],
+    'linkedVerses': [new Verse('Revelation', 2, 5)],
     'isPublic': true
   },
   {
     'id': '2',
     'title': 'Note Title 2',
     'body': 'Glory be',
-    'linkedVerses': ['Genesis 1:10'],
+    'linkedVerses': [new Verse('Genesis', 1, 10)],
     'isPublic': false
   },
   {
     'id': '3',
     'title': 'My Note Title',
     'body': 'I think this passage is pretty nice.',
-    'linkedVerses': ['Genesis 14:2', 'Psalms 145:100', 'Zechariah 1:3', 'Matthew 5:5'],
+    'linkedVerses': [new Verse('Genesis', 14, 2), new Verse('Psalms', 145, 100), new Verse('Zechariah', 1, 3), new Verse('Matthew', 5, 5)],
     'isPublic': true
   },
   {
@@ -145,7 +146,7 @@ const NotesPage = ({initialSelectedVerses}) => {
               noteId={note.id}
               title={note.title}
               body={note.body}
-              linkedVerseReferences={note.linkedVerses}
+              linkedVerseReferences={note.linkedVerses.map(verseObj => verseObj.toString())}
               isPublic={note.isPublic}
               deleteMe={deleteNote}
             ></Note>
@@ -163,7 +164,7 @@ const NotesPage = ({initialSelectedVerses}) => {
         <NoteFilterModal
           setShouldShowDialog={setShowNoteFilterModal}
           onCancel={() => setShowNoteFilterModal(false)}
-          onSubmit={newSettings => setFilterSettings(newSettings)}
+          onSubmit={newSettings => {console.log('new filter settings: ', newSettings); setFilterSettings(newSettings)}}
           initialFilterSettings={filterSettings}
         ></NoteFilterModal>
       }

@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
-import { Provider, Portal, Dialog, Button, Paragraph } from 'react-native-paper';
+import { Provider, Portal, Dialog, Button } from 'react-native-paper';
+import { sampleNotes } from '../pages/NotesPage';
 
 // custom components
 import { FormLabel } from './FormLabel';
@@ -8,9 +9,7 @@ import { FormLabel } from './FormLabel';
 /**
  * @param onSubmit: called with argument object
  *  {
- *      selectedVerses: [{
- *                          title: string, body: string, linkedVerses: string[], isPublic: bool
- *      }]
+ *    selectedVerses: [Verse]
  *  }
  */
 const NoteFilterModal = ({setShouldShowDialog, onSubmit, onCancel, initialFilterSettings}) => {
@@ -23,9 +22,20 @@ const NoteFilterModal = ({setShouldShowDialog, onSubmit, onCancel, initialFilter
   };
 
   const handleSubmit = () => {
+    console.log('*submitting filter settings ', JSON.stringify(filterSettings));
     hideDialog();
     onSubmit(filterSettings);
   };
+
+  const handleRelatedVersesChange = newRelatedVerses => {
+    console.log('\tsetting new filter settings ', JSON.stringify({...filterSettings, selectedVerses: [...newRelatedVerses]}));
+    setFilterSettings({...filterSettings, selectedVerses: newRelatedVerses});
+  };
+
+  // TODO: remove after testing
+  useEffect(() => {
+    console.log('DEBUG: on mount, setting linked verses to ', sampleNotes[0].linkedVerses);
+    handleRelatedVersesChange(sampleNotes[0].linkedVerses)}, []);
 
   return (
     <Provider>
@@ -35,10 +45,10 @@ const NoteFilterModal = ({setShouldShowDialog, onSubmit, onCancel, initialFilter
             <Text>Filters</Text>
           </Dialog.Title>
           <Dialog.Content>
-            <FormLabel label="Related to verses"></FormLabel>
-            <Text>TODO: button here to open verse selection modal</Text>
-            <View>{filterSettings?.selectedVerses?.map(verseData => (
-              <Text key={verseData.title + verseData.body}>{verseData.body}</Text>
+            <FormLabel label="Related verses"></FormLabel>
+            <Text>TODO: button here to open verse selection modal, which will call handleRelatedVersesChange</Text>
+            <View>{filterSettings?.selectedVerses?.map(verseObj => (
+              <Text key={verseObj.toString()}>{verseObj.toString()}</Text>
             ))}</View>
             
             {/* if no selectedVerses */}
