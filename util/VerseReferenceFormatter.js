@@ -14,8 +14,9 @@ export const versesToString = (verses) => {
   const firstChapter = verses[0]?.chapterNumber;
   const firstVerse = verses[0]?.verseNumber;
 
-  contextHeaderText = firstBook && firstChapter && firstVerse &&
-    `${firstBook} ${firstChapter}:${firstVerse}`;
+  if (firstBook && firstChapter && firstVerse) {
+    contextHeaderText = `${firstBook} ${firstChapter}:${firstVerse}`;
+  }
 
   // append 'etc' for ranges
   contextHeaderText += verses?.length > 1 ? ' etc'

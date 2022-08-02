@@ -77,13 +77,10 @@ const NotesPage = ({initialSelectedVerses}) => {
 
   // set context header text based on selected verses
   useEffect(() => {
-    console.log('\tdetected change in filter settings for verses. Getting new context header text');
     const {selectedVerses} = filterSettings;
 
     const newHeaderText = versesToString(selectedVerses)
       || 'All';
-
-    console.log('\tnew header text: ', newHeaderText);
 
     setContextHeaderText(newHeaderText);
   }, [filterSettings?.selectedVerses]);
@@ -128,6 +125,11 @@ const NotesPage = ({initialSelectedVerses}) => {
 
     // TODO: after api call, update displayed notes
     // fetchNoteData();
+  };
+
+  const editNote = async () => {
+    // TODO
+    // note from Tim 8/1/22: send PUT to /api/notes/:username with body {oldTitle: string, newTitle: string, oldBody: string, newBody: string, isPublic: bool}
   };
 
   return (
