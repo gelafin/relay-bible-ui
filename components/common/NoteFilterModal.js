@@ -28,7 +28,7 @@ const NoteFilterModal = ({setShouldShowDialog, onSubmit, onCancel, initialFilter
   };
 
   const handleRelatedVersesChange = newRelatedVerses => {
-    console.log('\tsetting new filter settings ', JSON.stringify({...filterSettings, selectedVerses: [...newRelatedVerses]}));
+    console.log('\tsetting new filter settings ', {...filterSettings, selectedVerses: [...newRelatedVerses]});
     setFilterSettings({...filterSettings, selectedVerses: newRelatedVerses});
   };
 
@@ -48,9 +48,11 @@ const NoteFilterModal = ({setShouldShowDialog, onSubmit, onCancel, initialFilter
             <FormLabel label="Related verses"></FormLabel>
             <Text>TODO: button here to open verse selection modal, which will call handleRelatedVersesChange</Text>
             <View>{filterSettings?.selectedVerses?.map(verseObj => (
-              <Text key={verseObj.toString()}>{verseObj.toString()}</Text>
+              <Text key={verseObj.reference}>{verseObj.reference}</Text>
             ))}</View>
             
+            {/* TODO: debug why one of these conditions is met even after setting
+            filterSettings.selectedVerses to a valid value? */}
             {/* if no selectedVerses */}
             {!filterSettings?.selectedVerses || filterSettings.selectedVerses.length < 1 &&
               <Text>none</Text>

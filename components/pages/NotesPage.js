@@ -108,8 +108,15 @@ const NotesPage = ({initialSelectedVerses}) => {
    * @param {*} noteData object in the form {title: string, body: string, linkedVerses: string[], isPublic: bool}
    */
   const createNote = async (noteData) => {
-    // TODO: call api
-    // note from Tim 8/1/22: make sure that it has book_name, chapter_num and verse_num in the linkedVerses string with only a reference to one verse
+    // TODO: call api at POST /api/notes/:username
+    /* note from Tim 8/1/22: make sure that it has this form, with reference to only one verse for now
+     {
+      "title": "string",
+      "body": "This is such an incredible verse",
+      "linkedVerses": ["John", 3, 16],
+      "isPublic": true
+     }
+     */
     const reqUrl = `${BASE_URL}notes/${userName}`;
     const reqBodyData = noteData;
 
@@ -146,7 +153,7 @@ const NotesPage = ({initialSelectedVerses}) => {
               noteId={note.id}
               title={note.title}
               body={note.body}
-              linkedVerseReferences={note.linkedVerses.map(verseObj => verseObj.toString())}
+              linkedVerseReferences={note.linkedVerses.map(verseObj => verseObj.reference)}
               isPublic={note.isPublic}
               deleteMe={deleteNote}
             ></Note>
