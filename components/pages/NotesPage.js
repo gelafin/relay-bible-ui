@@ -12,6 +12,7 @@ import { NoteEditDialog } from '../unique/NoteEditDialog.js';
 import { versesToString } from '../../util/VerseReferenceFormatter.js';
 import axios from 'axios';
 import { BASE_URL } from '../../constants/apiData.js';
+import { NoteFilterModal } from '../common/NoteFilterModal.js';
 
 const sampleNotes = [
   {
@@ -54,6 +55,7 @@ const NotesPage = ({initialSelectedVerses}) => {
   const [contextHeaderText, setContextHeaderText] = useState('');
   const [notes, setNotes] = useState([]);
   const [showNoteCreateDialog, setShowNoteCreateDialog] = useState(false);
+  const [showNoteFilterModal, setShowNoteFilterModal] = useState(false);
   const [userName, setUserName] = useState('CTCheeseman');  // TODO: use global state
 
   const fetchNoteData = async () => {
@@ -85,14 +87,7 @@ const NotesPage = ({initialSelectedVerses}) => {
     setContextHeaderText(newHeaderText);
   }, [filterSettings?.selectedVerses]);
 
-  const handleFilterPress = () => {
-    console.log('filtering...');
-
-    // TODO: show filter form modal, then set filter settings in handleSubmitFilterSettings
-    const sampleVerses = [{bookName: 'Matthew', chapterNumber: 5, verseNumber: 5}];
-
-    setFilterSettings({...filterSettings, selectedVerses: sampleVerses});
-  };
+  const handleFilterPress = () => setShowNoteFilterModal(true);
 
   const handleNewPress = () => {
     console.log('creating new...');
@@ -163,6 +158,14 @@ const NotesPage = ({initialSelectedVerses}) => {
           onCancel={() => setShowNoteCreateDialog(false)}
           onSubmit={createNote}
         ></NoteEditDialog>
+      }
+      {showNoteFilterModal &&
+        <NoteFilterModal
+          setShouldShowDialog={setShowNoteFilterModal}
+          onCancel={() => setShowNoteFilterModal(false)}
+          onSubmit={newSettings => setFilterSettings(newSettings)}
+          initialFilterSettings={filterSettings}
+        ></NoteFilterModal>
       }
     </>
   );
