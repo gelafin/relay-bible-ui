@@ -14,6 +14,7 @@ import { FormLabel } from './FormLabel';
  */
 const NoteFilterModal = ({setShouldShowDialog, onSubmit, onCancel, initialFilterSettings}) => {
   const [filterSettings, setFilterSettings] = useState(initialFilterSettings || {});
+  const [selectedVersesTest, setSelectedVersesTest] = useState();
   const hideDialog = () => setShouldShowDialog(false);
 
   const handleCancel = () => {
@@ -35,6 +36,8 @@ const NoteFilterModal = ({setShouldShowDialog, onSubmit, onCancel, initialFilter
     console.log('\t\tselected verses length', filterSettings.selectedVerses.length);
   }, [filterSettings.selectedVerses, filterSettings.selectedVerses[0]]);
 
+  useEffect(() => console.log('\t*selectedVersesTest ', selectedVersesTest), [selectedVersesTest]);
+
   const handleRelatedVersesChange = newRelatedVerses => {
     // setFilterSettings((filterSettings) => ({...filterSettings, [...newRelatedVerses]}));
 
@@ -50,6 +53,8 @@ const NoteFilterModal = ({setShouldShowDialog, onSubmit, onCancel, initialFilter
     const initVerses = [{reference: 'Matthew 5:5'}];
     console.log('DEBUG: on mount, setting linked verses to ', initVerses);
     handleRelatedVersesChange(initVerses);
+
+    setSelectedVersesTest(initVerses);
   }, []);
 
   return (
@@ -73,7 +78,10 @@ const NoteFilterModal = ({setShouldShowDialog, onSubmit, onCancel, initialFilter
               <Text>none</Text>
             }
             {/* DEBUG */}
+            <Text>filterSettings.selectedVerses: </Text>
             <Paragraph>{JSON.stringify(filterSettings?.selectedVerses)}</Paragraph>
+            <Text>Independent selectedVersesTest: </Text>
+            <Paragraph>{JSON.stringify(selectedVersesTest)}</Paragraph>
           </Dialog.Content>
           <Dialog.Actions>
             <Button onPress={() => handleSubmit()}>Apply</Button>

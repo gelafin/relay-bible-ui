@@ -10,6 +10,7 @@ import { PageStyler } from './PageStyler.js';
 import { DeleteButton } from '../buttons/DeleteButton.js';
 import { ConfirmDialog } from '../common/ConfirmDialog.js';
 import { ContextHeader } from '../common/ContextHeader.js';
+import { TEST } from '../TEST.js';
 
 const DELETE_PROFILE_DIALOG_DESCRIPTION = 'Your public notes will remain. There\'s nothing you can do about this. Mwahaha <3';
 
@@ -71,6 +72,9 @@ const ProfilePage = () => {
           ></SingletonInputForm>
         </FormSection>
         <DeleteButton onPress={()=>{setShouldShowDialog(true)}}>Delete Profile</DeleteButton>
+
+        <TEST></TEST>
+
       </PageStyler>
       {shouldShowDialog &&
         <ConfirmDialog
