@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { Paragraph } from 'react-native-paper';
 
 const TEST = () => {
-  const [testObjArray, setTestObjArray] = useState([{reference: 'Matthew 5:5'}]);
+  const [testObjArray, setTestObjArray] = useState();
 
   useEffect(() => console.log('new value: ', testObjArray), [testObjArray])
 

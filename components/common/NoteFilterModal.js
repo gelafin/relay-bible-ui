@@ -12,8 +12,7 @@ import { FormLabel } from './FormLabel';
  *    selectedVerses: [Verse]
  *  }
  */
-const NoteFilterModal = ({setShouldShowDialog, onSubmit, onCancel, initialFilterSettings}) => {
-  const [filterSettings, setFilterSettings] = useState(initialFilterSettings || {});
+const NoteFilterModal = ({setShouldShowDialog, onSubmit, onCancel, filterSettings, setFilterSettings}) => {
   const [selectedVersesTest, setSelectedVersesTest] = useState();
   const hideDialog = () => setShouldShowDialog(false);
 
@@ -29,12 +28,10 @@ const NoteFilterModal = ({setShouldShowDialog, onSubmit, onCancel, initialFilter
     onSubmit(filterSettings);
   }
 
-  // DEBUG
+  // DEBUG EVERY UPDATE
   useEffect(() => {
-    console.log('\tselected verses changed:', filterSettings.selectedVerses);
-    console.log('\t\tselected verses is now truthy?', !!filterSettings.selectedVerses);
-    console.log('\t\tselected verses length', filterSettings.selectedVerses.length);
-  }, [filterSettings.selectedVerses, filterSettings.selectedVerses[0]]);
+    console.log('\tselected verses:', filterSettings.selectedVerses);
+  });
 
   useEffect(() => console.log('\t*selectedVersesTest ', selectedVersesTest), [selectedVersesTest]);
 
@@ -54,7 +51,9 @@ const NoteFilterModal = ({setShouldShowDialog, onSubmit, onCancel, initialFilter
     console.log('DEBUG: on mount, setting linked verses to ', initVerses);
     handleRelatedVersesChange(initVerses);
 
-    setSelectedVersesTest(initVerses);
+    // DEBUG state
+    const testVerse = [{reference: 'Matthew 5:5'}];
+    setSelectedVersesTest(testVerse);
   }, []);
 
   return (

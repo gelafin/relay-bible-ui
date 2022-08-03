@@ -51,7 +51,7 @@ export const sampleNotes = [
 // selectedVerses are in the form [{bookName: str, chapterNumber: int, verseNumber: int}]
 // When in a drawer, set filter and don't render contextHeader (Drawer does).
 // Filter settings are independent of context header when set
-const NotesPage = ({initialSelectedVerses}) => {
+const NotesPage = ({initialSelectedVerseObjects}) => {
   const [filterSettings, setFilterSettings] = useState({});
   const [contextHeaderText, setContextHeaderText] = useState('');
   const [notes, setNotes] = useState([]);
@@ -72,7 +72,7 @@ const NotesPage = ({initialSelectedVerses}) => {
   const initializeFilterSettings = () => (
     setFilterSettings({
       ...filterSettings,
-      selectedVerses: initialSelectedVerses || [],
+      selectedVerses: initialSelectedVerseObjects || [],
     })
   );
 
@@ -159,10 +159,10 @@ const NotesPage = ({initialSelectedVerses}) => {
     <>
       {/* If initialSelectedVerses are provided, this component is in a drawer,
           so don't show header */}
-      {!initialSelectedVerses && <ContextHeader headingText={contextHeaderText}></ContextHeader>}
+      {!initialSelectedVerseObjects && <ContextHeader headingText={contextHeaderText}></ContextHeader>}
       <PageHeader
         headingText="My Notes"
-        onFilterPress={!initialSelectedVerses && handleFilterPress}
+        onFilterPress={!initialSelectedVerseObjects && handleFilterPress}
         onNewPress={handleNewPress}
       ></PageHeader>
       <PageStyler>
@@ -192,7 +192,9 @@ const NotesPage = ({initialSelectedVerses}) => {
           setShouldShowDialog={setShowNoteFilterModal}
           onCancel={() => setShowNoteFilterModal(false)}
           onSubmit={newSettings => {console.log('new filter settings: ', newSettings); setFilterSettings(newSettings)}}
-          initialFilterSettings={filterSettings}
+          // filterSettings={{selectedVerses: [{reference: 'DEFAULT pleeeease override this'}]}}
+          filterSettings={filterSettings}
+          setFilterSettings={setFilterSettings}
         ></NoteFilterModal>
       }
     </>
