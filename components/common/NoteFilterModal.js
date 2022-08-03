@@ -21,15 +21,18 @@ const NoteFilterModal = ({setShouldShowDialog, onSubmit, onCancel, initialFilter
     onCancel && onCancel();
   };
 
-  const handleSubmit = () => {
-    console.log('*submitting filter settings ', JSON.stringify(filterSettings));
+  function handleSubmit() {
+    console.log('*submitting filter settings ', filterSettings);
     hideDialog();
     onSubmit(filterSettings);
-  };
+  }
+
+  // DEBUG
+  useEffect(() => console.log('\tfilter settings changed:', filterSettings), [filterSettings]);
 
   const handleRelatedVersesChange = newRelatedVerses => {
     console.log('\tsetting new filter settings ', {...filterSettings, selectedVerses: [...newRelatedVerses]});
-    setFilterSettings({...filterSettings, selectedVerses: newRelatedVerses});
+    setFilterSettings((filterSettings) => ({...filterSettings, selectedVerses: [...newRelatedVerses]}));
   };
 
   // TODO: remove after testing
@@ -59,7 +62,7 @@ const NoteFilterModal = ({setShouldShowDialog, onSubmit, onCancel, initialFilter
             }
           </Dialog.Content>
           <Dialog.Actions>
-            <Button onPress={handleSubmit}>Apply</Button>
+            <Button onPress={() => handleSubmit()}>Apply</Button>
             <Button onPress={handleCancel}>Cancel</Button>
           </Dialog.Actions>
         </Dialog>
