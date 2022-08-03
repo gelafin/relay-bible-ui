@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
-import { Provider, Portal, Dialog, Button } from 'react-native-paper';
+import { Provider, Portal, Dialog, Button, Paragraph } from 'react-native-paper';
 import { sampleNotes } from '../pages/NotesPage';
 
 // custom components
@@ -23,22 +23,34 @@ const NoteFilterModal = ({setShouldShowDialog, onSubmit, onCancel, initialFilter
 
   function handleSubmit() {
     console.log('*submitting filter settings ', filterSettings);
+    console.log('\twith selected verses ', filterSettings.selectedVerses);
     hideDialog();
     onSubmit(filterSettings);
   }
 
   // DEBUG
-  useEffect(() => console.log('\tfilter settings changed:', filterSettings), [filterSettings]);
+  useEffect(() => {
+    console.log('\tselected verses changed:', filterSettings.selectedVerses);
+    console.log('\t\tselected verses is now truthy?', !!filterSettings.selectedVerses);
+    console.log('\t\tselected verses length', filterSettings.selectedVerses.length);
+  }, [filterSettings.selectedVerses, filterSettings.selectedVerses[0]]);
 
   const handleRelatedVersesChange = newRelatedVerses => {
-    console.log('\tsetting new filter settings ', {...filterSettings, selectedVerses: [...newRelatedVerses]});
-    setFilterSettings((filterSettings) => ({...filterSettings, selectedVerses: [...newRelatedVerses]}));
+    // setFilterSettings((filterSettings) => ({...filterSettings, [...newRelatedVerses]}));
+
+    // test with the deepest clone from the depths of sheol
+    const TEST_SETTINGS = {selectedVerses: JSON.parse(JSON.stringify(newRelatedVerses))};
+    console.log('\tsetting new filter settings ', TEST_SETTINGS);
+    setFilterSettings(TEST_SETTINGS);
   };
 
   // TODO: remove after testing
   useEffect(() => {
-    console.log('DEBUG: on mount, setting linked verses to ', sampleNotes[0].linkedVerses);
-    handleRelatedVersesChange(sampleNotes[0].linkedVerses)}, []);
+    // const initVerses = sampleNotes[0].linkedVerses;
+    const initVerses = [{reference: 'Matthew 5:5'}];
+    console.log('DEBUG: on mount, setting linked verses to ', initVerses);
+    handleRelatedVersesChange(initVerses);
+  }, []);
 
   return (
     <Provider>
@@ -60,6 +72,8 @@ const NoteFilterModal = ({setShouldShowDialog, onSubmit, onCancel, initialFilter
             {!filterSettings?.selectedVerses || filterSettings.selectedVerses.length < 1 &&
               <Text>none</Text>
             }
+            {/* DEBUG */}
+            <Paragraph>{JSON.stringify(filterSettings?.selectedVerses)}</Paragraph>
           </Dialog.Content>
           <Dialog.Actions>
             <Button onPress={() => handleSubmit()}>Apply</Button>

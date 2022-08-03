@@ -1,9 +1,8 @@
-export function Verse(bookName, chapterNumber, verseNumber) {
-  this.bookName = bookName;
-  this.chapterNumber = chapterNumber;
-  this.verseNumber = verseNumber;
-
-  this.reference = `${bookName} ${chapterNumber}:${verseNumber}`;
-
-  return this;
+export function createVerse(bookName, chapterNumber, verseNumber) {
+  return ({
+    bookName: bookName,
+    chapterNumber: chapterNumber,
+    verseNumber: verseNumber,
+    reference: `${bookName} ${chapterNumber}:${verseNumber}`
+  });
 }

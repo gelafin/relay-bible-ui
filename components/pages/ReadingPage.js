@@ -24,7 +24,7 @@ import { Enum } from '../../util/Enum.js';
 // custom util
 import { versesToString } from "../../util/VerseReferenceFormatter";
 import { BASE_URL } from '../../constants/apiData.js';
-import { Verse as VerseObj } from '../../util/Verse.js';
+import { createVerse } from '../../util/Verse.js';
 
 const drawerContentsOptions = new Enum('NOTES_PAGE', 'COMMENTARY_PAGE', 'VERSE_SELECTED_OPTIONS');
 
@@ -142,7 +142,7 @@ const ReadingPage = () => {
   // update context header text
   useEffect(() => {
     const selectedVerseObjects = selectedVerseNumbersOrdered.map(
-      verseNumber => new VerseObj(currentBookName, currentChapterNumber, verseNumber)
+      verseNumber => createVerse(currentBookName, currentChapterNumber, verseNumber)
     );
     let contextHeaderText = versesToString(selectedVerseObjects);
     setContextHeaderText(contextHeaderText);

@@ -13,7 +13,7 @@ import { versesToString } from '../../util/VerseReferenceFormatter.js';
 import axios from 'axios';
 import { BASE_URL } from '../../constants/apiData.js';
 import { NoteFilterModal } from '../common/NoteFilterModal.js';
-import { Verse } from '../../util/Verse.js';
+import { createVerse } from '../../util/Verse.js';
 
 export const sampleNotes = [
   {
@@ -21,21 +21,21 @@ export const sampleNotes = [
     'id': '1',
     'title': 'Note Title Abc',
     'body': 'I think this verse is cool because a comparison can be made between the symbolism of the metaphors of both passages insofar that one applies best practices of exegesis and hermeneutics.',
-    'linkedVerses': [new Verse('Revelation', 2, 5)],
+    'linkedVerses': [createVerse('Revelation', 2, 5)],
     'isPublic': true
   },
   {
     'id': '2',
     'title': 'Note Title 2',
     'body': 'Glory be',
-    'linkedVerses': [new Verse('Genesis', 1, 10)],
+    'linkedVerses': [createVerse('Genesis', 1, 10)],
     'isPublic': false
   },
   {
     'id': '3',
     'title': 'My Note Title',
     'body': 'I think this passage is pretty nice.',
-    'linkedVerses': [new Verse('Genesis', 14, 2), new Verse('Psalms', 145, 100), new Verse('Zechariah', 1, 3), new Verse('Matthew', 5, 5)],
+    'linkedVerses': [createVerse('Genesis', 14, 2), createVerse('Psalms', 145, 100), createVerse('Zechariah', 1, 3), createVerse('Matthew', 5, 5)],
     'isPublic': true
   },
   {
