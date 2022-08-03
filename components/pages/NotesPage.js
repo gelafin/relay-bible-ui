@@ -97,6 +97,13 @@ const NotesPage = ({initialSelectedVerses}) => {
 
   const deleteNote = (noteId) => {
     // TODO: call api
+    /**
+     * note from Tim 8/1/22: send DELETE to /notes/:username with body 
+    {
+      "title": "string",
+      "body": "string"
+    }
+     */
 
     setNotes(notes.filter(note => note.id !== noteId));
 
@@ -133,6 +140,19 @@ const NotesPage = ({initialSelectedVerses}) => {
   const editNote = async () => {
     // TODO
     // note from Tim 8/1/22: send PUT to /api/notes/:username with body {oldTitle: string, newTitle: string, oldBody: string, newBody: string, isPublic: bool}
+  };
+
+  const updateNote = async () => {
+    /** note from Tim 8/1/22: send PUT to /api/notes/:username with body
+    {
+      "oldTitle": "string",
+      "newTitle": "string",
+      "oldBody": "This is such an incredible verse",
+      "newBody": "This is really such an incredible verse",
+      "linkedVerses": ["John", 3, 16],
+      "isPublic": true
+    }
+     */
   };
 
   return (
