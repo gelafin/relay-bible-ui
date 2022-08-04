@@ -12,28 +12,27 @@ import { FormLabel } from './FormLabel';
  *    selectedVerses: [Verse]
  *  }
  */
-const NoteFilterModal = ({setShouldShowDialog, onSubmit, onCancel, initialFilterSettings}) => {
-  const [filterSettings, setFilterSettings] = useState(initialFilterSettings || {});
+const NoteFilterModal = ({setShouldShowDialog, onCancel, filterSettings, setFilterSettings}) => {
+  const [selectedVersesTest, setSelectedVersesTest] = useState();
   const hideDialog = () => setShouldShowDialog(false);
 
   const handleCancel = () => {
     hideDialog();
-    onCancel && onCancel();
+    onCancel && onCancel();  // parent should undo changes
   };
 
   function handleSubmit() {
-    console.log('*submitting filter settings ', filterSettings);
+    console.log('*keeping filter settings ', filterSettings);
     console.log('\twith selected verses ', filterSettings.selectedVerses);
     hideDialog();
-    onSubmit(filterSettings);
+
+    // no need to submit to parent; parent state already updated
   }
 
-  // DEBUG
+  // DEBUG EVERY UPDATE
   useEffect(() => {
-    console.log('\tselected verses changed:', filterSettings.selectedVerses);
-    console.log('\t\tselected verses is now truthy?', !!filterSettings.selectedVerses);
-    console.log('\t\tselected verses length', filterSettings.selectedVerses.length);
-  }, [filterSettings.selectedVerses, filterSettings.selectedVerses[0]]);
+    console.log('\tselected verses (SAME EXACT expression as non-updating jsx):', JSON.stringify(filterSettings?.selectedVerses));
+  });
 
   const handleRelatedVersesChange = newRelatedVerses => {
     // setFilterSettings((filterSettings) => ({...filterSettings, [...newRelatedVerses]}));
@@ -43,14 +42,6 @@ const NoteFilterModal = ({setShouldShowDialog, onSubmit, onCancel, initialFilter
     console.log('\tsetting new filter settings ', TEST_SETTINGS);
     setFilterSettings(TEST_SETTINGS);
   };
-
-  // TODO: remove after testing
-  useEffect(() => {
-    // const initVerses = sampleNotes[0].linkedVerses;
-    const initVerses = [{reference: 'Matthew 5:5'}];
-    console.log('DEBUG: on mount, setting linked verses to ', initVerses);
-    handleRelatedVersesChange(initVerses);
-  }, []);
 
   return (
     <Provider>
@@ -73,10 +64,12 @@ const NoteFilterModal = ({setShouldShowDialog, onSubmit, onCancel, initialFilter
               <Text>none</Text>
             }
             {/* DEBUG */}
+            <Text>filterSettings.selectedVerses... SAME EXACT expression as correctly updating js: </Text>
             <Paragraph>{JSON.stringify(filterSettings?.selectedVerses)}</Paragraph>
           </Dialog.Content>
           <Dialog.Actions>
-            <Button onPress={() => handleSubmit()}>Apply</Button>
+            <Button onPress={() => handleRelatedVersesChange([{reference: 'Matthew 5:5'}])}>Test Selected Verses</Button>
+            <Button onPress={handleSubmit}>Apply</Button>
             <Button onPress={handleCancel}>Cancel</Button>
           </Dialog.Actions>
         </Dialog>

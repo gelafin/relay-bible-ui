@@ -51,7 +51,7 @@ export const sampleNotes = [
 // selectedVerses are in the form [{bookName: str, chapterNumber: int, verseNumber: int}]
 // When in a drawer, set filter and don't render contextHeader (Drawer does).
 // Filter settings are independent of context header when set
-const NotesPage = ({initialSelectedVerses}) => {
+const NotesPage = ({initialSelectedVerseObjects}) => {
   const [filterSettings, setFilterSettings] = useState({});
   const [contextHeaderText, setContextHeaderText] = useState('');
   const [notes, setNotes] = useState([]);
@@ -70,13 +70,24 @@ const NotesPage = ({initialSelectedVerses}) => {
   useEffect(fetchNoteData, []);
 
   const initializeFilterSettings = () => (
-    setFilterSettings({
-      ...filterSettings,
-      selectedVerses: initialSelectedVerses || [],
-    })
+    // DEBUG
+    setFilterSettings({selectedVerses: [{reference: 'DEFAULT pleeeease override this'}]})
+
+    // setFilterSettings({
+    //   ...filterSettings,
+    //   selectedVerses: initialSelectedVerseObjects || [],
+    // })
   );
 
-  useEffect(initializeFilterSettings, []);
+  // DEBUG
+  useEffect(() => console.log('\t** NotesPage: filter settings changed **', filterSettings), [filterSettings]);
+
+  // DEBUG
+  // useEffect(initializeFilterSettings, []);
+  useEffect(() => {
+    console.log('**initializing filter settings in NotesPage**');
+    initializeFilterSettings();
+  }, []);
 
   // set context header text based on selected verses
   useEffect(() => {
@@ -159,10 +170,10 @@ const NotesPage = ({initialSelectedVerses}) => {
     <>
       {/* If initialSelectedVerses are provided, this component is in a drawer,
           so don't show header */}
-      {!initialSelectedVerses && <ContextHeader headingText={contextHeaderText}></ContextHeader>}
+      {!initialSelectedVerseObjects && <ContextHeader headingText={contextHeaderText}></ContextHeader>}
       <PageHeader
         headingText="My Notes"
-        onFilterPress={!initialSelectedVerses && handleFilterPress}
+        onFilterPress={!initialSelectedVerseObjects && handleFilterPress}
         onNewPress={handleNewPress}
       ></PageHeader>
       <PageStyler>
@@ -191,8 +202,8 @@ const NotesPage = ({initialSelectedVerses}) => {
         <NoteFilterModal
           setShouldShowDialog={setShowNoteFilterModal}
           onCancel={() => setShowNoteFilterModal(false)}
-          onSubmit={newSettings => {console.log('new filter settings: ', newSettings); setFilterSettings(newSettings)}}
-          initialFilterSettings={filterSettings}
+          filterSettings={filterSettings}
+          setFilterSettings={newSettings => {console.log('**NotesPage: new filter settings** ', newSettings); setFilterSettings(newSettings)}}
         ></NoteFilterModal>
       }
     </>

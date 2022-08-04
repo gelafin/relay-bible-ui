@@ -205,7 +205,10 @@ const ReadingPage = () => {
               onClosePress={closeDrawer}
               onExpandPress={toggleExpandMinimizeDrawer}
             >
-              <NotesPage initialSelectedVerses={selectedVerseNumbers}></NotesPage>
+              <NotesPage
+                initialSelectedVerses={[...selectedVerseNumbers].map(verseNumber => 
+                  createVerse(currentBookName, currentChapterNumber, verseNumber))}
+              ></NotesPage>
             </DrawerPage>
           }
           {
