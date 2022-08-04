@@ -70,13 +70,24 @@ const NotesPage = ({initialSelectedVerseObjects}) => {
   useEffect(fetchNoteData, []);
 
   const initializeFilterSettings = () => (
-    setFilterSettings({
-      ...filterSettings,
-      selectedVerses: initialSelectedVerseObjects || [],
-    })
+    // DEBUG
+    setFilterSettings({selectedVerses: [{reference: 'DEFAULT pleeeease override this'}]})
+
+    // setFilterSettings({
+    //   ...filterSettings,
+    //   selectedVerses: initialSelectedVerseObjects || [],
+    // })
   );
 
-  useEffect(initializeFilterSettings, []);
+  // DEBUG
+  useEffect(() => console.log('\t** NotesPage: filter settings changed **', filterSettings), [filterSettings]);
+
+  // DEBUG
+  // useEffect(initializeFilterSettings, []);
+  useEffect(() => {
+    console.log('**initializing filter settings in NotesPage**');
+    initializeFilterSettings();
+  }, []);
 
   // set context header text based on selected verses
   useEffect(() => {
@@ -191,10 +202,8 @@ const NotesPage = ({initialSelectedVerseObjects}) => {
         <NoteFilterModal
           setShouldShowDialog={setShowNoteFilterModal}
           onCancel={() => setShowNoteFilterModal(false)}
-          onSubmit={newSettings => {console.log('new filter settings: ', newSettings); setFilterSettings(newSettings)}}
-          // filterSettings={{selectedVerses: [{reference: 'DEFAULT pleeeease override this'}]}}
           filterSettings={filterSettings}
-          setFilterSettings={setFilterSettings}
+          setFilterSettings={newSettings => {console.log('**NotesPage: new filter settings** ', newSettings); setFilterSettings(newSettings)}}
         ></NoteFilterModal>
       }
     </>
