@@ -12,28 +12,30 @@ import { NoteEditDialog } from '../unique/NoteEditDialog.js';
 import { versesToString } from '../../util/VerseReferenceFormatter.js';
 import axios from 'axios';
 import { BASE_URL } from '../../constants/apiData.js';
+import { NoteFilterModal } from '../common/NoteFilterModal.js';
+import { createVerse } from '../../util/Verse.js';
 
-const sampleNotes = [
+export const sampleNotes = [
   {
     // ID can be a combo of title and linked verses, and uniqueness can be enforced
     'id': '1',
     'title': 'Note Title Abc',
     'body': 'I think this verse is cool because a comparison can be made between the symbolism of the metaphors of both passages insofar that one applies best practices of exegesis and hermeneutics.',
-    'linkedVerses': ['Revelation 2:5'],
+    'linkedVerses': [createVerse('Revelation', 2, 5)],
     'isPublic': true
   },
   {
     'id': '2',
     'title': 'Note Title 2',
     'body': 'Glory be',
-    'linkedVerses': ['Genesis 1:10'],
+    'linkedVerses': [createVerse('Genesis', 1, 10)],
     'isPublic': false
   },
   {
     'id': '3',
     'title': 'My Note Title',
     'body': 'I think this passage is pretty nice.',
-    'linkedVerses': ['Genesis 14:2', 'Psalms 145:100', 'Zechariah 1:3', 'Matthew 5:5'],
+    'linkedVerses': [createVerse('Genesis', 14, 2), createVerse('Psalms', 145, 100), createVerse('Zechariah', 1, 3), createVerse('Matthew', 5, 5)],
     'isPublic': true
   },
   {
@@ -46,13 +48,15 @@ const sampleNotes = [
 ];
 
 // If selectedVerses are provided, this is in a drawer.
+// selectedVerses are in the form [{bookName: str, chapterNumber: int, verseNumber: int}]
 // When in a drawer, set filter and don't render contextHeader (Drawer does).
 // Filter settings are independent of context header when set
-const NotesPage = ({initialSelectedVerses}) => {
+const NotesPage = ({initialSelectedVerseObjects}) => {
   const [filterSettings, setFilterSettings] = useState({});
   const [contextHeaderText, setContextHeaderText] = useState('');
   const [notes, setNotes] = useState([]);
   const [showNoteCreateDialog, setShowNoteCreateDialog] = useState(false);
+  const [showNoteFilterModal, setShowNoteFilterModal] = useState(false);
   const [userName, setUserName] = useState('CTCheeseman');  // TODO: use global state
 
   const fetchNoteData = async () => {
@@ -66,30 +70,36 @@ const NotesPage = ({initialSelectedVerses}) => {
   useEffect(fetchNoteData, []);
 
   const initializeFilterSettings = () => (
-    setFilterSettings({
-      ...filterSettings,
-      selectedVerses: initialSelectedVerses || [],
-      bookName: '',
-      chapterNumber: 0
-    })
+    // DEBUG
+    setFilterSettings({selectedVerses: [{reference: 'DEFAULT pleeeease override this'}]})
+
+    // setFilterSettings({
+    //   ...filterSettings,
+    //   selectedVerses: initialSelectedVerseObjects || [],
+    // })
   );
 
-  useEffect(initializeFilterSettings, []);
+  // DEBUG
+  useEffect(() => console.log('\t** NotesPage: filter settings changed **', filterSettings), [filterSettings]);
+
+  // DEBUG
+  // useEffect(initializeFilterSettings, []);
+  useEffect(() => {
+    console.log('**initializing filter settings in NotesPage**');
+    initializeFilterSettings();
+  }, []);
 
   // set context header text based on selected verses
   useEffect(() => {
-    const {selectedVerses, bookName, chapterNumber} = filterSettings;
-    const newHeaderText = versesToString(bookName, chapterNumber, selectedVerses)
+    const {selectedVerses} = filterSettings;
+
+    const newHeaderText = versesToString(selectedVerses)
       || 'All';
 
     setContextHeaderText(newHeaderText);
   }, [filterSettings?.selectedVerses]);
 
-  const handleFilterPress = () => {
-    console.log('filtering...');
-    // TODO: show filter form modal, then set filter settings in handleSubmitFilterSettings
-    setFilterSettings({...filterSettings, bookName: 'Jeremiah', chapterNumber: 5, selectedVerses: [7, 8, 9, 20]});
-  };
+  const handleFilterPress = () => setShowNoteFilterModal(true);
 
   const handleNewPress = () => {
     console.log('creating new...');
@@ -98,6 +108,13 @@ const NotesPage = ({initialSelectedVerses}) => {
 
   const deleteNote = (noteId) => {
     // TODO: call api
+    /**
+     * note from Tim 8/1/22: send DELETE to /notes/:username with body 
+    {
+      "title": "string",
+      "body": "string"
+    }
+     */
 
     setNotes(notes.filter(note => note.id !== noteId));
 
@@ -109,7 +126,15 @@ const NotesPage = ({initialSelectedVerses}) => {
    * @param {*} noteData object in the form {title: string, body: string, linkedVerses: string[], isPublic: bool}
    */
   const createNote = async (noteData) => {
-    // TODO: call api
+    // TODO: call api at POST /api/notes/:username
+    /* note from Tim 8/1/22: make sure that it has this form, with reference to only one verse for now
+     {
+      "title": "string",
+      "body": "This is such an incredible verse",
+      "linkedVerses": ["John", 3, 16],
+      "isPublic": true
+     }
+     */
     const reqUrl = `${BASE_URL}notes/${userName}`;
     const reqBodyData = noteData;
 
@@ -123,15 +148,33 @@ const NotesPage = ({initialSelectedVerses}) => {
     // fetchNoteData();
   };
 
+  const editNote = async () => {
+    // TODO
+    // note from Tim 8/1/22: send PUT to /api/notes/:username with body {oldTitle: string, newTitle: string, oldBody: string, newBody: string, isPublic: bool}
+  };
+
+  const updateNote = async () => {
+    /** note from Tim 8/1/22: send PUT to /api/notes/:username with body
+    {
+      "oldTitle": "string",
+      "newTitle": "string",
+      "oldBody": "This is such an incredible verse",
+      "newBody": "This is really such an incredible verse",
+      "linkedVerses": ["John", 3, 16],
+      "isPublic": true
+    }
+     */
+  };
+
   return (
     <>
       {/* If initialSelectedVerses are provided, this component is in a drawer,
           so don't show header */}
-      {!initialSelectedVerses && <ContextHeader headingText={contextHeaderText}></ContextHeader>}
+      {!initialSelectedVerseObjects && <ContextHeader headingText={contextHeaderText}></ContextHeader>}
       <PageHeader
         headingText="My Notes"
-        onFilterPress={!initialSelectedVerses && handleFilterPress}
-        onNewPress={!initialSelectedVerses && handleNewPress}
+        onFilterPress={!initialSelectedVerseObjects && handleFilterPress}
+        onNewPress={handleNewPress}
       ></PageHeader>
       <PageStyler>
         <ScrollView scrollEnabled="true">
@@ -141,7 +184,7 @@ const NotesPage = ({initialSelectedVerses}) => {
               noteId={note.id}
               title={note.title}
               body={note.body}
-              linkedVerseReferences={note.linkedVerses}
+              linkedVerseReferences={note.linkedVerses.map(verseObj => verseObj.reference)}
               isPublic={note.isPublic}
               deleteMe={deleteNote}
             ></Note>
@@ -154,6 +197,14 @@ const NotesPage = ({initialSelectedVerses}) => {
           onCancel={() => setShowNoteCreateDialog(false)}
           onSubmit={createNote}
         ></NoteEditDialog>
+      }
+      {showNoteFilterModal &&
+        <NoteFilterModal
+          setShouldShowDialog={setShowNoteFilterModal}
+          onCancel={() => setShowNoteFilterModal(false)}
+          filterSettings={filterSettings}
+          setFilterSettings={newSettings => {console.log('**NotesPage: new filter settings** ', newSettings); setFilterSettings(newSettings)}}
+        ></NoteFilterModal>
       }
     </>
   );

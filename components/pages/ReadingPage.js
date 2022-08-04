@@ -24,6 +24,7 @@ import { Enum } from '../../util/Enum.js';
 // custom util
 import { versesToString } from "../../util/VerseReferenceFormatter";
 import { BASE_URL } from '../../constants/apiData.js';
+import { createVerse } from '../../util/Verse.js';
 
 const drawerContentsOptions = new Enum('NOTES_PAGE', 'COMMENTARY_PAGE', 'VERSE_SELECTED_OPTIONS');
 
@@ -31,18 +32,18 @@ const ReadingPage = () => {
   const [currentBookName, setCurrentBookName] = useState('Matthew');
   const [currentChapterNumber, setCurrentChapterNumber] = useState(1);
   const [currentVerseList, setCurrentVerseList] = useState([]);
-  const [selectedVerses, setSelectedVerses] = useState(new Set());  // constant-time checks for Verse.isSelected
+  const [selectedVerseNumbers, setSelectedVerseNumbers] = useState(new Set());  // constant-time checks for Verse.isSelected
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [currentBookAndChapterString, setCurrentBookAndChapterString] = useState('');
   const [drawerIsMinimized, setDrawerIsMinimized] = useState(true);
   const [drawerContents, setDrawerContents] = useState();
   const [contextHeaderText, setContextHeaderText] = useState();
-  const [selectedVersesOrdered, setSelectedVersesOrdered] = useState([]);
+  const [selectedVerseNumbersOrdered, setSelectedVersesOrdered] = useState([]);
 
   // TODO: use min heap for selected verses to maintain order and contains() speed
   useEffect(() => {
-    setSelectedVersesOrdered(Array.from(selectedVerses).sort());
-  }, [selectedVerses]);
+    setSelectedVersesOrdered(Array.from(selectedVerseNumbers).sort());
+  }, [selectedVerseNumbers]);
 
   const handleChapterSelect = ({book, chapter}) => {
     setCurrentBookName(book);
@@ -79,7 +80,7 @@ const ReadingPage = () => {
       const verseList = res?.data ? res.data : null;
 
       if (verseList) {
-        console.log('success. Verses: ', JSON.stringify(verseList));
+        // console.log('success. Verses: ', JSON.stringify(verseList));
         setCurrentVerseList(verseList);
   
         setCurrentBookAndChapterString(`${currentBookName} ${currentChapterNumber}`);
@@ -100,7 +101,7 @@ const ReadingPage = () => {
   },
   [currentBookName, currentChapterNumber]);
 
-  const verseIsSelected = (verseNumber) => selectedVerses.has(verseNumber);
+  const verseIsSelected = (verseNumber) => selectedVerseNumbers.has(verseNumber);
 
   const handleVersePress = (verse) => {
     verseIsSelected(verse.number) ? handleVerseDeselect(verse.number)
@@ -109,20 +110,20 @@ const ReadingPage = () => {
 
   const handleVerseSelect = (verseNumber) => {
     // add to set of selected verse numbers
-    const tempCopy = new Set(selectedVerses);
+    const tempCopy = new Set(selectedVerseNumbers);
     tempCopy.add(verseNumber);
-    setSelectedVerses(tempCopy);
+    setSelectedVerseNumbers(tempCopy);
   };
 
   const handleVerseDeselect = (verseNumber) => {
     // remove from set of selected verse numbers
-    const tempCopy = new Set(selectedVerses);
+    const tempCopy = new Set(selectedVerseNumbers);
     tempCopy.delete(verseNumber);
-    setSelectedVerses(tempCopy);
+    setSelectedVerseNumbers(tempCopy);
   };
 
   const clearSelectedVerses = () => {
-    setSelectedVerses(new Set());
+    setSelectedVerseNumbers(new Set());
   };
 
   const handleRelatedNotesPress = () => {
@@ -140,9 +141,12 @@ const ReadingPage = () => {
 
   // update context header text
   useEffect(() => {
-    let contextHeaderText = versesToString(currentBookName, currentChapterNumber, selectedVersesOrdered);
+    const selectedVerseObjects = selectedVerseNumbersOrdered.map(
+      verseNumber => createVerse(currentBookName, currentChapterNumber, verseNumber)
+    );
+    let contextHeaderText = versesToString(selectedVerseObjects);
     setContextHeaderText(contextHeaderText);
-  }, [currentBookName, currentChapterNumber, selectedVersesOrdered]);
+  }, [currentBookName, currentChapterNumber, selectedVerseNumbersOrdered]);
 
   return (
     <>
@@ -178,7 +182,7 @@ const ReadingPage = () => {
 
         {/* Verse selected context drawer with "Related" buttons */}
         <Drawer
-          isOpen={selectedVerses.size > 0}
+          isOpen={selectedVerseNumbers.size > 0}
           minimize={drawerIsMinimized}
         >
           {/* JSX-style switch for drawerContents */}
@@ -201,7 +205,10 @@ const ReadingPage = () => {
               onClosePress={closeDrawer}
               onExpandPress={toggleExpandMinimizeDrawer}
             >
-              <NotesPage initialSelectedVerses={selectedVerses}></NotesPage>
+              <NotesPage
+                initialSelectedVerses={[...selectedVerseNumbers].map(verseNumber => 
+                  createVerse(currentBookName, currentChapterNumber, verseNumber))}
+              ></NotesPage>
             </DrawerPage>
           }
           {
@@ -211,7 +218,7 @@ const ReadingPage = () => {
               onClosePress={closeDrawer}
               onExpandPress={toggleExpandMinimizeDrawer}
             >
-              <CommentaryPage initialSelectedVerses={selectedVerses}></CommentaryPage>
+              <CommentaryPage initialSelectedVerses={selectedVerseNumbers}></CommentaryPage>
             </DrawerPage>
           }
         </Drawer>
