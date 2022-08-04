@@ -73,8 +73,6 @@ const ProfilePage = () => {
         </FormSection>
         <DeleteButton onPress={()=>{setShouldShowDialog(true)}}>Delete Profile</DeleteButton>
 
-        <TEST></TEST>
-
       </PageStyler>
       {shouldShowDialog &&
         <ConfirmDialog
