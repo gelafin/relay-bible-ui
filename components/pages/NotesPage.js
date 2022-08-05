@@ -1,20 +1,19 @@
 import { React, useEffect, useState } from 'react';
 import { ScrollView } from 'react-native';
+import axios from 'axios';
 
 // custom components
 import { PageStyler } from './PageStyler.js';
 import { PageHeader } from '../common/PageHeader.js';
 import { ContextHeader } from '../common/ContextHeader.js';
-import { Note } from '../unique/Note.js';
 import { NoteEditDialog } from '../unique/NoteEditDialog.js';
+import { NotesList } from '../unique/NotesList.js';
+import { NoteFilterModal } from '../common/NoteFilterModal.js';
 
 // custom utils
 import { versesToString } from '../../util/VerseReferenceFormatter.js';
-import axios from 'axios';
 import { BASE_URL } from '../../constants/apiData.js';
-import { NoteFilterModal } from '../common/NoteFilterModal.js';
 import { createVerse } from '../../util/Verse.js';
-import { NotesList } from '../unique/NotesList.js';
 
 export const sampleNotes = [
   {
