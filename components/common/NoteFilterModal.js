@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from 'react';
+import { React, useState } from 'react';
 import { Text, View } from 'react-native';
 import { Provider, Portal, Dialog, Button, Paragraph } from 'react-native-paper';
 
@@ -9,7 +9,6 @@ import { FormLabel } from './FormLabel';
 import { createVerse } from '../../util/Verse';
 
 const TEST_VERSES = [createVerse('Matthew', 5, 5)];
-console.log('**TEST VERSES (has equals?)', TEST_VERSES);
 
 /**
  * @param onSubmit: called with argument object
@@ -27,21 +26,14 @@ const NoteFilterModal = ({setShouldShowDialog, onCancel, filterSettings, setFilt
   };
 
   function handleSubmit() {
-    console.log('*keeping filter settings ', filterSettings);
-    console.log('\twith selected verses ', filterSettings.selectedVerses);
+    console.log('filter modal: *keeping filter settings ', filterSettings);
     hideDialog();
 
     // no need to submit to parent; parent state already updated
   }
 
-  // DEBUG EVERY UPDATE
-  useEffect(() => {
-    console.log('\tselected verses:', JSON.stringify(filterSettings?.selectedVerses));
-  });
-
   const handleRelatedVersesChange = newRelatedVerses => {
-    console.log('\tnewRelatedVerses from TEST VERSES (has equals?)', newRelatedVerses);
-    console.log('\tsetting new filter settings (HAS EQUALS?) ', {...filterSettings, selectedVerses: [...newRelatedVerses]});
+    console.log('filter modal: setting new filter settings ', {...filterSettings, selectedVerses: [...newRelatedVerses]});
     setFilterSettings((filterSettings) => ({...filterSettings, selectedVerses: [...newRelatedVerses]}));
   };
 
