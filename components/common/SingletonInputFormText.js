@@ -36,11 +36,6 @@ const SingletonInputFormText = ({
 
   useEffect(focusInput, [isFocused, inputRef]);
 
-  // DEBUG
-  useEffect(
-    () => {console.log('(note with body', currentValue,') \n\tthis Note\'s underlying input component is focused? ', isFocused)}, [isFocused]
-  );
-
   return (
     <TextInput
       ref={inputRef}
