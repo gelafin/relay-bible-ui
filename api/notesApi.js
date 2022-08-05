@@ -7,7 +7,7 @@ import axios from "axios";
 // custom util
 import { BASE_URL } from "../constants/apiData";
 import { createVerse } from "../util/Verse";
-
+ 
 const sampleNotes = [
   {
     // ID can be a combo of title and linked verses, and uniqueness can be enforced
@@ -39,74 +39,75 @@ const sampleNotes = [
     'isPublic': true
   },
 ];
-
+ 
 /**
- * Gets data for all Notes of a User from the database and returns a promise with the data
- */
+  * Gets data for all Notes of a User from the database and returns a promise with the data
+  */
 export const fetchAllNotes = async (userName) => {
   // TODO: hit the api
   // const reqUrl = `${BASE_URL}notes/${userName}`;
   // const res = await axios.get(reqUrl);
-
+ 
   return sampleNotes;
 };
-
+ 
 /**
- * Adds a new Note to the database and returns a promise with a bool for success/fail
- * @param noteData object in the form {title: string, body: string, linkedVerses: string[], isPublic: bool}
- * @return bool indicating success
- */
+  * Adds a new Note to the database and returns a promise with a bool for success/fail
+  * @param noteData object in the form {title: string, body: string, linkedVerses: string[], isPublic: bool}
+  * @return bool indicating success
+  */
 export const createNote = async (noteData, username) => {
   // TODO: call api at POST /api/notes/:username
   // TODO: using the note id would be fine
   /* note from Tim 8/1/22: make sure that it has this form, with reference to only one verse for now
-     {
-      "title": "string",
-      "body": "This is such an incredible verse",
-      "linkedVerses": ["John", 3, 16],
-      "isPublic": true
-     }
-     */
+      {
+       "title": "string",
+       "body": "This is such an incredible verse",
+       "linkedVerses": ["John", 3, 16],
+       "isPublic": true
+      }
+      */
   //   const reqUrl = `${BASE_URL}notes/${username}`;
   //   const reqBodyData = noteData;
   //   const res = await axios.post(reqUrl, reqBodyData);
   return true;
 };
-
+ 
 /**
- * Updates a Note in the database and returns a promise with a bool indicating success
- * @param oldNoteData {title: str, body: str, isPublic: bool, linkedVerses: createVerse()[]}
- * @param newNoteData {title: str, body: str, isPublic: bool, linkedVerses: createVerse()[]}
- * @return bool indicating success
- */
+  * Updates a Note in the database and returns a promise with a bool indicating success
+  * @param oldNoteData {title: str, body: str, isPublic: bool, linkedVerses: createVerse()[]}
+  * @param newNoteData {title: str, body: str, isPublic: bool, linkedVerses: createVerse()[]}
+  * @return bool indicating success
+  */
 export const updateNote = async (oldNoteData, newNoteData, username) => {
   /** note from Tim 8/1/22: send PUT to /api/notes/:username with body
-   *   // TODO: using the note id would be fine
-    {
-      "oldTitle": "string",
-      "newTitle": "string",
-      "oldBody": "This is such an incredible verse",
-      "newBody": "This is really such an incredible verse",
-      "linkedVerses": ["John", 3, 16],  // TODO: api only handles one verse for now
-      "isPublic": true
-    }
-    */
+    *   // TODO: using the note id would be fine
+     {
+       "oldTitle": "string",
+       "newTitle": "string",
+       "oldBody": "This is such an incredible verse",
+       "newBody": "This is really such an incredible verse",
+       "linkedVerses": ["John", 3, 16],  // TODO: api only handles one verse for now
+       "isPublic": true
+     }
+     */
   return true;
 };
-
+ 
 /**
- * Deletes a Note from the database and returns a promise with a bool indicating success
- * @return bool indicating success
- */
+  * Deletes a Note from the database and returns a promise with a bool indicating success
+  * @return bool indicating success
+  */
 export const deleteNote = async (username, noteId) => {
   // TODO: call api
   // TODO: using the note id would be fine
   /**
-    * note from Tim 8/1/22: send DELETE to /notes/:username with body 
-    {
-      "title": "string",
-      "body": "string"
-    }
-  */
+     * note from Tim 8/1/22: send DELETE to /notes/:username with body 
+     {
+       "title": "string",
+       "body": "string"
+     }
+   */
   return true;
 };
+ 
