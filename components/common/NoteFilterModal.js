@@ -5,6 +5,11 @@ import { Provider, Portal, Dialog, Button, Paragraph } from 'react-native-paper'
 // custom components
 import { FormLabel } from './FormLabel';
 
+// custom util
+import { createVerse } from '../../util/Verse';
+
+const TEST_VERSES = [createVerse('Matthew', 5, 5)];
+
 /**
  * @param onSubmit: called with argument object
  *  {
@@ -67,7 +72,7 @@ const NoteFilterModal = ({setShouldShowDialog, onCancel, filterSettings, setFilt
             <Paragraph>{JSON.stringify(filterSettings?.selectedVerses)}</Paragraph>
           </Dialog.Content>
           <Dialog.Actions>
-            <Button onPress={() => handleRelatedVersesChange([{reference: 'Matthew 5:5'}])}>Test Selected Verses</Button>
+            <Button onPress={() => handleRelatedVersesChange(TEST_VERSES)}>Test Selected Verses</Button>
             <Button onPress={handleSubmit}>Apply</Button>
             <Button onPress={handleCancel}>Cancel</Button>
           </Dialog.Actions>
