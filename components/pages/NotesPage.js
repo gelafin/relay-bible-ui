@@ -47,11 +47,13 @@ const NotesPage = ({initialSelectedVerseObjects}) => {
   };
 
   /**
-   * @param {*} noteData object in the form {title: string, body: string, linkedVerses: string[], isPublic: bool}
+   * @param noteData {id: number, title: str, body: str, isPublic: bool, linkedVerses: Verse.createNote()}
    */
   const createNote = async (noteData) => {
     // TODO: call api
     // const success = await Api.createNote(noteData, userName);
+
+    console.log('NotesPage: creating note ', {...noteData});
 
     const notesCopy = [...notes];
     notesCopy.push({...noteData, id: notes[notes.length - 1].id + 1});

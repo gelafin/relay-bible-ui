@@ -5,8 +5,11 @@ import { Provider, Portal, Dialog, Button, Paragraph } from 'react-native-paper'
 import { FormLabel } from '../common/FormLabel';
 import { SingletonInputFormText } from '../common/SingletonInputFormText';
 
+// custom util
+import { createVerse } from '../../util/Verse';
+
 /**
- * @param onSubmit: called with argument object {title: string, body: string, linkedVerses: string[], isPublic: bool}
+ * @param onSubmit: called with argument object created by Verse.createVerse()
  */
 const NoteEditDialog = ({setShouldShowDialog, onSubmit, onCancel, initialNoteData}) => {
   const [noteData, setNoteData] = useState(initialNoteData || {});
@@ -19,7 +22,17 @@ const NoteEditDialog = ({setShouldShowDialog, onSubmit, onCancel, initialNoteDat
 
   const handleSubmit = () => {
     hideDialog();
-    onSubmit(noteData);
+
+    // TODO: placeholder until SingletonInputFormText is replaced by a verse select modal
+    // onSubmit(noteData);  // noteData is already [createVerse()]
+    const tempLinkedVerses = noteData.linkedVerses.map(referenceText => (createVerse(
+      referenceText.split(' ')[0],  // book name
+      referenceText.split(' ')[1].split(':')[0],  // chapter number
+      referenceText.split(':')[1]   // verse number
+    )));
+    const tempSubmitData = {...noteData, linkedVerses: tempLinkedVerses};
+    console.log('submitting edited/new note ', tempSubmitData);
+    onSubmit(tempSubmitData);
   };
 
   return (
