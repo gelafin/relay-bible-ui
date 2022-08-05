@@ -14,6 +14,7 @@ import axios from 'axios';
 import { BASE_URL } from '../../constants/apiData.js';
 import { NoteFilterModal } from '../common/NoteFilterModal.js';
 import { createVerse } from '../../util/Verse.js';
+import { NotesList } from '../unique/NotesList.js';
 
 export const sampleNotes = [
   {
@@ -192,17 +193,10 @@ const NotesPage = ({initialSelectedVerseObjects}) => {
       ></PageHeader>
       <PageStyler>
         <ScrollView scrollEnabled="true">
-          {notes.map((note) => (
-            <Note
-              key={note.id}
-              noteId={note.id}
-              title={note.title}
-              body={note.body}
-              linkedVerseReferences={note.linkedVerses.map(verseObj => verseObj.reference)}
-              isPublic={note.isPublic}
-              deleteMe={deleteNote}
-            ></Note>
-          ))}
+          <NotesList
+            notes={notes}
+            deleteNote={deleteNote}
+          ></NotesList>
         </ScrollView>
       </PageStyler>
       {showNoteCreateDialog &&
