@@ -103,7 +103,6 @@ const Note = ({noteId, title, body, linkedVerseReferences, isPublic, deleteMe}) 
 
   // expand input area on focus
   useEffect(() => {
-    console.log('(note with body ', currentBody, ') Note \n\tisFocused? ', isFocused);
     const showLines = isFocused ? 5 : 2;
     
     setNumberOfLines(showLines);

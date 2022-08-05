@@ -175,10 +175,10 @@ const NotesPage = ({initialSelectedVerseObjects}) => {
   const handleNewPress = () => setShowNoteCreateDialog(true);
 
   /**
-     * initialization
-     */
+   * initialization
+   */
   useEffect(fetchNoteData, []);
-  useEffect(initializeFilterSettings, []);   
+  useEffect(initializeFilterSettings, [initialSelectedVerseObjects]);
 
   return (
     <>
