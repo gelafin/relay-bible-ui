@@ -11,15 +11,31 @@ import { NotesList } from '../unique/NotesList.js';
 // Filter controls context heading
 const CommentaryPage = ({initialSelectedVerses}) => {
   const [selectedVerses, setSelectedVerses] = useState(initialSelectedVerses);
+  const [notes, setNotes] = useState([]);
+
+  /**
+   * 
+   * @param {*} noteId 
+   */
+  const deleteNote = (noteId) => {
+    // TODO: call api
+    // const success = await Api.deleteNote();
+
+    setNotes(notes.filter(note => note.id !== noteId));
+
+    // TODO: after api call, update displayed notes
+    // fetchNoteData();
+  };
 
   return (
     <>
       <ContextHeader>{selectedVerses}</ContextHeader>
       <PageHeader headingText="Commentary"></PageHeader>
       <PageStyler>
-        <ScrollView scrollEnabled='true'>
+        <ScrollView scrollEnabled="true">
           <NotesList
-            
+            notes={notes}
+            deleteNote={deleteNote}
           ></NotesList>
         </ScrollView>
       </PageStyler>

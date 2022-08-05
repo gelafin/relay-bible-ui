@@ -14,38 +14,7 @@ import { NoteFilterModal } from '../common/NoteFilterModal.js';
 import { versesToString } from '../../util/VerseReferenceFormatter.js';
 import { BASE_URL } from '../../constants/apiData.js';
 import { createVerse } from '../../util/Verse.js';
-
-export const sampleNotes = [
-  {
-    // ID can be a combo of title and linked verses, and uniqueness can be enforced
-    'id': '1',
-    'title': 'Note Title Abc',
-    'body': 'I think this verse is cool because a comparison can be made between the symbolism of the metaphors of both passages insofar that one applies best practices of exegesis and hermeneutics.',
-    'linkedVerses': [createVerse('Revelation', 2, 5)],
-    'isPublic': true
-  },
-  {
-    'id': '2',
-    'title': 'Note Title 2',
-    'body': 'Glory be',
-    'linkedVerses': [createVerse('Genesis', 1, 10)],
-    'isPublic': false
-  },
-  {
-    'id': '3',
-    'title': 'My Note Title',
-    'body': 'I think this passage is pretty nice.',
-    'linkedVerses': [createVerse('Genesis', 14, 2), createVerse('Psalms', 145, 100), createVerse('Zechariah', 1, 3), createVerse('Matthew', 5, 5)],
-    'isPublic': true
-  },
-  {
-    'id': '4',
-    'title': 'Grocery list',
-    'body': `Captain Crunch Berries\nCaptain Crunch Chocolate\nCaptain Crunch Peanut Butter`,
-    'linkedVerses': [],
-    'isPublic': true
-  },
-];
+import * as Api from '../../api/notesApi.js';
 
 // If selectedVerses are provided, this is in a drawer.
 // selectedVerses are in the form [{bookName: str, chapterNumber: int, verseNumber: int}]
@@ -63,22 +32,13 @@ const NotesPage = ({initialSelectedVerseObjects}) => {
    * API interaction
    */
   const fetchNoteData = async () => {
-    // TODO: hit the api
-    // const reqUrl = `${BASE_URL}notes/${userName}`;
-    // const res = await axios.get(reqUrl);
-
-    setNotes(sampleNotes);
+    const freshNotes = await Api.fetchAllNotes();
+    setNotes(freshNotes);
   };
 
   const deleteNote = (noteId) => {
     // TODO: call api
-    /**
-     * note from Tim 8/1/22: send DELETE to /notes/:username with body 
-    {
-      "title": "string",
-      "body": "string"
-    }
-     */
+    // const success = await Api.deleteNote();
 
     setNotes(notes.filter(note => note.id !== noteId));
 
@@ -90,19 +50,8 @@ const NotesPage = ({initialSelectedVerseObjects}) => {
    * @param {*} noteData object in the form {title: string, body: string, linkedVerses: string[], isPublic: bool}
    */
   const createNote = async (noteData) => {
-    // TODO: call api at POST /api/notes/:username
-    /* note from Tim 8/1/22: make sure that it has this form, with reference to only one verse for now
-     {
-      "title": "string",
-      "body": "This is such an incredible verse",
-      "linkedVerses": ["John", 3, 16],
-      "isPublic": true
-     }
-     */
-    const reqUrl = `${BASE_URL}notes/${userName}`;
-    const reqBodyData = noteData;
-
-    // const res = await axios.post(reqUrl, reqBodyData);
+    // TODO: call api
+    // const success = await Api.createNote(noteData, userName);
 
     const notesCopy = [...notes];
     notesCopy.push({...noteData, id: notes[notes.length - 1].id + 1});
@@ -112,12 +61,8 @@ const NotesPage = ({initialSelectedVerseObjects}) => {
     // fetchNoteData();
   };
 
-  const editNote = async () => {
-    // TODO
-    // note from Tim 8/1/22: send PUT to /api/notes/:username with body {oldTitle: string, newTitle: string, oldBody: string, newBody: string, isPublic: bool}
-  };
-
-  const updateNote = async () => {
+  const updateNote = async (oldNote, newNote) => {
+    // const success = await Api.updateNote(oldNote, newNote, userName);
     /** note from Tim 8/1/22: send PUT to /api/notes/:username with body
     {
       "oldTitle": "string",
