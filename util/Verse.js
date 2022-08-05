@@ -1,13 +1,15 @@
-export function createVerse(bookName, chapterNumber, verseNumber) {
+export function createVerse(bookNameIn, chapterNumberIn, verseNumberIn) {
   return ({
-    bookName: bookName,
-    chapterNumber: '' + chapterNumber,
-    verseNumber: '' + verseNumber,
-    reference: `${bookName} ${chapterNumber}:${verseNumber}`,
-    equals: (bookName2, chapterNumber2, verseNumber2) => (
-      bookName === bookName2 &&
-      chapterNumber === chapterNumber2 &&
-      verseNumber === verseNumber2
-    )
+    bookName: bookNameIn,
+    chapterNumber: '' + chapterNumberIn,
+    verseNumber: '' + verseNumberIn,
+    reference: `${bookNameIn} ${chapterNumberIn}:${verseNumberIn}`,
+    equals: function(verseObj) {
+      return (
+        this.bookName === verseObj.bookName &&
+        this.chapterNumber === verseObj.chapterNumber &&
+        this.verseNumber === verseObj.verseNumber
+      );
+    }
   });
 }
