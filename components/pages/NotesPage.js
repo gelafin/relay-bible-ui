@@ -59,51 +59,15 @@ const NotesPage = ({initialSelectedVerseObjects}) => {
   const [showNoteFilterModal, setShowNoteFilterModal] = useState(false);
   const [userName, setUserName] = useState('CTCheeseman');  // TODO: use global state
 
+  /**
+   * API interaction
+   */
   const fetchNoteData = async () => {
     // TODO: hit the api
     // const reqUrl = `${BASE_URL}notes/${userName}`;
     // const res = await axios.get(reqUrl);
 
     setNotes(sampleNotes);
-  };
-
-  useEffect(fetchNoteData, []);
-
-  const initializeFilterSettings = () => (
-    // DEBUG
-    setFilterSettings({selectedVerses: [{reference: 'DEFAULT pleeeease override this'}]})
-
-    // setFilterSettings({
-    //   ...filterSettings,
-    //   selectedVerses: initialSelectedVerseObjects || [],
-    // })
-  );
-
-  // DEBUG
-  useEffect(() => console.log('\t** NotesPage: filter settings changed **', filterSettings), [filterSettings]);
-
-  // DEBUG
-  // useEffect(initializeFilterSettings, []);
-  useEffect(() => {
-    console.log('**initializing filter settings in NotesPage**');
-    initializeFilterSettings();
-  }, []);
-
-  // set context header text based on selected verses
-  useEffect(() => {
-    const {selectedVerses} = filterSettings;
-
-    const newHeaderText = versesToString(selectedVerses)
-      || 'All';
-
-    setContextHeaderText(newHeaderText);
-  }, [filterSettings?.selectedVerses]);
-
-  const handleFilterPress = () => setShowNoteFilterModal(true);
-
-  const handleNewPress = () => {
-    console.log('creating new...');
-    setShowNoteCreateDialog(true);
   };
 
   const deleteNote = (noteId) => {
@@ -166,6 +130,51 @@ const NotesPage = ({initialSelectedVerseObjects}) => {
      */
   };
 
+  /**
+   * helpers
+   */
+  const initializeFilterSettings = () => (
+    setFilterSettings({
+      ...filterSettings,
+      selectedVerses: initialSelectedVerseObjects || [],
+    })
+  );
+    
+  /**
+   * side effect listeners
+   */
+  // set context header text based on selected verses
+  useEffect(() => {
+    const {selectedVerses} = filterSettings;
+
+    const newHeaderText = versesToString(selectedVerses)
+      || 'All';
+
+    setContextHeaderText(newHeaderText);
+
+    updateFilteredNotes();
+  }, [filterSettings?.selectedVerses]);
+
+  // filter displayed notes based on filter settings
+  // (a note should display if any of its linked verses are in filter settings)
+  // const isInFilterSettings = verseObj => filterSettings.selectedVerses.some(verseObj2 => verseObj2.equals(verseObj));
+  const updateFilteredNotes = () => {
+    // setNotes(notes.filter(note => note.linkedVerses.some(isInFilterSettings)));
+    setNotes(notes);
+  }
+
+  /**
+   * handlers
+   */
+  const handleFilterPress = () => setShowNoteFilterModal(true);
+  const handleNewPress = () => setShowNoteCreateDialog(true);
+
+  /**
+     * initialization
+     */
+  useEffect(fetchNoteData, []);
+  useEffect(initializeFilterSettings, []);   
+
   return (
     <>
       {/* If initialSelectedVerses are provided, this component is in a drawer,
@@ -203,7 +212,7 @@ const NotesPage = ({initialSelectedVerseObjects}) => {
           setShouldShowDialog={setShowNoteFilterModal}
           onCancel={() => setShowNoteFilterModal(false)}
           filterSettings={filterSettings}
-          setFilterSettings={newSettings => {console.log('**NotesPage: new filter settings** ', newSettings); setFilterSettings(newSettings)}}
+          setFilterSettings={setFilterSettings}
         ></NoteFilterModal>
       }
     </>

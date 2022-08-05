@@ -1,7 +1,6 @@
 import { React, useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 import { Provider, Portal, Dialog, Button, Paragraph } from 'react-native-paper';
-import { sampleNotes } from '../pages/NotesPage';
 
 // custom components
 import { FormLabel } from './FormLabel';
@@ -31,7 +30,7 @@ const NoteFilterModal = ({setShouldShowDialog, onCancel, filterSettings, setFilt
 
   // DEBUG EVERY UPDATE
   useEffect(() => {
-    console.log('\tselected verses (SAME EXACT expression as non-updating jsx):', JSON.stringify(filterSettings?.selectedVerses));
+    console.log('\tselected verses:', JSON.stringify(filterSettings?.selectedVerses));
   });
 
   const handleRelatedVersesChange = newRelatedVerses => {
