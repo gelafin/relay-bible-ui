@@ -4,10 +4,10 @@ export function createVerse(bookName, chapterNumber, verseNumber) {
     chapterNumber: '' + chapterNumber,
     verseNumber: '' + verseNumber,
     reference: `${bookName} ${chapterNumber}:${verseNumber}`,
-    // equals: (bookName2, chapterNumber2, verseNumber2) => (
-    //   bookName === bookName2 &&
-    //   chapterNumber === chapterNumber2 &&
-    //   verseNumber === verseNumber2
-    // )
+    equals: (bookName2, chapterNumber2, verseNumber2) => (
+      bookName === bookName2 &&
+      chapterNumber === chapterNumber2 &&
+      verseNumber === verseNumber2
+    )
   });
 }

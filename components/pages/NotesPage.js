@@ -152,16 +152,20 @@ const NotesPage = ({initialSelectedVerseObjects}) => {
 
     setContextHeaderText(newHeaderText);
 
-    updateFilteredNotes();
+    if (filterSettings?.selectedVerses && filterSettings.selectedVerses.length > 0) {
+      updateFilteredNotes();
+    }
   }, [filterSettings?.selectedVerses]);
 
   // filter displayed notes based on filter settings
   // (a note should display if any of its linked verses are in filter settings)
-  // const isInFilterSettings = verseObj => filterSettings.selectedVerses.some(verseObj2 => verseObj2.equals(verseObj));
+  const isInFilterSettings = verseObj => filterSettings.selectedVerses.some(verseObj2 => {
+    return verseObj2.equals(verseObj)
+  });
   const updateFilteredNotes = () => {
-    // setNotes(notes.filter(note => note.linkedVerses.some(isInFilterSettings)));
+    setNotes(notes.filter(note => note.linkedVerses.some(isInFilterSettings)));
     console.log('NotesPage: updating notes to match settings: ', filterSettings.selectedVerses);
-    setNotes(notes);
+    console.log('NotesPage: new notes: ', notes.filter(note => note.linkedVerses.some(isInFilterSettings)));
   }
 
   /**
@@ -213,7 +217,7 @@ const NotesPage = ({initialSelectedVerseObjects}) => {
           setShouldShowDialog={setShowNoteFilterModal}
           onCancel={() => setShowNoteFilterModal(false)}
           filterSettings={filterSettings}
-          setFilterSettings={(newSettings) => {console.log('setting filter settings to ', newSettings); setFilterSettings({...newSettings});}}
+          setFilterSettings={setFilterSettings}
         ></NoteFilterModal>
       }
     </>

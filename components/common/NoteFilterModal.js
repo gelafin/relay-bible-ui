@@ -9,6 +9,7 @@ import { FormLabel } from './FormLabel';
 import { createVerse } from '../../util/Verse';
 
 const TEST_VERSES = [createVerse('Matthew', 5, 5)];
+console.log('**TEST VERSES (has equals?)', TEST_VERSES);
 
 /**
  * @param onSubmit: called with argument object
@@ -39,12 +40,9 @@ const NoteFilterModal = ({setShouldShowDialog, onCancel, filterSettings, setFilt
   });
 
   const handleRelatedVersesChange = newRelatedVerses => {
-    // setFilterSettings((filterSettings) => ({...filterSettings, [...newRelatedVerses]}));
-
-    // test with the deepest clone from the depths of sheol
-    const TEST_SETTINGS = {selectedVerses: JSON.parse(JSON.stringify(newRelatedVerses))};
-    console.log('\tsetting new filter settings ', TEST_SETTINGS);
-    setFilterSettings(TEST_SETTINGS);
+    console.log('\tnewRelatedVerses from TEST VERSES (has equals?)', newRelatedVerses);
+    console.log('\tsetting new filter settings (HAS EQUALS?) ', {...filterSettings, selectedVerses: [...newRelatedVerses]});
+    setFilterSettings((filterSettings) => ({...filterSettings, selectedVerses: [...newRelatedVerses]}));
   };
 
   return (
